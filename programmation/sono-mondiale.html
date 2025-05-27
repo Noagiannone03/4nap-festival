@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sono Mondiale - Festival ANRF</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        overflow-x: hidden;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        z-index: 1000;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 40px;
+        right: 40px;
+        height: 1px;
+        background: #000;
+    }
+
+    .navbar.menu-open {
+        background: #000;
+    }
+
+    .logo {
+        margin-left: -20px;
+        height: fit-content;
+        transition: all 0.5s ease;
+    }
+
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: #000;
+        font-weight: 500;
+        font-size: 16px;
+        transition: all 0.5s ease;
+    }
+
+    .navbar.menu-open .menu-toggle {
+        color: white;
+    }
+
+    .hamburger {
+        margin-left: 15px;
+        width: 24px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: #000;
+        position: absolute;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar.menu-open .hamburger span {
+        background: white;
+    }
+
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+    .hamburger span:nth-child(3) { bottom: 0; }
+
+    .hamburger.active span:nth-child(1) {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
+    }
+
+    /* Menu Overlay */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 80px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .menu-item {
+        color: white;
+        font-size: 4rem;
+        font-weight: 400;
+        margin: 20px 0;
+        cursor: pointer;
+        transform: translateX(-50px);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .menu-item:hover {
+        color: #ff6b6b;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        margin-top: 80px;
+        height: 100vh;
+        display: flex;
+        background: white;
+    }
+
+    .hero-image {
+        flex: 1;
+        background: url('../assets/images/perso1.png') center/cover;
+        position: relative;
+    }
+
+    .hero-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px;
+    }
+
+    .hero-text {
+        max-width: 500px;
+        text-align: left;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        font-weight: 800;
+        color: #333;
+        margin-bottom: 30px;
+        line-height: 1.1;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: #ff9a56;
+        font-weight: 600;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .hero-description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #666;
+        margin-bottom: 40px;
+        font-weight: 500;
+    }
+
+    .hero-date {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .hero-time {
+        font-size: 1.1rem;
+        color: #666;
+        font-weight: 500;
+    }
+
+    /* Content Sections */
+    .content-section {
+        padding: 100px 80px;
+        background: white;
+        margin-bottom: 0;
+    }
+
+    .section-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+    }
+
+    .section-text h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #333;
+        margin-bottom: 30px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .section-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #666;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+
+    .section-image {
+        height: 400px;
+        background: #f0f0f0;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .section-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    /* Image Separators */
+    .image-separator {
+        width: 100%;
+        height: 40px;
+        background: url('../assets/pattern/Group\ 69.png') center/cover;
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .image-separator:nth-child(even) {
+        background: url('../assets/pattern/Group\ 69.png') center/cover;
+    }
+
+    .image-separator::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('../assets/pattern/Group\ 69.png') center/cover;
+    }
+
+
+
+    /* Social Bar */
+    .social-bar {
+        background: #e8e8e8;
+        padding: 30px 0;
+    }
+
+    .social-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 25px;
+    }
+
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        background: #333;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        background: #4CAF50;
+        transform: translateY(-2px);
+    }
+
+    .newsletter-signup {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .newsletter-icon {
+        width: 24px;
+        height: 24px;
+        background: #333;
+    }
+
+    /* Footer */
+    .footer {
+        background: #e8e8e8;
+        padding: 40px 0;
+        color: #333;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 1fr;
+        gap: 80px;
+        margin-bottom: 40px;
+    }
+
+    .footer-section h4 {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .footer-section p {
+        color: #333;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .footer-section a {
+        color: #333;
+        text-decoration: none;
+        line-height: 1.6;
+        margin-bottom: 10px;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .footer-section a:hover {
+        color: #4CAF50;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 40px;
+        border-top: 1px solid #ccc;
+        margin-top: 40px;
+        color: #666;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-section {
+            flex-direction: column;
+            height: auto;
+        }
+
+        .hero-content {
+            padding: 40px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .section-container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .content-section {
+            padding: 60px 40px;
+        }
+
+        .menu-overlay {
+            padding-left: 40px;
+        }
+
+        .menu-item {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+    <img src="../assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    <div class="menu-toggle" id="menuToggle">
+        <span id="menuText">MENU</span>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- Menu Overlay -->
+<div class="menu-overlay" id="menuOverlay">
+    <div class="menu-item">PROGRAMMATION</div>
+    <div class="menu-item">INFOS PRATIQUES</div>
+    <div class="menu-item">DEVENEZ MEMBRE</div>
+    <div class="menu-item">NEWS</div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-image"></div>
+    <div class="hero-content">
+        <div class="hero-text">
+           
+            <h1 class="hero-title">SONO MONDIALE</h1>
+            <p class="hero-description">
+                Une soirée dédiée aux sonorités du monde entier. Découvrez des artistes exceptionnels 
+                qui vous feront voyager à travers les continents grâce à leurs musiques authentiques 
+                et leurs performances envoûtantes. Une expérience musicale unique qui célèbre la 
+                diversité culturelle et l'universalité de la musique.
+            </p>
+            
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Content Section 1 -->
+<section class="content-section">
+    <div class="section-container">
+        <div class="section-text">
+            <h2>L'EXPÉRIENCE SONO MONDIALE</h2>
+            <p>
+                Plongez dans un univers sonore où se mélangent les traditions musicales du monde entier. 
+                Cette soirée unique vous propose un voyage musical à travers les continents, 
+                avec des artistes venus des quatre coins du globe.
+            </p>
+            <p>
+                Des rythmes africains aux mélodies asiatiques, en passant par les sonorités 
+                latino-américaines et les harmonies européennes, chaque performance vous 
+                transportera dans une nouvelle culture musicale.
+            </p>
+        </div>
+        <div class="section-image">
+            <img src="../assets/images/dezze.png" alt="World Music" />
+        </div>
+    </div>
+</section>
+
+<!-- Image Separator -->
+<div class="image-separator"></div>
+
+<!-- Content Section 2 -->
+<section class="content-section">
+    <div class="section-container">
+        <div class="section-image">
+            <img src="../assets/images/dezze.png" alt="Instruments" />
+        </div>
+        <div class="section-text">
+            <h2>INSTRUMENTS TRADITIONNELS</h2>
+            <p>
+                Découvrez une collection exceptionnelle d'instruments traditionnels du monde entier. 
+                Chaque artiste apporte avec lui les sonorités authentiques de sa culture, 
+                créant une symphonie unique et envoûtante.
+            </p>
+            <p>
+                Du djembé africain au sitar indien, en passant par le charango andin et 
+                les percussions caribéennes, chaque instrument raconte une histoire 
+                et porte en lui l'âme d'un peuple.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Image Separator -->
+<div class="image-separator"></div>
+
+<!-- Content Section 3 -->
+<section class="content-section">
+    <div class="section-container">
+        <div class="section-text">
+            <h2>FUSION CULTURELLE</h2>
+            <p>
+                La magie de Sono Mondiale réside dans la rencontre entre les cultures. 
+                Les artistes ne se contentent pas de présenter leur tradition musicale, 
+                ils créent ensemble des fusions inédites et surprenantes.
+            </p>
+            <p>
+                Ces collaborations spontanées donnent naissance à des moments musicaux 
+                uniques, où les frontières s'effacent pour laisser place à l'universalité 
+                de la musique et à la beauté de la diversité culturelle.
+            </p>
+        </div>
+        <div class="section-image">
+            <img src="../assets/images/dezze.png" alt="Cultural Fusion" />
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Social Bar -->
+<section class="social-bar">
+    <div class="social-container">
+        <div class="social-icons">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">@</a>
+            <a href="#" class="social-icon">♪</a>
+            <a href="#" class="social-icon">𝕏</a>
+        </div>
+        <div class="newsletter-signup">
+            <div class="newsletter-icon"></div>
+            <span>NEWSLETTER</span>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>INFOS PRATIQUES</h4>
+            <p>Découvrez toutes nos infos pratiques</p>
+        </div>
+        <div class="footer-section">
+            <h4>PARTENAIRES</h4>
+            <p>Découvrez nos partenaires</p>
+        </div>
+        <div class="footer-section">
+            <h4>NEWS</h4>
+            <p>News & bon plans</p>
+        </div>
+        <div class="footer-section">
+            <h4>DEVENEZ MEMBRE</h4>
+            <p>Des questions ? Des réponses</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Festival ANRF. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script>
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Page Load Animation
+    gsap.timeline()
+        .from('.navbar', { y: -100, opacity: 0, duration: 1, ease: 'power3.out' })
+        .from('.hero-text', { x: -50, opacity: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+        .from('.hero-image', { x: 50, opacity: 0, duration: 1, ease: 'power3.out' }, '-=1');
+
+    // Menu Toggle (same as original)
+    const menuToggle = document.getElementById('menuToggle');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const hamburger = document.getElementById('hamburger');
+    const navbar = document.getElementById('navbar');
+    const menuText = document.getElementById('menuText');
+    const logo = document.getElementById('logo');
+
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        
+        if (menuOpen) {
+            navbar.classList.add('menu-open');
+            hamburger.classList.add('active');
+            menuOverlay.classList.add('active');
+            menuText.textContent = 'FERMER';
+            logo.src = "../assets/logos/4nap-logo-gris.png";
+            
+            gsap.fromTo('.menu-item', 
+                { x: -50, opacity: 0 },
+                { x: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.3 }
+            );
+        } else {
+            navbar.classList.remove('menu-open');
+            hamburger.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            menuText.textContent = 'MENU';
+            logo.src = "../assets/logos/4nap-logo-noir.png";
+            
+            gsap.to('.menu-item', { x: -50, opacity: 0, duration: 0.3, stagger: 0.05 });
+        }
+    });
+
+    // Content Sections Animation
+    gsap.fromTo('.content-section', {
+        y: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.content-section',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.3,
+        ease: 'power3.out'
+    });
+
+    // Image Separators Animation
+    gsap.fromTo('.image-separator', {
+        scaleX: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.image-separator',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+        },
+        scaleX: 1,
+        duration: 1.2,
+        ease: 'power3.out',
+        transformOrigin: 'left center'
+    });
+
+
+
+    // Section Text Animation
+    gsap.fromTo('.section-text h2', {
+        y: 30,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.section-text h2',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
+
+    gsap.fromTo('.section-text p', {
+        y: 20,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.section-text p',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power3.out'
+    });
+
+    // Section Images Animation
+    gsap.fromTo('.section-image', {
+        scale: 0.8,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.section-image',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+        },
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out'
+    });
+
+    // Parallax effect for image separators
+    gsap.to('.image-separator', {
+        scrollTrigger: {
+            trigger: '.image-separator',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1
+        },
+        y: '-20%',
+        ease: 'none'
+    });
+</script>
+</body>
+</html> 

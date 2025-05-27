@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Festival ANRF</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        overflow-x: hidden;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        z-index: 1000;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 40px;
+        right: 40px;
+        height: 1px;
+        background: #000;
+    }
+
+    .navbar.menu-open {
+        background: #000;
+    }
+
+    .logo {
+        margin-left: -20px;
+        height: fit-content;
+        transition: all 0.5s ease;
+    }
+
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: #000;
+        font-weight: 500;
+        font-size: 16px;
+        transition: all 0.5s ease;
+    }
+
+    .navbar.menu-open .menu-toggle {
+        color: white;
+    }
+
+    .hamburger {
+        margin-left: 15px;
+        width: 24px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: #000;
+        position: absolute;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar.menu-open .hamburger span {
+        background: white;
+    }
+
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+    .hamburger span:nth-child(3) { bottom: 0; }
+
+    .hamburger.active span:nth-child(1) {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
+    }
+
+    /* Menu Overlay */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 80px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .menu-item {
+        color: white;
+        font-size: 4rem;
+        font-weight: 400;
+        margin: 20px 0;
+        cursor: pointer;
+        transform: translateX(-50px);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .menu-item:hover {
+        color: #ff6b6b;
+    }
+
+    /* Hero Section */
+    .hero {
+        height: 100vh;
+        position: relative;
+        background: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    .video-placeholder {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .play-button {
+        width: 80px;
+        height: 80px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .play-button:hover {
+        transform: scale(1.1);
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    .play-button::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 20px solid white;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        margin-left: 4px;
+    }
+
+    /* Sticky Member Button */
+    .sticky-member {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 120px;
+        height: 120px;
+        background: #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+        z-index: 900;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .sticky-member:hover {
+        transform: scale(1.05);
+        background: #333;
+    }
+
+    /* Main Image Section */
+    .main-image-section {
+        height: 80vh;
+        background: url('assets/images/fortnap.jpeg') center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .countdown {
+        text-align: center;
+        color: white;
+        z-index: 2;
+    }
+
+    .countdown h2 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        font-weight: 400;
+    }
+
+    .countdown-timer {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+    }
+
+    .countdown-item {
+        text-align: center;
+    }
+
+    .countdown-number {
+        font-size: 4rem;
+        font-weight: 700;
+        display: block;
+    }
+
+    .countdown-label {
+        font-size: 1.2rem;
+        opacity: 0.8;
+    }
+
+    /* Program Section */
+    .program-section {
+        padding: 0;
+        background: #f5f5f5;
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        overflow: hidden;
+        width: 100vw;
+    }
+
+    .program-card {
+        flex: 1;
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: skewX(-5deg);
+        margin: 0 -30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .program-card:first-child {
+        margin-left: -50px;
+    }
+
+    .program-card:last-child {
+        margin-right: -50px;
+    }
+
+    .program-card:hover {
+        flex: 1.5;
+        z-index: 10;
+    }
+
+    .program-section:hover .program-card:not(:hover) {
+        filter: brightness(0.4);
+    }
+
+    .program-card:nth-child(1) { background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%); }
+    .program-card:nth-child(2) { background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%); }
+    .program-card:nth-child(3) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .program-card:nth-child(4) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+
+    .card-content {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        padding: 0 40px;
+        color: white;
+        transform: skewX(5deg);
+        z-index: 5;
+    }
+
+    .card-date {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .card-genre {
+        font-size: 1rem;
+        font-weight: 500;
+        opacity: 0.9;
+        margin-bottom: 60px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .card-image {
+        position: absolute;
+        bottom: 0;
+        left: 40px;
+        right: 40px;
+        height: 45%;
+        transform: skewX(5deg);
+        border-radius: 15px 15px 0 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 600;
+    }
+
+    .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        transform: skewX(-5deg) scale(0.9);
+        transition: transform 0.8s ease;
+    }
+
+    .program-card:hover .card-image img {
+        transform: skewX(-5deg) scale(0.95);
+    }
+
+    .card-button-container {
+        position: absolute;
+        top: 280px;
+        left: -200px;
+        right: 40px;
+        transform: skewX(5deg);
+        opacity: 0;
+        transition: all 0.4s ease 0.3s;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+    }
+
+    .program-card:hover .card-button-container {
+        opacity: 1;
+        left: 40px;
+    }
+
+    .card-button {
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        padding: 16px 30px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-width: 250px;
+    }
+
+    .card-button:hover {
+        background: white;
+        color: #333;
+        border-color: white;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 80px 0;
+        background: #ffffff;
+    }
+
+    .action-btn {
+        padding: 20px 40px;
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: 'Montserrat', sans-serif;
+        width: 300px;
+        text-align: center;
+    }
+
+    .action-btn.primary {
+        background: #000;
+        color: white;
+    }
+
+    .action-btn.secondary {
+        background: white;
+        color: #000;
+        border: 2px solid #000;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Map Section */
+    .map-section {
+        padding: 80px 0 0;
+        background: white;
+    }
+
+    .map-container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .map-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 60px;
+        color: #333;
+        font-family: 'Montserrat', sans-serif;
+        padding: 0 40px;
+    }
+
+    .map-iframe {
+        width: 100%;
+        height: 500px;
+        border: none;
+        margin-bottom: 0;
+    }
+
+    /* Info Section Redesign */
+    .info-section {
+        background: white;
+        padding: 80px 0 80px;
+    }
+
+    .info-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 80px;
+    }
+
+    .info-block h3 {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        color: #333;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        position: relative;
+    }
+
+    .info-block .highlight {
+        color: #4CAF50;
+        font-weight: 700;
+    }
+
+    .info-block:nth-child(1) .highlight { color: #FF6B35; }
+    .info-block:nth-child(2) .highlight { color: #4CAF50; }
+    .info-block:nth-child(3) .highlight { color: #2196F3; }
+
+    .info-block p {
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .info-block a {
+        color: #333;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .info-block a:hover {
+        color: #4CAF50;
+    }
+
+    /* Social Bar */
+    .social-bar {
+        background: #e8e8e8;
+        padding: 30px 0;
+    }
+
+    .social-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 25px;
+    }
+
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        background: #333;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        background: #4CAF50;
+        transform: translateY(-2px);
+    }
+
+    .newsletter-signup {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .newsletter-icon {
+        width: 24px;
+        height: 24px;
+        background: #333;
+    }
+
+    /* Footer */
+    .footer {
+        background: #e8e8e8;
+        padding: 40px 0;
+        color: #333;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 40px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 1fr;
+        gap: 80px;
+        margin-bottom: 40px;
+    }
+
+    .footer-section h4 {
+        font-size: 1.2rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .footer-section p {
+        color: #333;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .footer-section a {
+        color: #333;
+        text-decoration: none;
+        line-height: 1.6;
+        margin-bottom: 10px;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .footer-section a:hover {
+        color: #4CAF50;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 40px;
+        border-top: 1px solid #ccc;
+        margin-top: 40px;
+        color: #666;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .program-section {
+            flex-direction: column;
+            min-height: auto;
+        }
+
+        .program-card {
+            height: 300px;
+            transform: none;
+            margin: 10px 0;
+        }
+
+        .card-content {
+            transform: none;
+        }
+
+        .countdown-timer {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu-overlay {
+            padding-left: 40px;
+        }
+
+        .menu-item {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+    <img src="assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    <div class="menu-toggle" id="menuToggle">
+        <span id="menuText">MENU</span>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- Menu Overlay -->
+<div class="menu-overlay" id="menuOverlay">
+    <div class="menu-item">PROGRAMMATION</div>
+    <div class="menu-item">INFOS PRATIQUES</div>
+    <div class="menu-item">DEVENEZ MEMBRE</div>
+    <div class="menu-item">NEWS</div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="video-placeholder">
+        <div class="play-button"></div>
+    </div>
+</section>
+
+<!-- Sticky Member Button -->
+<div class="sticky-member">
+    DEVENEZ<br>MEMBRE
+</div>
+
+<!-- Main Image Section -->
+<section class="main-image-section">
+    <div class="countdown">
+        <h2>RENDEZ-VOUS DANS</h2>
+        <div class="countdown-timer">
+            <div class="countdown-item">
+                <span class="countdown-number">30</span>
+                <span class="countdown-label">JOURS</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number">05</span>
+                <span class="countdown-label">HEURES</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number">24</span>
+                <span class="countdown-label">MINUTES</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number">16</span>
+                <span class="countdown-label">SECONDES</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Program Section -->
+<section class="program-section">
+    <div class="program-card">
+        <div class="card-content">
+            <div class="card-date">11<br>JUILLET</div>
+            <div class="card-title">SONO MONDIALE</div>
+            <div class="card-genre">WORLD MUSIC</div>
+        </div>
+        <div class="card-image">
+            <img src="assets/images/perso1.png" alt="Program Card 3">
+        </div>
+        <div class="card-button-container">
+            <button class="card-button" onclick="window.location.href='programmation/sono-mondiale.html'">VOIR LA PROGRAMMATION</button>
+        </div>
+    </div>
+    <div class="program-card">
+        <div class="card-content">
+            <div class="card-date">12<br>JUILLET</div>
+            <div class="card-title">GROS MUSIC</div>
+            <div class="card-genre">ELECTRONIC</div>
+        </div>
+        <div class="card-image">
+            <img src="assets/images/perso2.png" alt="Program Card 3">
+        </div>
+        <div class="card-button-container">
+            <button class="card-button">VOIR LA PROGRAMMATION</button>
+        </div>
+    </div>
+    <div class="program-card">
+        <div class="card-content">
+            <div class="card-date">13<br>JUILLET</div>
+            <div class="card-title">TECHNO HARD</div>
+            <div class="card-genre">TECHNO</div>
+        </div>
+        <div class="card-image">
+            <img src="assets/images/perso3.png" alt="Program Card 3">
+        </div>
+        <div class="card-button-container">
+            <button class="card-button">VOIR LA PROGRAMMATION</button>
+        </div>
+    </div>
+    <div class="program-card">
+        <div class="card-content">
+            <div class="card-date">14<br>JUILLET</div>
+            <div class="card-title">HOUSE MUSIC</div>
+            <div class="card-genre">HOUSE</div>
+        </div>
+        <div class="card-image">
+            <img src="assets/images/perso4.png" alt="Program Card 3">
+        </div>
+        <div class="card-button-container">
+            <button class="card-button">VOIR LA PROGRAMMATION</button>
+        </div>
+    </div>
+</section>
+
+<!-- Action Buttons -->
+<section class="action-buttons">
+    <button class="action-btn secondary">PROGRAMMATION COMPLÈTE</button>
+    <button class="action-btn primary">GET YOUR PASS</button>
+</section>
+
+<!-- Map Section -->
+<section class="map-section">
+    <div class="map-container">
+        <h2 class="map-title">COMMENT VENIR ?</h2>
+        <iframe 
+            class="map-iframe"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.8234567890123!2d5.8834567890123456!3d43.10123456789012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c91b5b5b5b5b5b%3A0x5b5b5b5b5b5b5b5b!2sFort%20Napol%C3%A9on%2C%20La%20Seyne-sur-Mer!5e0!3m2!1sfr!2sfr!4v1234567890123"
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</section>
+
+<!-- Info Section -->
+<section class="info-section">
+    <div class="info-container">
+        <div class="info-block">
+            <h3>ACCÈS</h3>
+            <p><span class="highlight">LIEU :</span> LE BOIS DE VINCENNES</p>
+            <p>Plaine de la Belle Étoile<br>
+            Accès par la Route Dauphine via Espl. Saint Louis<br>
+            Bois de Vincennes, 75012 Paris</p>
+            
+            <p><span class="highlight">HORAIRES :</span> 6, 7 & 8 JUIN 2025</p>
+            <p>Vendredi : 17H – 1H<br>
+            Samedi : 14H – 1h<br>
+            Dimanche : 14H – 1H</p>
+            
+            <p><span class="highlight">DERNIERS MÉTROS :</span></p>
+            <p>Vendredi : métro 1 : Château de Vincennes vers PARIS : 1h39<br>
+            Samedi : métro 1 : Château de Vincennes vers PARIS : 1h39<br>
+            Dimanche : métro 1 : Château de Vincennes vers PARIS : 1h39</p>
+        </div>
+        <div class="info-block">
+            <h3>TRANSPORTS</h3>
+            <p><span class="highlight">MÉTRO</span> Ligne 1 — Château de Vincennes</p>
+            <p><span class="highlight">RER</span> A — Château de Vincennes</p>
+            <p><span class="highlight">BUS</span> Ligne 56 — Barbès, Gare de l'Est, République, Oberkampf,<br>
+            Nation, Château de Vincennes</p>
+            <p>Ligne 46 Et d'autres !</p>
+            
+            <p><span class="highlight">VÉLO</span></p>
+            <p>> Parking à vélo proposé par <a href="#" class="highlight">BOSCH EBIKE SYSTEMS</a></p>
+            <p>> Parking vélo gratuit, non gardienné à proximité</p>
+            
+            <p><span class="highlight">VÉLIB'</span> 5 stations sont à proximité : Bois de Vincennes, Polygone-<br>
+            Pyramide, Parc Floral-Tremblay, Lac des Minimes-Pyramide, École<br>
+            du Breuil.</p>
+            
+            <p><span class="highlight">STATION VÉLIB' GÉANTE ÉPHÉMÈRE</span> 600 places à l'entrée du festival<br>
+            (Esplanade Saint-Louis)</p>
+            
+            <p><span class="highlight">NOCTILIEN</span> Ligne N11 et N33</p>
+            <p>Pas de parking voiture à proximité.</p>
+        </div>
+        <div class="info-block">
+            <h3>PLUS D'INFOS</h3>
+            <p><a href="#">Plus d'informations ici !</a></p>
+        </div>
+    </div>
+</section>
+
+<!-- Social Bar -->
+<section class="social-bar">
+    <div class="social-container">
+        <div class="social-icons">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">@</a>
+            <a href="#" class="social-icon">♪</a>
+            <a href="#" class="social-icon">𝕏</a>
+        </div>
+        <div class="newsletter-signup">
+            <div class="newsletter-icon"></div>
+            <span>NEWSLETTER</span>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>INFOS PRATIQUES</h4>
+            <p>Découvrez toutes nos infos pratiques</p>
+        </div>
+        <div class="footer-section">
+            <h4>PARTENAIRES</h4>
+            <p>Découvrez nos partenaires</p>
+        </div>
+        <div class="footer-section">
+            <h4>NEWS</h4>
+            <p>News & bon plans</p>
+        </div>
+        <div class="footer-section">
+            <h4>DEVENEZ MEMBRE</h4>
+            <p>Des questions ? Des réponses</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Festival ANRF. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script>
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Page Load Animation
+    gsap.timeline()
+        .from('.navbar', { y: -100, opacity: 0, duration: 1, ease: 'power3.out' })
+        .from('.hero .play-button', { scale: 0, opacity: 0, duration: 0.8, ease: 'back.out(1.7)' }, '-=0.5')
+        .from('.sticky-member', { scale: 0, opacity: 0, duration: 0.8, ease: 'back.out(1.7)' }, '-=0.3');
+
+    // Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const hamburger = document.getElementById('hamburger');
+    const navbar = document.getElementById('navbar');
+    const menuText = document.getElementById('menuText');
+    const logo = document.getElementById('logo');
+
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        
+        if (menuOpen) {
+            // Open menu
+            navbar.classList.add('menu-open');
+            hamburger.classList.add('active');
+            menuOverlay.classList.add('active');
+            menuText.textContent = 'FERMER';
+            logo.src = "assets/logos/4nap-logo-gris.png";
+            
+            // Animate menu items
+            gsap.fromTo('.menu-item', 
+                { x: -50, opacity: 0 },
+                { x: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.3 }
+            );
+        } else {
+            // Close menu
+            navbar.classList.remove('menu-open');
+            hamburger.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            menuText.textContent = 'MENU';
+            logo.src = "assets/logos/4nap-logo-noir.png";
+            
+            gsap.to('.menu-item', { x: -50, opacity: 0, duration: 0.3, stagger: 0.05 });
+        }
+    });
+
+    // Real Countdown Timer
+    function updateCountdown() {
+        // Date du festival - vous pouvez modifier cette date
+        const festivalDate = new Date('2025-07-11T17:00:00').getTime();
+        const now = new Date().getTime();
+        const distance = festivalDate - now;
+
+        if (distance > 0) {
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.querySelector('.countdown-timer .countdown-item:nth-child(1) .countdown-number').textContent = days;
+            document.querySelector('.countdown-timer .countdown-item:nth-child(2) .countdown-number').textContent = hours;
+            document.querySelector('.countdown-timer .countdown-item:nth-child(3) .countdown-number').textContent = minutes;
+            document.querySelector('.countdown-timer .countdown-item:nth-child(4) .countdown-number').textContent = seconds;
+        }
+    }
+
+    // Mettre à jour le compteur toutes les secondes
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Appel initial
+
+    // Animation du compteur
+    gsap.to('.countdown-number', {
+        scrollTrigger: {
+            trigger: '.main-image-section',
+            start: 'top center',
+            end: 'bottom center',
+        },
+        scale: 1.1,
+        duration: 1,
+        ease: 'power2.inOut',
+        yoyo: true,
+        repeat: -1
+    });
+
+    // Program Cards - pas d'animation d'apparition
+
+    // Action Buttons Animation
+    gsap.fromTo('.action-btn', {
+        y: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.action-buttons',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out'
+    });
+
+    // Map Section Animation
+    gsap.fromTo('.map-iframe', {
+        y: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.map-section',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out'
+    });
+
+    // Info Blocks Animation
+    gsap.fromTo('.info-block', {
+        y: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.info-section',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out'
+    });
+
+    // Sticky Member Button Animation
+    gsap.to('.sticky-member', {
+        rotation: 360,
+        duration: 20,
+        ease: 'none',
+        repeat: -1
+    });
+
+    // Hover Effects for Program Cards
+    document.querySelectorAll('.program-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            gsap.to(card.querySelector('.card-content'), {
+                y: -10,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card.querySelector('.card-content'), {
+                y: 0,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+    });
+
+    // Parallax Effect for Hero
+    gsap.to('.hero .video-placeholder', {
+        scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1
+        },
+        y: '50%',
+        ease: 'none'
+    });
+
+    // Text Reveal Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    const textElements = document.querySelectorAll('h2, h3, h4');
+    textElements.forEach(element => {
+        gsap.fromTo(element, {
+            opacity: 0,
+            y: 30
+        }, {
+            scrollTrigger: {
+                trigger: element,
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out'
+        });
+    });
+</script>
+</body>
+</html> 

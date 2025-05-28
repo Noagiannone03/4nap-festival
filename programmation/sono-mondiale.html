@@ -120,7 +120,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.95);
+        background: rgba(0, 0, 0, 1);
         z-index: 999;
         display: flex;
         flex-direction: column;
@@ -155,15 +155,17 @@
     /* Hero Section */
     .hero-section {
         margin-top: 80px;
-        height: 100vh;
+        height: 90vh;
         display: flex;
         background: white;
     }
 
     .hero-image {
         flex: 1;
-        background: url('../assets/images/perso1.png') center/cover;
+        background: url('../assets/entetes/entete1.png') center/cover;
+        background-position: center center;
         position: relative;
+        min-height: 400px;
     }
 
     .hero-content {
@@ -171,7 +173,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 80px;
+        padding: 60px;
     }
 
     .hero-text {
@@ -180,7 +182,7 @@
     }
 
     .hero-title {
-        font-size: 4rem;
+        font-size: 3.5rem;
         font-weight: 800;
         color: #333;
         margin-bottom: 30px;
@@ -220,7 +222,7 @@
 
     /* Content Sections */
     .content-section {
-        padding: 100px 80px;
+        padding: 80px 80px;
         background: white;
         margin-bottom: 0;
     }
@@ -231,23 +233,74 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 80px;
-        align-items: center;
+        align-items: stretch;
+    }
+
+    .section-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 400px;
     }
 
     .section-text h2 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         font-weight: 800;
         color: #333;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
         font-family: 'Montserrat', sans-serif;
     }
 
-    .section-text p {
-        font-size: 1.1rem;
-        line-height: 1.8;
+    .section-time {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 25px;
         color: #666;
-        margin-bottom: 20px;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
+    .time-icon {
+        width: 18px;
+        height: 18px;
+        opacity: 0.7;
+    }
+
+    .section-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #666;
+        margin-bottom: 15px;
         font-weight: 500;
+        flex-grow: 1;
+    }
+
+    .discover-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #333;
+        text-decoration: underline;
+        font-weight: 700;
+        font-size: 1rem;
+        margin-top: auto;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .discover-more:hover {
+        color: #ff9a56;
+        transform: translateX(5px);
+    }
+
+    .discover-arrow {
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .discover-more:hover .discover-arrow {
+        transform: translateX(3px);
     }
 
     .section-image {
@@ -269,146 +322,199 @@
         border-radius: 10px;
     }
 
-    /* Image Separators */
+    /* Image Separators - Correction avec fallback */
     .image-separator {
         width: 100%;
         height: 40px;
-        background: url('../assets/pattern/Group\ 69.png') center/cover;
+        background: url('../assets/pattern/séparateur1.png') center/cover;
+        background-color: #e0e0e0; /* Fallback si l'image ne charge pas */
         margin: 0;
         position: relative;
         overflow: hidden;
+        border-top: 2px solid #ddd; /* Bordure visible en fallback */
+        border-bottom: 2px solid #ddd;
     }
 
     .image-separator:nth-child(even) {
-        background: url('../assets/pattern/Group\ 69.png') center/cover;
+        background: url('../assets/pattern/séparateur1.png') center/cover;
+        background-color: #f0f0f0; /* Fallback différent pour variation */
     }
 
-    .image-separator::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('../assets/pattern/Group\ 69.png') center/cover;
-    }
-
-
-
-    /* Social Bar */
-    .social-bar {
+    /* Nouveau Footer */
+    .footer {
         background: #e8e8e8;
-        padding: 30px 0;
+        color: #333;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        padding: 60px 80px 0 80px;
+        box-sizing: border-box;
     }
-
-    .social-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 40px;
+    .footer-top {
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 30px 60px;
+        border-top: 2px solid #222;
+        border-bottom: 2px solid #222;
+        min-height: 70px;
+        background: #e8e8e8;
+        margin-bottom: 0;
+        box-sizing: border-box;
     }
-
-    .social-icons {
+    .footer-socials {
         display: flex;
-        gap: 25px;
+        gap: 30px;
+        align-items: center;
     }
-
-    .social-icon {
-        width: 40px;
-        height: 40px;
-        background: #333;
-        color: white;
+    .footer-social-icon {
+        width: 32px;
+        height: 32px;
+        color: #000;
         display: flex;
         align-items: center;
         justify-content: center;
-        text-decoration: none;
+        border-radius: 50%;
         font-size: 18px;
-        font-weight: 700;
-        transition: all 0.3s ease;
+        text-decoration: none;
+        transition: background 0.2s;
+        overflow: hidden;
     }
-
-    .social-icon:hover {
+    .social-icon-img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+    .footer-social-icon:hover {
         background: #4CAF50;
-        transform: translateY(-2px);
     }
-
-    .newsletter-signup {
+    .footer-newsletter {
         display: flex;
         align-items: center;
-        gap: 15px;
-        font-family: 'Montserrat', sans-serif;
+        gap: 12px;
         font-weight: 700;
-        font-size: 14px;
+        font-size: 16px;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-
-    .newsletter-icon {
+    .footer-newsletter-icon-img {
         width: 24px;
         height: 24px;
-        background: #333;
+        object-fit: contain;
+        filter: brightness(0);
     }
-
-    /* Footer */
-    .footer {
-        background: #e8e8e8;
-        padding: 40px 0;
-        color: #333;
-    }
-
-    .footer-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 40px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 2fr 1fr;
-        gap: 80px;
-        margin-bottom: 40px;
-    }
-
-    .footer-section h4 {
-        font-size: 1.2rem;
-        font-weight: 800;
-        margin-bottom: 20px;
-        font-family: 'Montserrat', sans-serif;
-        text-transform: uppercase;
-        color: #333;
-    }
-
-    .footer-section p {
-        color: #333;
-        line-height: 1.6;
-        margin-bottom: 15px;
-        font-size: 14px;
-        font-weight: 500;
-        font-family: 'Montserrat', sans-serif;
-    }
-
-    .footer-section a {
-        color: #333;
-        text-decoration: none;
-        line-height: 1.6;
-        margin-bottom: 10px;
-        display: block;
-        font-size: 14px;
-        font-weight: 500;
-        font-family: 'Montserrat', sans-serif;
-    }
-
-    .footer-section a:hover {
-        color: #4CAF50;
-    }
-
     .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 60px 60px 30px 60px;
+        gap: 60px;
+        background: #e8e8e8;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .footer-col {
+        flex: 1 1 0;
+        min-width: 200px;
+        max-width: 350px;
+    }
+    .footer-col-center {
         text-align: center;
-        padding-top: 40px;
-        border-top: 1px solid #ccc;
+    }
+    .footer-col-right {
+        text-align: right;
+    }
+    .footer-member-section {
         margin-top: 40px;
-        color: #666;
-        font-family: 'Montserrat', sans-serif;
+        padding-top: 30px;
+        border-top: 1px solid #ccc;
+    }
+    .footer-member-section h4 {
+        font-size: 1.3rem;
+        font-weight: 900;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #222;
+    }
+    .footer-member-section p {
+        color: #333;
+        font-size: 15px;
         font-weight: 500;
+        margin-bottom: 0;
+    }
+    .footer-col h4 {
+        font-size: 1.3rem;
+        font-weight: 900;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #222;
+    }
+    .footer-col p {
+        color: #333;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    .footer-copyright {
+        text-align: center;
+        padding: 30px 0 20px 0;
+        color: #666;
+        font-size: 14px;
+        border-top: 1px solid #ccc;
+        background: #e8e8e8;
+        margin: 0 60px;
+    }
+
+    /* Suppression de l'ancien social-bar et footer */
+    .social-bar { display: none !important; }
+
+    /* Responsive Footer */
+    @media (max-width: 900px) {
+        .footer {
+            padding: 40px 30px 0 30px;
+        }
+        .footer-top, .footer-bottom {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .footer-bottom {
+            flex-direction: column;
+            gap: 30px;
+            align-items: stretch;
+        }
+        .footer-col-center, .footer-col-right {
+            text-align: left;
+        }
+        .footer-copyright {
+            margin: 0 30px;
+        }
+    }
+    @media (max-width: 600px) {
+        .footer {
+            padding: 20px 15px 0 15px;
+        }
+        .footer-top, .footer-bottom {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .footer-top {
+            flex-direction: column;
+            gap: 15px;
+            min-height: 0;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-top: 20px;
+        }
+        .footer-bottom {
+            padding-top: 30px;
+            padding-bottom: 10px;
+        }
+        .footer-copyright {
+            margin: 0 15px;
+        }
     }
 
     /* Responsive */
@@ -443,6 +549,41 @@
             font-size: 2.5rem;
         }
     }
+
+    /* Sticky Member Button */
+    .sticky-member {
+        position: fixed;
+        bottom: -20px;
+        right: -20px;
+        width: 150px;
+        height: 150px;
+        background: #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        z-index: 900;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+    }
+
+    .sticky-member:hover {
+        animation: epileptic-effect 0.50s infinite;
+    }
+
+    @keyframes epileptic-effect {
+        0% { background: #000; color: white; }
+        25% { background: #ff0000; color: black; }
+        50% { background: #00ff00; color: white; }
+        75% { background: #0000ff; color: yellow; }
+        100% { background: #ffff00; color: black; }
+    }
 </style>
 </head>
 <body>
@@ -458,6 +599,11 @@
         </div>
     </div>
 </nav>
+
+<!-- Sticky Member Button -->
+<div class="sticky-member">
+    DEVENIR<br>MEMBRE
+</div>
 
 <!-- Menu Overlay -->
 <div class="menu-overlay" id="menuOverlay">
@@ -492,6 +638,10 @@
     <div class="section-container">
         <div class="section-text">
             <h2>L'EXPÉRIENCE SONO MONDIALE</h2>
+            <div class="section-time">
+                <img src="../assets/pictos/ic_baseline-access-time.png" alt="Time" class="time-icon">
+                <span>19:00 - 22:00</span>
+            </div>
             <p>
                 Plongez dans un univers sonore où se mélangent les traditions musicales du monde entier. 
                 Cette soirée unique vous propose un voyage musical à travers les continents, 
@@ -502,6 +652,10 @@
                 latino-américaines et les harmonies européennes, chaque performance vous 
                 transportera dans une nouvelle culture musicale.
             </p>
+            <a href="#" class="discover-more">
+                <span>Découvrir plus</span>
+                <img src="../assets/pictos/ic_baseline-arrow-right.png" alt="Arrow" class="discover-arrow">
+            </a>
         </div>
         <div class="section-image">
             <img src="../assets/images/dezze.png" alt="World Music" />
@@ -520,6 +674,10 @@
         </div>
         <div class="section-text">
             <h2>INSTRUMENTS TRADITIONNELS</h2>
+            <div class="section-time">
+                <img src="../assets/pictos/ic_baseline-access-time.png" alt="Time" class="time-icon">
+                <span>19:00 - 22:00</span>
+            </div>
             <p>
                 Découvrez une collection exceptionnelle d'instruments traditionnels du monde entier. 
                 Chaque artiste apporte avec lui les sonorités authentiques de sa culture, 
@@ -530,6 +688,10 @@
                 les percussions caribéennes, chaque instrument raconte une histoire 
                 et porte en lui l'âme d'un peuple.
             </p>
+            <a href="#" class="discover-more">
+                <span>Découvrir plus</span>
+                <img src="../assets/pictos/ic_baseline-arrow-right.png" alt="Arrow" class="discover-arrow">
+            </a>
         </div>
     </div>
 </section>
@@ -542,6 +704,10 @@
     <div class="section-container">
         <div class="section-text">
             <h2>FUSION CULTURELLE</h2>
+            <div class="section-time">
+                <img src="../assets/pictos/ic_baseline-access-time.png" alt="Time" class="time-icon">
+                <span>19:00 - 22:00</span>
+            </div>
             <p>
                 La magie de Sono Mondiale réside dans la rencontre entre les cultures. 
                 Les artistes ne se contentent pas de présenter leur tradition musicale, 
@@ -552,6 +718,10 @@
                 uniques, où les frontières s'effacent pour laisser place à l'universalité 
                 de la musique et à la beauté de la diversité culturelle.
             </p>
+            <a href="#" class="discover-more">
+                <span>Découvrir plus</span>
+                <img src="../assets/pictos/ic_baseline-arrow-right.png" alt="Arrow" class="discover-arrow">
+            </a>
         </div>
         <div class="section-image">
             <img src="../assets/images/dezze.png" alt="Cultural Fusion" />
@@ -559,46 +729,48 @@
     </div>
 </section>
 
-
-
-<!-- Social Bar -->
-<section class="social-bar">
-    <div class="social-container">
-        <div class="social-icons">
-            <a href="#" class="social-icon">f</a>
-            <a href="#" class="social-icon">@</a>
-            <a href="#" class="social-icon">♪</a>
-            <a href="#" class="social-icon">𝕏</a>
-        </div>
-        <div class="newsletter-signup">
-            <div class="newsletter-icon"></div>
-            <span>NEWSLETTER</span>
-        </div>
-    </div>
-</section>
-
 <!-- Footer -->
 <footer class="footer">
-    <div class="footer-container">
-        <div class="footer-section">
-            <h4>INFOS PRATIQUES</h4>
-            <p>Découvrez toutes nos infos pratiques</p>
+    <div class="footer-top">
+        <div class="footer-socials">
+            <a href="#" class="footer-social-icon">
+                <img src="../assets/pictos/fe_facebook.png" alt="Facebook" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="../assets/pictos/mdi_instagram.png" alt="Instagram" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="../assets/pictos/ic_baseline-tiktok.png" alt="TikTok" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="../assets/pictos/prime_twitter.png" alt="Twitter" class="social-icon-img">
+            </a>
         </div>
-        <div class="footer-section">
-            <h4>PARTENAIRES</h4>
-            <p>Découvrez nos partenaires</p>
-        </div>
-        <div class="footer-section">
-            <h4>NEWS</h4>
-            <p>News & bon plans</p>
-        </div>
-        <div class="footer-section">
-            <h4>DEVENEZ MEMBRE</h4>
-            <p>Des questions ? Des réponses</p>
+        <div class="footer-newsletter">
+            <img src="../assets/pictos/Vector(2).png" alt="Email" class="footer-newsletter-icon-img">
+            <span class="footer-newsletter-text">NEWSLETTER</span>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2024 Festival ANRF. Tous droits réservés.</p>
+        <div class="footer-col footer-col-left">
+            <h4>INFOS PRATIQUES</h4>
+            <p>Découvrez toutes nos infos pratiques</p>
+        </div>
+        <div class="footer-col footer-col-center">
+            <h4>PARTENAIRES</h4>
+            <p>Découvrez nos partenaires</p>
+            <div class="footer-member-section">
+                <h4>DEVENEZ MEMBRE</h4>
+                <p>Des questions ? Des réponses</p>
+            </div>
+        </div>
+        <div class="footer-col footer-col-right">
+            <h4>NEWS</h4>
+            <p>News & bon plans</p>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>&copy; 2025 NO/*ID. Tous droits réservés.</p>
     </div>
 </footer>
 

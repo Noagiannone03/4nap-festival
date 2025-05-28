@@ -120,7 +120,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.95);
+        background: rgba(0, 0, 0, 1);
         z-index: 999;
         display: flex;
         flex-direction: column;
@@ -212,33 +212,41 @@
     /* Sticky Member Button */
     .sticky-member {
         position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 120px;
-        height: 120px;
+        bottom: -20px; /* Collé au bord avec dépassement */
+        right: -20px; /* Collé au bord avec dépassement */
+        width: 150px; /* Plus gros */
+        height: 150px; /* Plus gros */
         background: #000;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 12px;
-        font-weight: 500;
+        font-size: 14px;
+        font-weight: 600;
         text-align: center;
         cursor: pointer;
         z-index: 900;
         transition: all 0.3s ease;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        overflow: hidden; /* Pour le crop */
     }
 
     .sticky-member:hover {
-        transform: scale(1.05);
-        background: #333;
+        animation: epileptic-effect 0.50s infinite;
+    }
+
+    @keyframes epileptic-effect {
+        0% { background: #000; color: white; }
+        25% { background: #ff0000; color: black; }
+        50% { background: #00ff00; color: white; }
+        75% { background: #0000ff; color: yellow; }
+        100% { background: #ffff00; color: black; }
     }
 
     /* Main Image Section */
     .main-image-section {
-        height: 80vh;
+        height: 90vh;
         background: url('assets/images/fortnap.jpeg') center/cover;
         display: flex;
         align-items: center;
@@ -302,6 +310,7 @@
         margin: 0 -30px;
         display: flex;
         flex-direction: column;
+        z-index: 1;
     }
 
     .program-card:first-child {
@@ -397,14 +406,16 @@
         transform: skewX(5deg);
         opacity: 0;
         transition: all 0.4s ease 0.3s;
-        z-index: 2;
+        z-index: 20;
         display: flex;
         justify-content: center;
+        pointer-events: none;
     }
 
     .program-card:hover .card-button-container {
         opacity: 1;
         left: 40px;
+        pointer-events: auto;
     }
 
     .card-button {
@@ -422,6 +433,9 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
         min-width: 250px;
+        position: relative;
+        z-index: 25;
+        pointer-events: auto;
     }
 
     .card-button:hover {
@@ -452,6 +466,11 @@
         font-family: 'Montserrat', sans-serif;
         width: 300px;
         text-align: center;
+        display: inline-block;
+        text-decoration: none;
+        line-height: 1.2;
+        position: relative;
+        z-index: 10;
     }
 
     .action-btn.primary {
@@ -468,6 +487,11 @@
     .action-btn:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-btn:focus {
+        outline: 2px solid #4CAF50;
+        outline-offset: 2px;
     }
 
     /* Map Section */
@@ -559,13 +583,13 @@
     /* Social Bar */
     .social-bar {
         background: #e8e8e8;
-        padding: 30px 0;
+        padding: 15px 0; /* Réduit de 30px à 15px */
     }
 
     .social-container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 0 40px;
+        padding: 0 20px; /* Réduit de 40px à 20px */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -573,19 +597,19 @@
 
     .social-icons {
         display: flex;
-        gap: 25px;
+        gap: 15px; /* Réduit de 25px à 15px */
     }
 
     .social-icon {
-        width: 40px;
-        height: 40px;
+        width: 35px; /* Réduit de 40px à 35px */
+        height: 35px; /* Réduit de 40px à 35px */
         background: #333;
         color: white;
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        font-size: 18px;
+        font-size: 16px; /* Réduit de 18px à 16px */
         font-weight: 700;
         transition: all 0.3s ease;
     }
@@ -598,7 +622,7 @@
     .newsletter-signup {
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 10px; /* Réduit de 15px à 10px */
         font-family: 'Montserrat', sans-serif;
         font-weight: 700;
         font-size: 14px;
@@ -607,70 +631,185 @@
     }
 
     .newsletter-icon {
-        width: 24px;
-        height: 24px;
+        width: 20px; /* Réduit de 24px à 20px */
+        height: 20px; /* Réduit de 24px à 20px */
         background: #333;
     }
 
-    /* Footer */
+    /* Nouveau Footer */
     .footer {
         background: #e8e8e8;
-        padding: 40px 0;
         color: #333;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        padding: 60px 80px 0 80px;
+        box-sizing: border-box;
     }
-
-    .footer-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 40px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 2fr 1fr;
-        gap: 80px;
-        margin-bottom: 40px;
+    .footer-top {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 60px;
+        border-top: 2px solid #222;
+        border-bottom: 2px solid #222;
+        min-height: 70px;
+        background: #e8e8e8;
+        margin-bottom: 0;
+        box-sizing: border-box;
     }
-
-    .footer-section h4 {
-        font-size: 1.2rem;
-        font-weight: 800;
-        margin-bottom: 20px;
-        font-family: 'Montserrat', sans-serif;
-        text-transform: uppercase;
-        color: #333;
+    .footer-socials {
+        display: flex;
+        gap: 30px;
+        align-items: center;
     }
-
-    .footer-section p {
-        color: #333;
-        line-height: 1.6;
-        margin-bottom: 15px;
-        font-size: 14px;
-        font-weight: 500;
-        font-family: 'Montserrat', sans-serif;
-    }
-
-    .footer-section a {
-        color: #333;
+    .footer-social-icon {
+        width: 32px;
+        height: 32px;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 18px;
         text-decoration: none;
-        line-height: 1.6;
-        margin-bottom: 10px;
-        display: block;
-        font-size: 14px;
-        font-weight: 500;
-        font-family: 'Montserrat', sans-serif;
+        transition: background 0.2s;
+        overflow: hidden;
     }
-
-    .footer-section a:hover {
-        color: #4CAF50;
+    .social-icon-img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+      
     }
-
+    .footer-social-icon:hover {
+        background: #4CAF50;
+    }
+    .footer-newsletter {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .footer-newsletter-icon-img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        filter: brightness(0);
+    }
     .footer-bottom {
-        text-align: center;
-        padding-top: 40px;
-        border-top: 1px solid #ccc;
-        margin-top: 40px;
-        color: #666;
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 60px 60px 30px 60px;
+        gap: 60px;
+        background: #e8e8e8;
+        width: 100%;
+        box-sizing: border-box;
     }
+    .footer-col {
+        flex: 1 1 0;
+        min-width: 200px;
+        max-width: 350px;
+    }
+    .footer-col-center {
+        text-align: center;
+    }
+    .footer-col-right {
+        text-align: right;
+    }
+    .footer-member-section {
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px solid #ccc;
+    }
+    .footer-member-section h4 {
+        font-size: 1.3rem;
+        font-weight: 900;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #222;
+    }
+    .footer-member-section p {
+        color: #333;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    .footer-col h4 {
+        font-size: 1.3rem;
+        font-weight: 900;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #222;
+    }
+    .footer-col p {
+        color: #333;
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+    .footer-copyright {
+        text-align: center;
+        padding: 30px 0 20px 0;
+        color: #666;
+        font-size: 14px;
+        border-top: 1px solid #ccc;
+        background: #e8e8e8;
+        margin: 0 60px;
+    }
+    @media (max-width: 900px) {
+        .footer {
+            padding: 40px 30px 0 30px;
+        }
+        .footer-top, .footer-bottom {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .footer-bottom {
+            flex-direction: column;
+            gap: 30px;
+            align-items: stretch;
+        }
+        .footer-col-center, .footer-col-right {
+            text-align: left;
+        }
+        .footer-copyright {
+            margin: 0 30px;
+        }
+    }
+    @media (max-width: 600px) {
+        .footer {
+            padding: 20px 15px 0 15px;
+        }
+        .footer-top, .footer-bottom {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .footer-top {
+            flex-direction: column;
+            gap: 15px;
+            min-height: 0;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-top: 20px;
+        }
+        .footer-bottom {
+            padding-top: 30px;
+            padding-bottom: 10px;
+        }
+        .footer-copyright {
+            margin: 0 15px;
+        }
+    }
+    /* Suppression de l'ancien footer-container et footer-section */
+    .footer-container, .footer-section { display: none !important; }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -788,7 +927,7 @@
             <img src="assets/images/perso2.png" alt="Program Card 3">
         </div>
         <div class="card-button-container">
-            <button class="card-button">VOIR LA PROGRAMMATION</button>
+            <button class="card-button" onclick="alert('Page Gros Music en construction')">VOIR LA PROGRAMMATION</button>
         </div>
     </div>
     <div class="program-card">
@@ -801,7 +940,7 @@
             <img src="assets/images/perso3.png" alt="Program Card 3">
         </div>
         <div class="card-button-container">
-            <button class="card-button">VOIR LA PROGRAMMATION</button>
+            <button class="card-button" onclick="alert('Page Techno Hard en construction')">VOIR LA PROGRAMMATION</button>
         </div>
     </div>
     <div class="program-card">
@@ -814,7 +953,7 @@
             <img src="assets/images/perso4.png" alt="Program Card 3">
         </div>
         <div class="card-button-container">
-            <button class="card-button">VOIR LA PROGRAMMATION</button>
+            <button class="card-button" onclick="alert('Page House Music en construction')">VOIR LA PROGRAMMATION</button>
         </div>
     </div>
 </section>
@@ -888,44 +1027,48 @@
     </div>
 </section>
 
-<!-- Social Bar -->
-<section class="social-bar">
-    <div class="social-container">
-        <div class="social-icons">
-            <a href="#" class="social-icon">f</a>
-            <a href="#" class="social-icon">@</a>
-            <a href="#" class="social-icon">♪</a>
-            <a href="#" class="social-icon">𝕏</a>
-        </div>
-        <div class="newsletter-signup">
-            <div class="newsletter-icon"></div>
-            <span>NEWSLETTER</span>
-        </div>
-    </div>
-</section>
-
 <!-- Footer -->
 <footer class="footer">
-    <div class="footer-container">
-        <div class="footer-section">
-            <h4>INFOS PRATIQUES</h4>
-            <p>Découvrez toutes nos infos pratiques</p>
+    <div class="footer-top">
+        <div class="footer-socials">
+            <a href="#" class="footer-social-icon">
+                <img src="assets/pictos/fe_facebook.png" alt="Facebook" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="assets/pictos/mdi_instagram.png" alt="Instagram" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="assets/pictos/ic_baseline-tiktok.png" alt="TikTok" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="assets/pictos/prime_twitter.png" alt="Twitter" class="social-icon-img">
+            </a>
         </div>
-        <div class="footer-section">
-            <h4>PARTENAIRES</h4>
-            <p>Découvrez nos partenaires</p>
-        </div>
-        <div class="footer-section">
-            <h4>NEWS</h4>
-            <p>News & bon plans</p>
-        </div>
-        <div class="footer-section">
-            <h4>DEVENEZ MEMBRE</h4>
-            <p>Des questions ? Des réponses</p>
+        <div class="footer-newsletter">
+            <img src="assets/pictos/Vector(2).png" alt="Email" class="footer-newsletter-icon-img">
+            <span class="footer-newsletter-text">NEWSLETTER</span>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2024 Festival ANRF. Tous droits réservés.</p>
+        <div class="footer-col footer-col-left">
+            <h4>INFOS PRATIQUES</h4>
+            <p>Découvrez toutes nos infos pratiques</p>
+        </div>
+        <div class="footer-col footer-col-center">
+            <h4>PARTENAIRES</h4>
+            <p>Découvrez nos partenaires</p>
+            <div class="footer-member-section">
+                <h4>DEVENEZ MEMBRE</h4>
+                <p>Des questions ? Des réponses</p>
+            </div>
+        </div>
+        <div class="footer-col footer-col-right">
+            <h4>NEWS</h4>
+            <p>News & bon plans</p>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>&copy; 2025 NO/*ID. Tous droits réservés.</p>
     </div>
 </footer>
 
@@ -936,8 +1079,7 @@
     // Page Load Animation
     gsap.timeline()
         .from('.navbar', { y: -100, opacity: 0, duration: 1, ease: 'power3.out' })
-        .from('.hero .play-button', { scale: 0, opacity: 0, duration: 0.8, ease: 'back.out(1.7)' }, '-=0.5')
-        .from('.sticky-member', { scale: 0, opacity: 0, duration: 0.8, ease: 'back.out(1.7)' }, '-=0.3');
+        .from('.hero .play-button', { scale: 0, opacity: 0, duration: 0.8, ease: 'back.out(1.7)' }, '-=0.5');
 
     // Menu Toggle
     const menuToggle = document.getElementById('menuToggle');
@@ -1065,14 +1207,6 @@
         duration: 0.8,
         stagger: 0.2,
         ease: 'power3.out'
-    });
-
-    // Sticky Member Button Animation
-    gsap.to('.sticky-member', {
-        rotation: 360,
-        duration: 20,
-        ease: 'none',
-        repeat: -1
     });
 
     // Hover Effects for Program Cards

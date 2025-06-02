@@ -584,6 +584,56 @@
         75% { background: #0000ff; color: yellow; }
         100% { background: #ffff00; color: black; }
     }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 80px 0;
+        background: #ffffff;
+    }
+
+    .action-btn {
+        padding: 20px 40px;
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: 'Montserrat', sans-serif;
+        width: 300px;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
+        line-height: 1.2;
+        position: relative;
+        z-index: 10;
+    }
+
+    .action-btn.primary {
+        background: #000;
+        color: white;
+    }
+
+    .action-btn.secondary {
+        background: white;
+        color: #000;
+        border: 2px solid #000;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-btn:focus {
+        outline: 2px solid #4CAF50;
+        outline-offset: 2px;
+    }
 </style>
 </head>
 <body>
@@ -630,8 +680,6 @@
         </div>
     </div>
 </section>
-
-
 
 <!-- Content Section 1 -->
 <section class="content-section">
@@ -727,6 +775,12 @@
             <img src="../assets/images/dezze.png" alt="Cultural Fusion" />
         </div>
     </div>
+</section>
+
+<!-- Action Buttons -->
+<section class="action-buttons">
+    <button class="action-btn secondary">PROGRAMMATION COMPLÈTE</button>
+    <button class="action-btn primary">GET YOUR PASS</button>
 </section>
 
 <!-- Footer -->
@@ -852,8 +906,6 @@
         transformOrigin: 'left center'
     });
 
-
-
     // Section Text Animation
     gsap.fromTo('.section-text h2', {
         y: 30,
@@ -912,6 +964,23 @@
         },
         y: '-20%',
         ease: 'none'
+    });
+
+    // Action Buttons Animation
+    gsap.fromTo('.action-btn', {
+        y: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.action-buttons',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out'
     });
 </script>
 </body>

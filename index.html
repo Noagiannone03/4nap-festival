@@ -299,6 +299,10 @@
         width: 100vw;
     }
 
+    .program-cards-grid {
+        display: none; /* Masqué sur desktop */
+    }
+
     .program-card {
         flex: 1;
         position: relative;
@@ -813,33 +817,488 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-        .program-section {
-            flex-direction: column;
-            min-height: auto;
+        /* Navbar Mobile */
+        .navbar {
+            padding: 0 15px;
+            height: 60px;
         }
 
-        .program-card {
-            height: 300px;
-            transform: none;
-            margin: 10px 0;
+        .navbar::after {
+            left: 15px;
+            right: 15px;
         }
 
-        .card-content {
-            transform: none;
+        .logo {
+            height: 50px;
+            margin-left: 5px;
         }
 
-        .countdown-timer {
-            flex-direction: column;
-            gap: 20px;
+        .logo img {
+            height: 100%;
+        }
+
+        #menuText {
+            display: none;
+        }
+
+        .hamburger {
+            margin-left: 0;
+            width: 28px;
+            height: 22px;
+        }
+
+        .hamburger span {
+            height: 3px;
         }
 
         .menu-overlay {
-            padding-left: 40px;
+            padding-left: 30px;
         }
 
         .menu-item {
+            font-size: 2rem;
+            margin: 12px 0;
+        }
+
+        /* Hero Section Mobile */
+        .hero {
+            height: 70vh;
+        }
+
+        .play-button {
+            width: 60px;
+            height: 60px;
+        }
+
+        .play-button::after {
+            border-left: 15px solid white;
+            border-top: 9px solid transparent;
+            border-bottom: 9px solid transparent;
+        }
+
+        /* Main Image Section (Countdown) Mobile */
+        .main-image-section {
+            height: 60vh;
+            padding: 0 20px;
+        }
+
+        .countdown h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .countdown-timer {
+            flex-direction: row;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .countdown-item {
+            flex: 1;
+            min-width: 70px;
+        }
+
+        .countdown-number {
             font-size: 2.5rem;
         }
+
+        .countdown-label {
+            font-size: 0.9rem;
+        }
+
+        /* Program Section Mobile - Grille 2x2 */
+        .program-section {
+            flex-direction: column;
+            min-height: auto;
+            padding: 0;
+            background: #f5f5f5;
+            position: relative;
+            display: block;
+        }
+
+        .program-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 0;
+            padding: 40px 0;
+            position: relative;
+            min-height: 80vh;
+        }
+
+        /* Masquer les cartes desktop sur mobile */
+        .program-section > .program-card {
+            display: none;
+        }
+
+        /* Styles pour les cartes dans la grille mobile */
+        .program-cards-grid .program-card {
+            height: 380px;
+            transform: none;
+            margin: 0;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .program-cards-grid .program-card:hover {
+            flex: none;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .program-cards-grid .card-content {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            transform: none;
+            z-index: 5;
+            text-align: center;
+            padding: 0 15px;
+        }
+
+        .program-cards-grid .card-date {
+            font-size: 1.6rem;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .program-cards-grid .card-title {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .program-cards-grid .card-genre {
+            font-size: 0.85rem;
+            margin-bottom: 0;
+        }
+
+        .program-cards-grid .card-image {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65%;
+            transform: none;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .program-cards-grid .card-image img {
+            transform: none;
+            width: 80%;
+            height: 90%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .program-cards-grid .card-button-container {
+            display: none;
+        }
+
+        /* Image centrale dans la grille */
+        .center-logo {
+            display: none; /* Masqué sur desktop */
+        }
+
+        /* Action Buttons Mobile */
+        .action-buttons {
+            padding: 40px 20px 60px 20px;
+        }
+
+        .action-btn {
+            width: 100%;
+            max-width: none;
+            padding: 18px 30px;
+            font-size: 14px;
+        }
+
+        /* Map Section Mobile */
+        .map-section {
+            padding: 60px 0 0;
+        }
+
+        .map-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .map-iframe {
+            height: 300px;
+        }
+
+        /* Info Section Mobile - Style FAQ */
+        .info-section {
+            padding: 60px 0;
+        }
+
+        .info-container {
+            max-width: none;
+            padding: 0 20px;
+            display: block;
+            gap: 0;
+        }
+
+        .info-block {
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 0;
+        }
+
+        .info-block:last-child {
+            border-bottom: none;
+        }
+
+        .info-block h3 {
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 20px 0;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-block h3::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        .info-block.active h3::after {
+            transform: rotate(45deg);
+        }
+
+        .info-block-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0;
+        }
+
+        .info-block.active .info-block-content {
+            max-height: 1000px;
+            padding-bottom: 20px;
+        }
+
+        .info-block p {
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        /* Footer Mobile - Style Accordion */
+        .footer {
+            padding: 40px 20px 0 20px;
+        }
+
+        .footer-top {
+            padding: 20px 0;
+            flex-direction: column;
+            gap: 20px;
+            min-height: auto;
+        }
+
+        .footer-socials {
+            gap: 20px;
+        }
+
+        .footer-bottom {
+            padding: 40px 0 20px 0;
+            flex-direction: column;
+            gap: 0;
+            align-items: stretch;
+        }
+
+        .footer-col {
+            border-bottom: 1px solid #ccc;
+            min-width: auto;
+            max-width: none;
+        }
+
+        .footer-col:last-child {
+            border-bottom: none;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 20px 0;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-col h4::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-col.active h4::after {
+            transform: rotate(45deg);
+        }
+
+        .footer-col-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0;
+        }
+
+        .footer-col.active .footer-col-content {
+            max-height: 500px;
+            padding-bottom: 20px;
+        }
+
+        .footer-col p {
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .footer-member-section {
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .footer-member-section h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            padding: 0;
+            cursor: default;
+            justify-content: flex-start;
+        }
+
+        .footer-member-section h4::after {
+            display: none;
+        }
+
+        .footer-copyright {
+            margin: 0;
+            padding: 20px 0 15px 0;
+            font-size: 12px;
+        }
+
+        /* Sticky Member Button Mobile */
+        .sticky-member {
+            width: 100px;
+            height: 100px;
+            bottom: -15px;
+            right: -15px;
+            font-size: 11px;
+        }
+    }
+
+    /* Très petit mobile */
+    @media (max-width: 480px) {
+        .navbar {
+            padding: 0 10px;
+        }
+
+        .navbar::after {
+            left: 10px;
+            right: 10px;
+        }
+
+        .logo {
+            height: 45px;
+            margin-left: 2px;
+        }
+
+        .hamburger {
+            width: 26px;
+            height: 20px;
+        }
+
+        .menu-overlay {
+            padding-left: 20px;
+        }
+
+        .menu-item {
+            font-size: 1.8rem;
+            margin: 10px 0;
+        }
+
+        .countdown-timer {
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .countdown-item {
+            min-width: auto;
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+        }
+
+        .program-cards-grid {
+        padding: 0%;
+            gap: 1px;
+        }
+
+        .program-cards-grid .program-card {
+            height: 340px;
+            border-radius: 0;
+        }
+
+        .center-logo {
+            width: 60px;
+            height: 60px;
+        }
+
+        .center-logo img {
+            width: 35px;
+            height: 35px;
+        }
+
+        .program-cards-grid .card-date {
+            font-size: 1.1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .program-cards-grid .card-title {
+            font-size: 0.8rem;
+        }
+
+        .program-cards-grid .card-genre {
+            font-size: 0.75rem;
+        }
+
+        .program-cards-grid .card-image {
+            padding: 3px;
+            height: 75%;
+        }
+
+        .program-cards-grid .card-image img {
+            width: 75%;
+            height: 85%;
+        }
+    }
+
+    /* Desktop: garder le contenu des blocs visible */
+    .info-block-content {
+        display: block;
+    }
+
+    .footer-col-content {
+        display: block;
     }
 </style>
 </head>
@@ -904,6 +1363,7 @@
 
 <!-- Program Section -->
 <section class="program-section">
+    <!-- Cartes Desktop (version biais) -->
     <div class="program-card">
         <div class="card-content">
             <div class="card-date">11<br>JUILLET</div>
@@ -911,7 +1371,7 @@
             <div class="card-genre">WORLD MUSIC</div>
         </div>
         <div class="card-image">
-            <img src="assets/images/perso1.png" alt="Program Card 3">
+            <img src="assets/images/perso1.png" alt="Program Card 1">
         </div>
         <div class="card-button-container">
             <button class="card-button" onclick="window.location.href='programmation/sono-mondiale.html'">VOIR LA PROGRAMMATION</button>
@@ -924,7 +1384,7 @@
             <div class="card-genre">ELECTRONIC</div>
         </div>
         <div class="card-image">
-            <img src="assets/images/perso2.png" alt="Program Card 3">
+            <img src="assets/images/perso2.png" alt="Program Card 2">
         </div>
         <div class="card-button-container">
             <button class="card-button" onclick="alert('Page Gros Music en construction')">VOIR LA PROGRAMMATION</button>
@@ -950,10 +1410,65 @@
             <div class="card-genre">HOUSE</div>
         </div>
         <div class="card-image">
-            <img src="assets/images/perso4.png" alt="Program Card 3">
+            <img src="assets/images/perso4.png" alt="Program Card 4">
         </div>
         <div class="card-button-container">
             <button class="card-button" onclick="alert('Page House Music en construction')">VOIR LA PROGRAMMATION</button>
+        </div>
+    </div>
+
+    <!-- Grille Mobile (masquée sur desktop) -->
+    <div class="program-cards-grid">
+        <div class="program-card">
+            <div class="card-content">
+                <div class="card-date">11<br>JUILLET</div>
+                <div class="card-title">SONO MONDIALE</div>
+            </div>
+            <div class="card-image">
+                <img src="assets/images/perso1.png" alt="Program Card 1">
+            </div>
+            <div class="card-button-container">
+                <button class="card-button" onclick="window.location.href='programmation/sono-mondiale.html'">VOIR LA PROGRAMMATION</button>
+            </div>
+        </div>
+        <div class="program-card">
+            <div class="card-content">
+                <div class="card-date">12<br>JUILLET</div>
+                <div class="card-title">GROS MUSIC</div>
+            </div>
+            <div class="card-image">
+                <img src="assets/images/perso2.png" alt="Program Card 2">
+            </div>
+            <div class="card-button-container">
+                <button class="card-button" onclick="alert('Page Gros Music en construction')">VOIR LA PROGRAMMATION</button>
+            </div>
+        </div>
+        <div class="program-card">
+            <div class="card-content">
+                <div class="card-date">13<br>JUILLET</div>
+                <div class="card-title">TECHNO HARD</div>
+            </div>
+            <div class="card-image">
+                <img src="assets/images/perso3.png" alt="Program Card 3">
+            </div>
+            <div class="card-button-container">
+                <button class="card-button" onclick="alert('Page Techno Hard en construction')">VOIR LA PROGRAMMATION</button>
+            </div>
+        </div>
+        <div class="program-card">
+            <div class="card-content">
+                <div class="card-date">14<br>JUILLET</div>
+                <div class="card-title">HOUSE MUSIC</div>
+            </div>
+            <div class="card-image">
+                <img src="assets/images/perso4.png" alt="Program Card 4">
+            </div>
+            <div class="card-button-container">
+                <button class="card-button" onclick="alert('Page House Music en construction')">VOIR LA PROGRAMMATION</button>
+            </div>
+        </div>
+        <div class="center-logo">
+            <img src="assets/logos/4nap-logo-noir.png" alt="ANRF Logo">
         </div>
     </div>
 </section>
@@ -983,46 +1498,52 @@
     <div class="info-container">
         <div class="info-block">
             <h3>ACCÈS</h3>
-            <p><span class="highlight">LIEU :</span> LE BOIS DE VINCENNES</p>
-            <p>Plaine de la Belle Étoile<br>
-            Accès par la Route Dauphine via Espl. Saint Louis<br>
-            Bois de Vincennes, 75012 Paris</p>
-            
-            <p><span class="highlight">HORAIRES :</span> 6, 7 & 8 JUIN 2025</p>
-            <p>Vendredi : 17H – 1H<br>
-            Samedi : 14H – 1h<br>
-            Dimanche : 14H – 1H</p>
-            
-            <p><span class="highlight">DERNIERS MÉTROS :</span></p>
-            <p>Vendredi : métro 1 : Château de Vincennes vers PARIS : 1h39<br>
-            Samedi : métro 1 : Château de Vincennes vers PARIS : 1h39<br>
-            Dimanche : métro 1 : Château de Vincennes vers PARIS : 1h39</p>
+            <div class="info-block-content">
+                <p><span class="highlight">LIEU :</span> LE BOIS DE VINCENNES</p>
+                <p>Plaine de la Belle Étoile<br>
+                Accès par la Route Dauphine via Espl. Saint Louis<br>
+                Bois de Vincennes, 75012 Paris</p>
+                
+                <p><span class="highlight">HORAIRES :</span> 6, 7 & 8 JUIN 2025</p>
+                <p>Vendredi : 17H – 1H<br>
+                Samedi : 14H – 1h<br>
+                Dimanche : 14H – 1H</p>
+                
+                <p><span class="highlight">DERNIERS MÉTROS :</span></p>
+                <p>Vendredi : métro 1 : Château de Vincennes vers PARIS : 1h39<br>
+                Samedi : métro 1 : Château de Vincennes vers PARIS : 1h39<br>
+                Dimanche : métro 1 : Château de Vincennes vers PARIS : 1h39</p>
+            </div>
         </div>
         <div class="info-block">
             <h3>TRANSPORTS</h3>
-            <p><span class="highlight">MÉTRO</span> Ligne 1 — Château de Vincennes</p>
-            <p><span class="highlight">RER</span> A — Château de Vincennes</p>
-            <p><span class="highlight">BUS</span> Ligne 56 — Barbès, Gare de l'Est, République, Oberkampf,<br>
-            Nation, Château de Vincennes</p>
-            <p>Ligne 46 Et d'autres !</p>
-            
-            <p><span class="highlight">VÉLO</span></p>
-            <p>> Parking à vélo proposé par <a href="#" class="highlight">BOSCH EBIKE SYSTEMS</a></p>
-            <p>> Parking vélo gratuit, non gardienné à proximité</p>
-            
-            <p><span class="highlight">VÉLIB'</span> 5 stations sont à proximité : Bois de Vincennes, Polygone-<br>
-            Pyramide, Parc Floral-Tremblay, Lac des Minimes-Pyramide, École<br>
-            du Breuil.</p>
-            
-            <p><span class="highlight">STATION VÉLIB' GÉANTE ÉPHÉMÈRE</span> 600 places à l'entrée du festival<br>
-            (Esplanade Saint-Louis)</p>
-            
-            <p><span class="highlight">NOCTILIEN</span> Ligne N11 et N33</p>
-            <p>Pas de parking voiture à proximité.</p>
+            <div class="info-block-content">
+                <p><span class="highlight">MÉTRO</span> Ligne 1 — Château de Vincennes</p>
+                <p><span class="highlight">RER</span> A — Château de Vincennes</p>
+                <p><span class="highlight">BUS</span> Ligne 56 — Barbès, Gare de l'Est, République, Oberkampf,<br>
+                Nation, Château de Vincennes</p>
+                <p>Ligne 46 Et d'autres !</p>
+                
+                <p><span class="highlight">VÉLO</span></p>
+                <p>> Parking à vélo proposé par <a href="#" class="highlight">BOSCH EBIKE SYSTEMS</a></p>
+                <p>> Parking vélo gratuit, non gardienné à proximité</p>
+                
+                <p><span class="highlight">VÉLIB'</span> 5 stations sont à proximité : Bois de Vincennes, Polygone-<br>
+                Pyramide, Parc Floral-Tremblay, Lac des Minimes-Pyramide, École<br>
+                du Breuil.</p>
+                
+                <p><span class="highlight">STATION VÉLIB' GÉANTE ÉPHÉMÈRE</span> 600 places à l'entrée du festival<br>
+                (Esplanade Saint-Louis)</p>
+                
+                <p><span class="highlight">NOCTILIEN</span> Ligne N11 et N33</p>
+                <p>Pas de parking voiture à proximité.</p>
+            </div>
         </div>
         <div class="info-block">
             <h3>PLUS D'INFOS</h3>
-            <p><a href="#">Plus d'informations ici !</a></p>
+            <div class="info-block-content">
+                <p><a href="#">Plus d'informations ici !</a></p>
+            </div>
         </div>
     </div>
 </section>
@@ -1052,19 +1573,25 @@
     <div class="footer-bottom">
         <div class="footer-col footer-col-left">
             <h4>INFOS PRATIQUES</h4>
-            <p>Découvrez toutes nos infos pratiques</p>
+            <div class="footer-col-content">
+                <p>Découvrez toutes nos infos pratiques</p>
+            </div>
         </div>
         <div class="footer-col footer-col-center">
             <h4>PARTENAIRES</h4>
-            <p>Découvrez nos partenaires</p>
-            <div class="footer-member-section">
-                <h4>DEVENEZ MEMBRE</h4>
-                <p>Des questions ? Des réponses</p>
+            <div class="footer-col-content">
+                <p>Découvrez nos partenaires</p>
+                <div class="footer-member-section">
+                    <h4>DEVENEZ MEMBRE</h4>
+                    <p>Des questions ? Des réponses</p>
+                </div>
             </div>
         </div>
         <div class="footer-col footer-col-right">
             <h4>NEWS</h4>
-            <p>News & bon plans</p>
+            <div class="footer-col-content">
+                <p>News & bon plans</p>
+            </div>
         </div>
     </div>
     <div class="footer-copyright">
@@ -1259,6 +1786,55 @@
             duration: 0.8,
             ease: 'power3.out'
         });
+    });
+
+    // Mobile Accordion Functionality
+    function initMobileAccordions() {
+        if (window.innerWidth <= 768) {
+            // Info Section Accordion
+            const infoBlocks = document.querySelectorAll('.info-block h3');
+            infoBlocks.forEach(header => {
+                header.addEventListener('click', () => {
+                    const infoBlock = header.parentElement;
+                    infoBlock.classList.toggle('active');
+                });
+            });
+
+            // Footer Accordion
+            const footerCols = document.querySelectorAll('.footer-col h4');
+            footerCols.forEach(header => {
+                // Skip the member section header
+                if (!header.parentElement.classList.contains('footer-member-section')) {
+                    header.addEventListener('click', () => {
+                        const footerCol = header.parentElement;
+                        footerCol.classList.toggle('active');
+                    });
+                }
+            });
+
+            // Program Cards Click to Open Details
+            const programCards = document.querySelectorAll('.program-card');
+            programCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const button = card.querySelector('.card-button');
+                    if (button) {
+                        button.click();
+                    }
+                });
+            });
+        }
+    }
+
+    // Initialize accordion on page load
+    initMobileAccordions();
+
+    // Reinitialize on window resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            initMobileAccordions();
+        }, 250);
     });
 </script>
 </body>

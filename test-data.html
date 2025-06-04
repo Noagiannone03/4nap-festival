@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajout de données de test - 4NAP Festival</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            background: #007aff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: background 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎵 Ajout de données de test - 4NAP Festival</h1>
+    
+    <div class="info">
+        <strong>Info :</strong> Ce fichier permet d'ajouter rapidement des artistes de démonstration dans Firestore pour tester l'architecture.
+    </div>
+    
+    <button id="addTestData" class="btn">Ajouter des artistes de test</button>
+    <button id="clearData" class="btn" style="background: #dc3545;">Supprimer tous les artistes</button>
+    
+    <div id="status"></div>
+    
+    <h2>Artistes qui seront ajoutés :</h2>
+    <ul>
+        <li><strong>DJ World Fusion</strong> - 11 juillet (Sono Mondiale) - 20:00</li>
+        <li><strong>Afro Beats Collective</strong> - 11 juillet (Sono Mondiale) - 21:30</li>
+        <li><strong>House Master</strong> - 12 juillet - 22:00</li>
+        <li><strong>Techno Underground</strong> - 12 juillet - 23:30</li>
+        <li><strong>Bass Drop Society</strong> - 13 juillet - 21:00</li>
+        <li><strong>Electronic Vibes</strong> - 13 juillet - 22:30</li>
+    </ul>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCK20ovvLNY9lBSr7FotjXPU1mwHsg8pnk",
+            authDomain: "nap-festival.firebaseapp.com",
+            projectId: "nap-festival",
+            storageBucket: "nap-festival.firebasestorage.app",
+            messagingSenderId: "928048730953",
+            appId: "1:928048730953:web:47cad1e4c5d300a11b4098",
+            measurementId: "G-481JX6JFMD"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+
+        // Données de test
+        const testArtists = [
+            {
+                nom: "DJ World Fusion",
+                styleMusical: "World Music",
+                jour: "11",
+                heure: "20:00",
+                description: "Un voyage musical à travers les continents avec des sonorités authentiques du monde entier. DJ World Fusion mélange les traditions musicales africaines, asiatiques et latino-américaines.",
+                lienSocial: "https://instagram.com/djworldfusion",
+                imageUrl: ""
+            },
+            {
+                nom: "Afro Beats Collective",
+                styleMusical: "Afro House",
+                jour: "11",
+                heure: "21:30",
+                description: "Le collectif Afro Beats apporte les rythmes hypnotiques de l'Afrique moderne. Un mélange explosif entre house électronique et percussions traditionnelles.",
+                lienSocial: "https://instagram.com/afrobeatscollective",
+                imageUrl: ""
+            },
+            {
+                nom: "House Master",
+                styleMusical: "Deep House",
+                jour: "12",
+                heure: "22:00",
+                description: "Maître incontesté de la house music, House Master vous emmène dans un voyage sonore profond et envoûtant. Sets underground garantis.",
+                lienSocial: "https://instagram.com/housemaster",
+                imageUrl: ""
+            },
+            {
+                nom: "Techno Underground",
+                styleMusical: "Hard Techno",
+                jour: "12",
+                heure: "23:30",
+                description: "Pour les amateurs de techno pure et dure. Techno Underground délivre des beats puissants et des basslines qui font vibrer les corps.",
+                lienSocial: "",
+                imageUrl: ""
+            },
+            {
+                nom: "Bass Drop Society",
+                styleMusical: "Bass Music",
+                jour: "13",
+                heure: "21:00",
+                description: "Le collectif Bass Drop Society maîtrise l'art du drop. Dubstep, drum'n'bass et bass music pour faire trembler la terre.",
+                lienSocial: "https://instagram.com/bassdropsociety",
+                imageUrl: ""
+            },
+            {
+                nom: "Electronic Vibes",
+                styleMusical: "Electronic",
+                jour: "13",
+                heure: "22:30",
+                description: "Un mélange éclectique de tous les styles électroniques. Electronic Vibes sait lire la foule et adapter son set pour créer l'ambiance parfaite.",
+                lienSocial: "https://instagram.com/electronicvibes",
+                imageUrl: ""
+            }
+        ];
+
+        // Fonction pour afficher les status
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="${type}">${message}</div>`;
+        }
+
+        // Fonction pour ajouter les données de test
+        async function addTestData() {
+            const btn = document.getElementById('addTestData');
+            btn.disabled = true;
+            btn.textContent = 'Ajout en cours...';
+            
+            try {
+                showStatus('Ajout des artistes de test en cours...', 'info');
+                
+                for (const artist of testArtists) {
+                    await addDoc(collection(db, 'artistes'), artist);
+                }
+                
+                showStatus(`✅ ${testArtists.length} artistes ajoutés avec succès ! Vous pouvez maintenant tester les pages.`, 'success');
+            } catch (error) {
+                console.error('Erreur:', error);
+                showStatus(`❌ Erreur lors de l'ajout : ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Ajouter des artistes de test';
+            }
+        }
+
+        // Fonction pour supprimer toutes les données
+        async function clearData() {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer TOUS les artistes ?')) {
+                return;
+            }
+
+            const btn = document.getElementById('clearData');
+            btn.disabled = true;
+            btn.textContent = 'Suppression en cours...';
+            
+            try {
+                showStatus('Suppression de tous les artistes...', 'info');
+                
+                const snapshot = await getDocs(collection(db, 'artistes'));
+                const deletePromises = [];
+                
+                snapshot.forEach((docSnapshot) => {
+                    deletePromises.push(deleteDoc(doc(db, 'artistes', docSnapshot.id)));
+                });
+                
+                await Promise.all(deletePromises);
+                
+                showStatus(`✅ ${deletePromises.length} artistes supprimés avec succès.`, 'success');
+            } catch (error) {
+                console.error('Erreur:', error);
+                showStatus(`❌ Erreur lors de la suppression : ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Supprimer tous les artistes';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('addTestData').addEventListener('click', addTestData);
+        document.getElementById('clearData').addEventListener('click', clearData);
+
+        // Status initial
+        showStatus('Prêt à ajouter des données de test. Cliquez sur le bouton pour commencer.', 'info');
+    </script>
+</body>
+</html> 

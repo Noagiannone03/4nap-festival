@@ -210,32 +210,32 @@
     }
 
     .tab-button.vendredi {
-        border-color: #ff6b35;
-        color: #ff6b35;
+        border-color: #EF740F;
+        color: #EF740F;
     }
 
     .tab-button.vendredi.active {
-        background: #ff6b35;
+        background: #EF740F;
         color: white;
     }
 
     .tab-button.samedi {
-        border-color: #4CAF50;
-        color: #4CAF50;
+        border-color: #56B047;
+        color: #56B047;
     }
 
     .tab-button.samedi.active {
-        background: #4CAF50;
+        background: #56B047;
         color: white;
     }
 
     .tab-button.dimanche {
-        border-color: #2196F3;
-        color: #2196F3;
+        border-color: #2A4999;
+        color: #2A4999;
     }
 
     .tab-button.dimanche.active {
-        background: #2196F3;
+        background: #2A4999;
         color: white;
     }
 
@@ -284,15 +284,15 @@
     }
 
     .event-card[data-day="vendredi"] {
-        border-color: #ff6b35;
+        border-color: #EF740F;
     }
 
     .event-card[data-day="samedi"] {
-        border-color: #4CAF50;
+        border-color: #56B047;
     }
 
     .event-card[data-day="dimanche"] {
-        border-color: #2196F3;
+        border-color: #2A4999;
     }
 
     .event-card[data-genre="sono"] {
@@ -320,28 +320,32 @@
 
     .event-date-badge {
         position: absolute;
-        top: 15px;
-        left: 15px;
+        top: 10px;
+        left: 10px;
         color: white;
-        padding: 10px 15px;
-        border-radius: 8px;
-        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 9px;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         z-index: 10;
+        max-width: fit-content;
+        text-align: center;
+        line-height: 1.1;
+        white-space: nowrap;
     }
 
     .event-date-badge.vendredi {
-        background: #ff6b35;
+        background: #EF740F;
     }
 
     .event-date-badge.samedi {
-        background: #4CAF50;
+        background: #56B047;
     }
 
     .event-date-badge.dimanche {
-        background: #2196F3;
+        background: #2A4999;
     }
 
     .event-genre-badge {
@@ -371,15 +375,15 @@
     }
 
     .event-card[data-day="vendredi"] .event-title {
-        color: #ff6b35;
+        color: #EF740F;
     }
 
     .event-card[data-day="samedi"] .event-title {
-        color: #4CAF50;
+        color: #56B047;
     }
 
     .event-card[data-day="dimanche"] .event-title {
-        color: #2196F3;
+        color: #2A4999;
     }
 
     .event-card[data-genre="sono"] .event-title {
@@ -408,16 +412,16 @@
 
     .event-icon {
         position: absolute;
-        bottom: 15px;
-        right: 20px;
-        width: 30px;
-        height: 30px;
-        background: #333;
-        border-radius: 6px;
+        bottom: 10px;
+        right: 10px;
+        width: 24px;
+        height: 24px;
+
+        border-radius: 4px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: 10px;
         color: white;
         font-weight: 600;
     }
@@ -683,20 +687,72 @@
 
     @media (max-width: 768px) {
         .main-content {
-            padding: 40px 30px;
+            padding: 40px 20px;
         }
+
+
+        .event-icon {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 24px;
+        height: 24px;
+     
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: white;
+        font-weight: 600;
+    }
 
         .page-title {
             font-size: 2.2rem;
         }
 
-        .tabs {
-            justify-content: center;
+        /* Tabs responsive avec scroll horizontal */
+        .tabs-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
+        .tabs {
+            display: flex;
+            gap: 15px;
+            min-width: max-content;
+            padding-bottom: 10px;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            font-size: 12px;
+            min-width: auto;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* Events Cards responsive - 2 colonnes */
         .events-grid {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .event-card {
+            height: 270px;
+        }
+
+        .event-content {
+            padding: 12px 15px;
+        }
+
+        .event-title {
+            font-size: 0.9rem;
+        }
+
+        .event-artist {
+            font-size: 0.9rem;
+            font-weight: bold;
         }
 
         .menu-overlay {
@@ -706,13 +762,245 @@
         .menu-item {
             font-size: 2.5rem;
         }
+
+        /* Navbar Mobile */
+        .navbar {
+            padding: 0 15px;
+            height: 60px;
+        }
+
+        .navbar::after {
+            left: 15px;
+            right: 15px;
+        }
+
+        .logo {
+            height: 50px;
+            margin-left: 5px;
+        }
+
+        .logo img {
+            height: 100%;
+        }
+
+        #menuText {
+            display: none;
+        }
+
+        .hamburger {
+            margin-left: 0;
+            width: 28px;
+            height: 22px;
+        }
+
+        .hamburger span {
+            height: 3px;
+        }
+
+        /* Action Buttons Mobile */
+        .action-buttons {
+            padding: 40px 20px 60px 20px;
+        }
+
+        .action-btn {
+            width: 100%;
+            max-width: none;
+            padding: 18px 30px;
+            font-size: 14px;
+        }
+
+        /* Footer Mobile - Style Accordion */
+        .footer {
+            padding: 40px 20px 0 20px;
+        }
+
+        .footer-top {
+            padding: 20px 0;
+            flex-direction: column;
+            gap: 20px;
+            min-height: auto;
+        }
+
+        .footer-socials {
+            gap: 20px;
+        }
+
+        .footer-bottom {
+            padding: 40px 0 20px 0;
+            flex-direction: column;
+            gap: 0;
+            align-items: stretch;
+        }
+
+        .footer-col {
+            border-bottom: 1px solid #ccc;
+            min-width: auto;
+            max-width: none;
+        }
+
+        .footer-col:last-child {
+            border-bottom: none;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 20px 0;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-col h4::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-col.active h4::after {
+            transform: rotate(45deg);
+        }
+
+        .footer-col-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0;
+        }
+
+        .footer-col.active .footer-col-content {
+            max-height: 500px;
+            padding-bottom: 20px;
+        }
+
+        .footer-col p {
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .footer-member-section {
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .footer-member-section h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            padding: 0;
+            cursor: default;
+            justify-content: flex-start;
+        }
+
+        .footer-member-section h4::after {
+            display: none;
+        }
+
+        .footer-copyright {
+            margin: 0;
+            padding: 20px 0 15px 0;
+            font-size: 12px;
+        }
+
+        /* Sticky Member Button Mobile */
+        .sticky-member {
+            width: 100px;
+            height: 100px;
+            bottom: -15px;
+            right: -15px;
+            font-size: 11px;
+        }
+    }
+
+    /* Très petit mobile */
+    @media (max-width: 480px) {
+        .main-content {
+            padding: 30px 15px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .navbar {
+            padding: 0 10px;
+        }
+
+        .navbar::after {
+            left: 10px;
+            right: 10px;
+        }
+
+        .logo {
+            height: 45px;
+            margin-left: 2px;
+        }
+
+        .hamburger {
+            width: 26px;
+            height: 20px;
+        }
+
+        .menu-overlay {
+            padding-left: 20px;
+        }
+
+        .menu-item {
+            font-size: 1.8rem;
+            margin: 10px 0;
+        }
+
+        .tabs {
+            gap: 10px;
+        }
+
+        .tab-button {
+            padding: 10px 15px;
+            font-size: 11px;
+        }
+
+        /* Events Cards - toujours 2 colonnes */
+        .events-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .event-card {
+            height: 250px;
+        }
+
+        .event-content {
+            padding: 10px 12px;
+        }
+
+        .event-title {
+            font-size: 0.8rem;
+        }
+
+        .event-artist {
+            font-size: 0.7rem;
+        }
+
+        .action-buttons {
+            padding: 30px 15px 50px 15px;
+        }
+    }
+
+    /* Desktop: garder le contenu des blocs visible */
+    .footer-col-content {
+        display: block;
     }
 </style>
 </head>
 <body>
 <!-- Navbar -->
 <nav class="navbar" id="navbar">
-    <img src="../assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    <a href="../index.html">
+        <img src="../assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    </a>
     <div class="menu-toggle" id="menuToggle">
         <span id="menuText">MENU</span>
         <div class="hamburger" id="hamburger">
@@ -754,131 +1042,17 @@
 
     <!-- Events Grid -->
     <div class="events-grid" id="eventsGrid">
-        <!-- Event Card 1 -->
-        <div class="event-card" data-day="vendredi" data-genre="bass">
-            <div class="event-image">
-                <img src="../assets/images/dezze.png" alt="DJ Snake">
-                <div class="event-date-badge vendredi">VEN. 12 JUILLET</div>
-            </div>
-            <div class="event-content">
-                <div class="event-text-section">
-                    <h3 class="event-title">DJ SNAKE</h3>
-                    <p class="event-artist">Bass Music</p>
-                </div>
-                <div class="event-icon">🎵</div>
-            </div>
-        </div>
-
-        <!-- Event Card 2 -->
-        <div class="event-card" data-day="vendredi" data-genre="sono">
-            <div class="event-image">
-                <img src="../assets/images/dezze.png" alt="Sono Mondiale">
-                <div class="event-date-badge vendredi">VEN. 12 JUILLET</div>
-            </div>
-            <div class="event-content">
-                <div class="event-text-section">
-                    <h3 class="event-title">SONO MONDIALE</h3>
-                    <p class="event-artist">World Music</p>
-                </div>
-                <div class="event-icon">🌍</div>
-            </div>
-        </div>
-
-        <!-- Event Card 3 -->
-        <div class="event-card" data-day="samedi" data-genre="house">
-            <div class="event-image">
-                <img src="../assets/images/dezze.png" alt="House Music">
-                <div class="event-date-badge samedi">SAM. 13 JUILLET</div>
-            </div>
-            <div class="event-content">
-                <div class="event-text-section">
-                    <h3 class="event-title">HOUSE MUSIC</h3>
-                    <p class="event-artist">Electronic</p>
-                </div>
-                <div class="event-icon">🏠</div>
-            </div>
-        </div>
-
-        <!-- Event Card 4 -->
-        <div class="event-card" data-day="samedi" data-genre="techno">
-            <div class="event-image">
-                <img src="../assets/images/dezze.png" alt="Techno Hard">
-                <div class="event-date-badge samedi">SAM. 13 JUILLET</div>
-            </div>
-            <div class="event-content">
-                <div class="event-text-section">
-                    <h3 class="event-title">TECHNO HARD</h3>
-                    <p class="event-artist">Hard Techno</p>
-                </div>
-                <div class="event-icon">⚡</div>
-            </div>
-        </div>
-
-        <!-- Event Card 5 -->
-        <div class="event-card" data-day="dimanche" data-genre="sono">
-            <div class="event-image">
-                <img src="../assets/images/dezze.png" alt="World Fusion">
-                <div class="event-date-badge dimanche">DIM. 14 JUILLET</div>
-            </div>
-            <div class="event-content">
-                <div class="event-text-section">
-                    <h3 class="event-title">WORLD FUSION</h3>
-                    <p class="event-artist">Global Sounds</p>
-                </div>
-                <div class="event-icon">🎶</div>
-            </div>
-        </div>
-
-        <!-- Event Card 6 -->
-        <div class="event-card" data-day="dimanche" data-genre="house">
-            <div class="event-image">
-                <img src="../assets/images/dezze.png" alt="Deep House">
-                <div class="event-date-badge dimanche">DIM. 14 JUILLET</div>
-            </div>
-            <div class="event-content">
-                <div class="event-text-section">
-                    <h3 class="event-title">DEEP HOUSE</h3>
-                    <p class="event-artist">Underground</p>
-                </div>
-                <div class="event-icon">🔊</div>
-            </div>
-        </div>
-
-        <!-- Event Card 7 -->
-        <div class="event-card" data-day="vendredi" data-genre="techno">
-            <div class="event-image">
-                <img src="../assets/images/dezze.png" alt="Minimal Techno">
-                <div class="event-date-badge vendredi">VEN. 12 JUILLET</div>
-            </div>
-            <div class="event-content">
-                <div class="event-text-section">
-                    <h3 class="event-title">MINIMAL TECHNO</h3>
-                    <p class="event-artist">Underground</p>
-                </div>
-                <div class="event-icon">🎯</div>
-            </div>
-        </div>
-
-        <!-- Event Card 8 -->
-        <div class="event-card" data-day="samedi" data-genre="bass">
-            <div class="event-image">
-                <img src="../assets/images/dezze.png" alt="Dubstep">
-                <div class="event-date-badge samedi">SAM. 13 JUILLET</div>
-            </div>
-            <div class="event-content">
-                <div class="event-text-section">
-                    <h3 class="event-title">DUBSTEP NIGHT</h3>
-                    <p class="event-artist">Heavy Bass</p>
-                </div>
-                <div class="event-icon">💥</div>
-            </div>
+        <!-- Loading placeholder - will be replaced by Firebase data -->
+        <div class="loading-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #666;">
+            <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #333; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+            <p>Chargement des artistes...</p>
         </div>
     </div>
 </main>
 
 <!-- Action Buttons -->
 <section class="action-buttons">
-    <button class="action-btn secondary">PROGRAMMATION COMPLÈTE</button>
+    <button class="action-btn secondary" onclick="window.location.href='../index.html'">ACCUEIL</button>
     <button class="action-btn primary">GET YOUR PASS</button>
 </section>
 
@@ -907,19 +1081,25 @@
     <div class="footer-bottom">
         <div class="footer-col footer-col-left">
             <h4>INFOS PRATIQUES</h4>
-            <p>Découvrez toutes nos infos pratiques</p>
+            <div class="footer-col-content">
+                <p>Découvrez toutes nos infos pratiques</p>
+            </div>
         </div>
         <div class="footer-col footer-col-center">
             <h4>PARTENAIRES</h4>
-            <p>Découvrez nos partenaires</p>
-            <div class="footer-member-section">
-                <h4>DEVENEZ MEMBRE</h4>
-                <p>Des questions ? Des réponses</p>
+            <div class="footer-col-content">
+                <p>Découvrez nos partenaires</p>
+                <div class="footer-member-section">
+                    <h4>DEVENEZ MEMBRE</h4>
+                    <p>Des questions ? Des réponses</p>
+                </div>
             </div>
         </div>
         <div class="footer-col footer-col-right">
             <h4>NEWS</h4>
-            <p>News & bon plans</p>
+            <div class="footer-col-content">
+                <p>News & bon plans</p>
+            </div>
         </div>
     </div>
     <div class="footer-copyright">
@@ -973,21 +1153,18 @@
     });
 
     // Events Grid Animation
-    gsap.fromTo('.event-card', {
-        y: 50,
-        opacity: 0
-    }, {
-        scrollTrigger: {
-            trigger: '.events-grid',
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
-        },
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: 'power3.out'
-    });
+    function animateEventCards() {
+        gsap.fromTo('.event-card', {
+            y: 50,
+            opacity: 0
+        }, {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out'
+        });
+    }
 
     // Action Buttons Animation
     gsap.fromTo('.action-btn', {
@@ -1006,49 +1183,247 @@
         ease: 'power3.out'
     });
 
-    // Tab Functionality
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const eventCards = document.querySelectorAll('.event-card');
-
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active class from all buttons
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
-            button.classList.add('active');
-
-            const filter = button.getAttribute('data-filter');
-            
-            // Filter events
-            eventCards.forEach(card => {
-                if (filter === 'all') {
-                    card.style.display = 'block';
-                } else if (filter === 'scenes' || filter === 'genres') {
-                    // Pour les onglets "Scènes" et "Genres", on affiche tout pour l'instant
-                    card.style.display = 'block';
-                } else {
-                    const cardDay = card.getAttribute('data-day');
-                    if (cardDay === filter) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
+    // Mobile Accordion Functionality
+    let accordionInitialized = false;
+    
+    function initMobileAccordions() {
+        // Supprimer les anciens event listeners si ils existent
+        const footerCols = document.querySelectorAll('.footer-col h4');
+        footerCols.forEach(header => {
+            if (header.hasAttribute('data-accordion-listener')) {
+                header.removeEventListener('click', header.accordionHandler);
+                header.removeAttribute('data-accordion-listener');
+            }
+        });
+        
+        if (window.innerWidth <= 768) {
+            // Footer Accordion
+            footerCols.forEach(header => {
+                // Skip the member section header
+                if (!header.parentElement.classList.contains('footer-member-section')) {
+                    header.accordionHandler = () => {
+                        const footerCol = header.parentElement;
+                        footerCol.classList.toggle('active');
+                    };
+                    header.addEventListener('click', header.accordionHandler);
+                    header.setAttribute('data-accordion-listener', 'true');
                 }
             });
+            accordionInitialized = true;
+        } else {
+            // Sur desktop, s'assurer que tous les contenus sont visibles
+            footerCols.forEach(header => {
+                const footerCol = header.parentElement;
+                footerCol.classList.remove('active');
+            });
+            accordionInitialized = false;
+        }
+    }
 
-            // Re-animate visible cards
-            const visibleCards = document.querySelectorAll('.event-card[style*="block"]');
-            gsap.fromTo(visibleCards, {
-                y: 20,
+    // Initialize accordion on page load
+    initMobileAccordions();
+
+    // Reinitialize on window resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            initMobileAccordions();
+        }, 250);
+    });
+</script>
+
+<!-- Firebase Integration for All Artists -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCK20ovvLNY9lBSr7FotjXPU1mwHsg8pnk",
+        authDomain: "nap-festival.firebaseapp.com",
+        projectId: "nap-festival",
+        storageBucket: "nap-festival.firebasestorage.app",
+        messagingSenderId: "928048730953",
+        appId: "1:928048730953:web:47cad1e4c5d300a11b4098",
+        measurementId: "G-481JX6JFMD"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+
+    // Global variables for artists and filtering
+    let allArtists = [];
+    let currentFilter = 'all';
+
+    // Mapping pour les jours
+    const dayMapping = {
+        '11': 'vendredi',
+        '12': 'samedi', 
+        '13': 'dimanche'
+    };
+
+    const dayColors = {
+        'vendredi': '#EF740F',
+        'samedi': '#56B047',
+        'dimanche': '#2A4999'
+    };
+
+    const dayLabels = {
+        'vendredi': 'VEN. 11 JUILLET',
+        'samedi': 'SAM. 12 JUILLET',
+        'dimanche': 'DIM. 13 JUILLET'
+    };
+
+    // Function to get day icon based on day
+    function getDayIcon(dayKey) {
+        const icons = {
+            'vendredi': '../assets/pictos/ArrowUpRightOrange.png',
+            'samedi': '../assets/pictos/ArrowUpRightVert.png',
+            'dimanche': '../assets/pictos/ArrowUpRightBleu.png'
+        };
+        return icons[dayKey] || '../assets/pictos/ArrowUpRightOrange.png';
+    }
+
+    // Function to get genre icon
+    function getGenreIcon(styleMusical) {
+        const style = styleMusical.toLowerCase();
+        if (style.includes('bass') || style.includes('dubstep')) return '🎵';
+        if (style.includes('world') || style.includes('mondial')) return '🌍';
+        if (style.includes('house')) return '🏠';
+        if (style.includes('techno')) return '⚡';
+        if (style.includes('electro')) return '🔊';
+        return '🎶';
+    }
+
+    // Function to create event card HTML
+    function createEventCard(artist) {
+        const dayKey = dayMapping[artist.jour] || 'vendredi';
+        const dayColor = dayColors[dayKey];
+        const dayLabel = dayLabels[dayKey];
+        const dayIcon = getDayIcon(dayKey);
+
+        return `
+            <div class="event-card" data-day="${dayKey}" data-genre="${artist.styleMusical.toLowerCase()}">
+                <div class="event-image">
+                    <img src="${artist.imageUrl || '../assets/images/dezze.png'}" alt="${artist.nom}">
+                    <div class="event-date-badge ${dayKey}">${dayLabel}</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-text-section">
+                        <h3 class="event-title">${artist.nom}</h3>
+                        <p class="event-artist">${artist.styleMusical}</p>
+                    </div>
+                    <div class="event-icon">
+                        <img src="${dayIcon}" alt="Day Icon" style="width: 24px; height: 24px; object-fit: contain;">
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Function to display artists
+    function displayArtists(artists) {
+        const eventsGrid = document.getElementById('eventsGrid');
+        
+        if (artists.length === 0) {
+            eventsGrid.innerHTML = `
+                <div class="loading-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #666;">
+                    <p>Aucun artiste trouvé pour ce filtre.<br>Essayez de changer de catégorie.</p>
+                </div>
+            `;
+            return;
+        }
+
+        eventsGrid.innerHTML = artists.map(createEventCard).join('');
+
+        // Trigger GSAP animation
+        setTimeout(() => {
+            gsap.fromTo('.event-card', {
+                y: 50,
                 opacity: 0
             }, {
                 y: 0,
                 opacity: 1,
-                duration: 0.5,
-                stagger: 0.05,
+                duration: 0.8,
+                stagger: 0.1,
                 ease: 'power3.out'
             });
+        }, 100);
+    }
+
+    // Function to filter artists
+    function filterArtists(filter) {
+        currentFilter = filter;
+        let filteredArtists = allArtists;
+
+        if (filter !== 'all') {
+            if (filter === 'vendredi') {
+                filteredArtists = allArtists.filter(artist => artist.jour === '11');
+            } else if (filter === 'samedi') {
+                filteredArtists = allArtists.filter(artist => artist.jour === '12');
+            } else if (filter === 'dimanche') {
+                filteredArtists = allArtists.filter(artist => artist.jour === '13');
+            } else if (filter === 'scenes' || filter === 'genres') {
+                // Pour ces filtres, afficher tous les artistes pour l'instant
+                filteredArtists = allArtists;
+            }
+        }
+
+        displayArtists(filteredArtists);
+    }
+
+    // Function to load all artists
+    async function loadAllArtists() {
+        const eventsGrid = document.getElementById('eventsGrid');
+        
+        try {
+            // Query all artists ordered by day then time
+            const q = query(collection(db, 'artistes'), orderBy('jour'), orderBy('heure'));
+            const snapshot = await getDocs(q);
+            
+            allArtists = [];
+            snapshot.forEach((doc) => {
+                allArtists.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Display all artists initially
+            displayArtists(allArtists);
+
+            // Setup tab functionality
+            setupTabFunctionality();
+
+        } catch (error) {
+            console.error('Erreur lors du chargement des artistes:', error);
+            eventsGrid.innerHTML = `
+                <div class="loading-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #666;">
+                    <p>Erreur lors du chargement des artistes.<br>Veuillez rafraîchir la page.</p>
+                </div>
+            `;
+        }
+    }
+
+    // Function to setup tab functionality
+    function setupTabFunctionality() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-filter');
+                filterArtists(filter);
+            });
         });
+    }
+
+    // Load artists when page is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        loadAllArtists();
     });
 </script>
 </body>

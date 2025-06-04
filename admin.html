@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4NAP Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Couleurs chaudes et accueillantes */
+            --warm-orange: #ff8a50;
+            --warm-peach: #ffb088;
+            --warm-cream: #fff8f0;
+            --warm-white: #ffffff;
+            --warm-gray-50: #fafafa;
+            --warm-gray-100: #f5f5f5;
+            --warm-gray-200: #e5e5e5;
+            --warm-gray-300: #d4d4d4;
+            --warm-gray-400: #a3a3a3;
+            --warm-gray-500: #737373;
+            --warm-gray-600: #525252;
+            --warm-gray-700: #404040;
+            --warm-gray-800: #262626;
+            --warm-gray-900: #171717;
+            
+            /* Couleurs accent */
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --info: #3b82f6;
+            
+            /* Design system */
+            --border-radius-sm: 8px;
+            --border-radius: 16px;
+            --border-radius-lg: 24px;
+            --border-radius-xl: 32px;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            
+            --gradient-warm: linear-gradient(135deg, #ff8a50 0%, #ffb088 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fff8f0 0%, #ffb088 50%, #ff8a50 100%);
+            min-height: 100vh;
+            color: var(--warm-gray-800);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animations fluides */
+        @keyframes slideInFromLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInFromRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInFromBottom {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Auth Container */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: fadeIn 1s ease-out;
+        }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 3rem;
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-xl);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            animation: slideInFromBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-warm);
+        }
+
+        .auth-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-warm);
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .auth-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--warm-gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: var(--warm-gray-500);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--warm-gray-700);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--warm-gray-200);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--warm-white);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--warm-orange);
+            box-shadow: 0 0 0 4px rgba(255, 138, 80, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-warm);
+            color: white;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:disabled {
+            background: var(--warm-gray-300);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--error);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: slideInFromBottom 0.3s ease-out;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+            background: var(--warm-gray-50);
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            background: var(--warm-white);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 2rem;
+            background: var(--gradient-warm);
+            color: white;
+            text-align: center;
+        }
+
+        .sidebar-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .sidebar-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-subtitle {
+            opacity: 0.9;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .sidebar-nav {
+            padding: 1.5rem 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 2rem;
+            color: var(--warm-gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--warm-cream);
+            color: var(--warm-orange);
+            border-left-color: var(--warm-orange);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+            background: var(--warm-gray-50);
+        }
+
+        .header {
+            background: var(--warm-white);
+            padding: 1.5rem 2.5rem;
+            border-bottom: 1px solid var(--warm-gray-200);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-title {
+            font-size: 1.875rem;
+            font-weight: 800;
+            color: var(--warm-gray-900);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--warm-gray-100);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-menu:hover {
+            background: var(--warm-gray-200);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-warm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--warm-gray-900);
+        }
+
+        .user-role {
+            font-size: 0.75rem;
+            color: var(--warm-gray-500);
+        }
+
+        .content-area {
+            padding: 2.5rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--warm-white);
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromBottom 0.6s ease-out;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .stat-card.primary::before { background: var(--gradient-warm); }
+        .stat-card.success::before { background: var(--gradient-success); }
+        .stat-card.warning::before { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-icon.primary { background: var(--gradient-warm); }
+        .stat-icon.success { background: var(--gradient-success); }
+        .stat-icon.warning { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card.primary .stat-number { color: var(--warm-orange); }
+        .stat-card.success .stat-number { color: var(--success); }
+        .stat-card.warning .stat-number { color: var(--warning); }
+
+        .stat-label {
+            color: var(--warm-gray-600);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-change {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--border-radius-sm);
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .stat-change.positive {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .header {
+                padding: 1rem 1.5rem;
+            }
+            .content-area {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .auth-card {
+                padding: 2rem;
+                margin: 1rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .header-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Onglets */
+        .tabs-container {
+            background: var(--warm-white);
+            border-radius: var(--border-radius-lg);
+            padding: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--warm-gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .tab:hover::before {
+            left: 100%;
+        }
+
+        .tab.active {
+            background: var(--gradient-warm);
+            color: white;
+            box-shadow: var(--shadow);
+            transform: translateY(-1px);
+        }
+
+        .tab:hover:not(.active) {
+            background: var(--warm-gray-100);
+            color: var(--warm-gray-700);
+        }
+
+        /* Artists Grid */
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .artist-card {
+            background: var(--warm-white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            animation: slideInFromBottom 0.6s ease-out;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .artist-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--warm-peach) 0%, var(--warm-orange) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: 600;
+        }
+
+        .artist-content {
+            padding: 1.5rem;
+        }
+
+        .artist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .artist-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--warm-gray-900);
+            margin-bottom: 0.25rem;
+        }
+
+        .artist-style {
+            color: var(--warm-orange);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .artist-day-badge {
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .artist-day-badge.day-11 {
+            background: var(--gradient-warm);
+            color: white;
+        }
+
+        .artist-day-badge.day-12 {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .artist-day-badge.day-13 {
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            color: white;
+        }
+
+        .artist-time {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--warm-gray-600);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .artist-description {
+            color: var(--warm-gray-600);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .artist-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-edit {
+            flex: 1;
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-delete {
+            flex: 1;
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: var(--warm-white);
+            border-radius: var(--border-radius-xl);
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-xl);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal.show .modal-content {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--warm-gray-100);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--warm-gray-900);
+        }
+
+        .btn-close {
+            background: var(--warm-gray-100);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            color: var(--warm-gray-600);
+        }
+
+        .btn-close:hover {
+            background: var(--warm-gray-200);
+            transform: rotate(90deg);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .image-upload-area {
+            border: 2px dashed var(--warm-gray-300);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--warm-gray-50);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-upload-area:hover {
+            border-color: var(--warm-orange);
+            background: var(--warm-cream);
+        }
+
+        .image-upload-area.has-image {
+            padding: 0;
+            border: none;
+            background: none;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+        }
+
+        .upload-placeholder {
+            color: var(--warm-gray-500);
+            font-weight: 500;
+        }
+
+        .upload-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--warm-gray-500);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--warm-gray-700);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-lg);
+            z-index: 10;
+        }
+
+        .loading-text {
+            margin-left: 1rem;
+            font-weight: 600;
+            color: var(--warm-gray-700);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .artists-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                margin: 1rem;
+                width: calc(100% - 2rem);
+                padding: 1.5rem;
+            }
+            .tabs-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .tab {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Container -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo">🎵</div>
+                <h1 class="auth-title">4NAP Admin</h1>
+                <p class="auth-subtitle">Bienvenue dans votre espace de gestion</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="email">Adresse email</label>
+                    <input type="email" id="email" class="form-input" placeholder="admin@4nap-festival.fr" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    Se connecter
+                </button>
+                
+                <div id="errorMessage" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">🎵</div>
+                <h2 class="sidebar-title">4NAP Admin</h2>
+                <p class="sidebar-subtitle">Festival Management</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">📊</span>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🎤</span>
+                    Artistes
+                </a>
+              
+           
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div class="header-content">
+                    <h1 class="header-title">Dashboard Artistes</h1>
+                    
+                    <div class="header-actions">
+                        <button class="btn btn-primary" id="addArtistBtn">
+                            ➕ Nouvel artiste
+                        </button>
+                        
+                        <div class="user-menu" id="userMenu">
+                            <div class="user-avatar" id="userAvatar">A</div>
+                            <div class="user-info">
+                                <div class="user-name" id="userName">Admin</div>
+                                <div class="user-role">Administrateur</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn" id="logoutBtn" style="background: var(--warm-gray-200); color: var(--warm-gray-700);">
+                            🚪 Déconnexion
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="totalArtists">0</div>
+                                <div class="stat-label">Total Artistes</div>
+                                <div class="stat-change positive">+2 cette semaine</div>
+                            </div>
+                            <div class="stat-icon primary">🎤</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card success">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="sonoArtists">0</div>
+                                <div class="stat-label">Sono Mondiale</div>
+                                <div class="stat-change positive">11 juillet</div>
+                            </div>
+                            <div class="stat-icon success">🌍</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card warning">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-number" id="weekendArtists">0</div>
+                                <div class="stat-label">Weekend</div>
+                                <div class="stat-change positive">12-13 juillet</div>
+                            </div>
+                            <div class="stat-icon warning">🎪</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglets par jour et contenu des artistes -->
+                <div id="artistsContent">
+                    <!-- Onglets -->
+                    <div class="tabs-container">
+                        <button class="tab active" data-day="all">🎵 Tous</button>
+                        <button class="tab" data-day="11">🌍 11 Juillet</button>
+                        <button class="tab" data-day="12">🎪 12 Juillet</button>
+                        <button class="tab" data-day="13">🎤 13 Juillet</button>
+                    </div>
+
+                    <!-- Zone d'artistes -->
+                    <div id="artistsDisplay">
+                        <div class="loading-overlay">
+                            <div class="loading-spinner"></div>
+                            <span class="loading-text">Chargement des artistes...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal d'ajout/modification d'artiste -->
+    <div class="modal" id="artistModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Nouvel Artiste</h2>
+                <button class="btn-close" id="closeModal">&times;</button>
+            </div>
+            
+            <form id="artistForm">
+                <div class="form-group">
+                    <label class="form-label" for="artistName">Nom de l'artiste *</label>
+                    <input type="text" id="artistName" class="form-input" placeholder="Ex: Dezze" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="artistStyle">Style musical *</label>
+                        <input type="text" id="artistStyle" class="form-input" placeholder="Ex: Afrobeat" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="artistDay">Jour *</label>
+                        <select id="artistDay" class="form-input" required>
+                            <option value="">Sélectionner un jour</option>
+                            <option value="11">11 Juillet - Sono Mondiale</option>
+                            <option value="12">12 Juillet - Weekend</option>
+                            <option value="13">13 Juillet - Weekend</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="artistTime">Heure de passage *</label>
+                    <input type="time" id="artistTime" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="artistDescription">Description *</label>
+                    <textarea id="artistDescription" class="form-input form-textarea" 
+                              placeholder="Description de l'artiste, son style, son univers musical..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="artistSocial">Lien social (optionnel)</label>
+                    <input type="url" id="artistSocial" class="form-input" placeholder="https://instagram.com/artiste">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Image de l'artiste</label>
+                    <div class="image-upload-area" id="imageUploadArea">
+                        <div class="upload-placeholder">
+                            <span class="upload-icon">📸</span>
+                            <div>Cliquer pour sélectionner une image</div>
+                            <small>PNG, JPG jusqu'à 5MB</small>
+                        </div>
+                        <input type="file" id="artistImage" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn" style="width: 100%; margin-top: 1rem;">
+                    ✨ Ajouter l'artiste
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts Firebase et logique complète -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-storage.js";
+
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCK20ovvLNY9lBSr7FotjXPU1mwHsg8pnk",
+            authDomain: "nap-festival.firebaseapp.com",
+            projectId: "nap-festival",
+            storageBucket: "nap-festival.firebasestorage.app",
+            messagingSenderId: "928048730953",
+            appId: "1:928048730953:web:47cad1e4c5d300a11b4098",
+            measurementId: "G-481JX6JFMD"
+        };
+
+        // Initialisation Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getFirestore();
+        const storage = getStorage();
+
+        // Variables globales
+        let currentUser = null;
+        let artists = [];
+        let currentDay = 'all';
+        let currentArtistId = null;
+        let selectedImageFile = null;
+
+        // Éléments DOM
+        const authContainer = document.getElementById('authContainer');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const addArtistBtn = document.getElementById('addArtistBtn');
+        const artistModal = document.getElementById('artistModal');
+        const artistForm = document.getElementById('artistForm');
+        const closeModal = document.getElementById('closeModal');
+        const artistsDisplay = document.getElementById('artistsDisplay');
+        const imageUploadArea = document.getElementById('imageUploadArea');
+        const artistImage = document.getElementById('artistImage');
+
+        // Gestion de l'authentification
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                showDashboard();
+                loadArtists();
+            } else {
+                showAuth();
+            }
+        });
+
+        // Connexion
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            loginBtn.disabled = true;
+            loginBtn.innerHTML = '<div class="loading-spinner"></div> Connexion en cours...';
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (error) {
+                showError('Email ou mot de passe incorrect');
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Se connecter';
+            }
+        });
+
+        // Déconnexion
+        logoutBtn.addEventListener('click', async () => {
+            await signOut(auth);
+        });
+
+        // Fonctions d'affichage
+        function showAuth() {
+            authContainer.style.display = 'flex';
+            dashboard.style.display = 'none';
+            document.body.style.background = 'linear-gradient(135deg, #fff8f0 0%, #ffb088 50%, #ff8a50 100%)';
+        }
+
+        function showDashboard() {
+            authContainer.style.display = 'none';
+            dashboard.style.display = 'block';
+            document.body.style.background = 'var(--warm-gray-50)';
+            
+            // Mise à jour des infos utilisateur
+            const email = currentUser.email;
+            userName.textContent = email.split('@')[0];
+            userAvatar.textContent = email.charAt(0).toUpperCase();
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 5000);
+        }
+
+        // Gestion des onglets
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentDay = tab.dataset.day;
+                renderArtists();
+            });
+        });
+
+        // Chargement des artistes
+        async function loadArtists() {
+            try {
+                const snapshot = await getDocs(collection(db, 'artistes'));
+                artists = [];
+                
+                snapshot.forEach((doc) => {
+                    artists.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Tri par jour puis par heure
+                artists.sort((a, b) => {
+                    if (a.jour !== b.jour) {
+                        return a.jour.localeCompare(b.jour);
+                    }
+                    return a.heure.localeCompare(b.heure);
+                });
+
+                updateStats();
+                renderArtists();
+            } catch (error) {
+                console.error('Erreur lors du chargement:', error);
+                showError('Erreur lors du chargement des artistes');
+            }
+        }
+
+        // Mise à jour des statistiques
+        function updateStats() {
+            const total = artists.length;
+            const sono = artists.filter(a => a.jour === '11').length;
+            const weekend = artists.filter(a => a.jour === '12' || a.jour === '13').length;
+            
+            animateNumber('totalArtists', total);
+            animateNumber('sonoArtists', sono);
+            animateNumber('weekendArtists', weekend);
+        }
+
+        function animateNumber(elementId, target) {
+            const element = document.getElementById(elementId);
+            const start = 0;
+            const duration = 1000;
+            const startTime = performance.now();
+            
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(start + (target - start) * easeOutCubic(progress));
+                
+                element.textContent = current;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        // Rendu des artistes
+        function renderArtists() {
+            const filteredArtists = currentDay === 'all' 
+                ? artists 
+                : artists.filter(artist => artist.jour === currentDay);
+
+            if (filteredArtists.length === 0) {
+                artistsDisplay.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎵</div>
+                        <h3>Aucun artiste trouvé</h3>
+                        <p>Ajoutez votre premier artiste pour commencer !</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const artistsHtml = filteredArtists.map(artist => `
+                <div class="artist-card" style="animation-delay: ${Math.random() * 0.5}s;">
+                    <div class="artist-image">
+                        ${artist.imageUrl 
+                            ? `<img src="${artist.imageUrl}" alt="${artist.nom}" style="width: 100%; height: 100%; object-fit: cover;">` 
+                            : '🎤'}
+                    </div>
+                    <div class="artist-content">
+                        <div class="artist-header">
+                            <div>
+                                <h3 class="artist-name">${artist.nom}</h3>
+                                <p class="artist-style">${artist.styleMusical}</p>
+                            </div>
+                            <span class="artist-day-badge day-${artist.jour}">
+                                ${artist.jour} JUILLET
+                            </span>
+                        </div>
+                        
+                        <div class="artist-time">
+                            <span>⏰</span>
+                            <span>${artist.heure}</span>
+                        </div>
+                        
+                        <p class="artist-description">${artist.description}</p>
+                        
+                        <div class="artist-actions">
+                            <button class="btn-edit" onclick="editArtist('${artist.id}')">
+                                ✏️ Modifier
+                            </button>
+                            <button class="btn-delete" onclick="deleteArtist('${artist.id}')">
+                                🗑️ Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            artistsDisplay.innerHTML = `<div class="artists-grid">${artistsHtml}</div>`;
+        }
+
+        // Gestion du modal
+        addArtistBtn.addEventListener('click', () => {
+            openModal();
+        });
+
+        closeModal.addEventListener('click', () => {
+            closeModalDialog();
+        });
+
+        artistModal.addEventListener('click', (e) => {
+            if (e.target === artistModal) {
+                closeModalDialog();
+            }
+        });
+
+        function openModal(artist = null) {
+            currentArtistId = artist ? artist.id : null;
+            const modalTitle = document.getElementById('modalTitle');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (artist) {
+                modalTitle.textContent = 'Modifier l\'artiste';
+                submitBtn.innerHTML = '💾 Modifier l\'artiste';
+                fillForm(artist);
+            } else {
+                modalTitle.textContent = 'Nouvel artiste';
+                submitBtn.innerHTML = '✨ Ajouter l\'artiste';
+                artistForm.reset();
+                resetImageUpload();
+            }
+
+            artistModal.style.display = 'block';
+            setTimeout(() => {
+                artistModal.classList.add('show');
+            }, 10);
+        }
+
+        function closeModalDialog() {
+            artistModal.classList.remove('show');
+            setTimeout(() => {
+                artistModal.style.display = 'none';
+                artistForm.reset();
+                resetImageUpload();
+                currentArtistId = null;
+                selectedImageFile = null;
+            }, 300);
+        }
+
+        function fillForm(artist) {
+            document.getElementById('artistName').value = artist.nom;
+            document.getElementById('artistStyle').value = artist.styleMusical;
+            document.getElementById('artistDay').value = artist.jour;
+            document.getElementById('artistTime').value = artist.heure;
+            document.getElementById('artistDescription').value = artist.description;
+            document.getElementById('artistSocial').value = artist.lienSocial || '';
+
+            if (artist.imageUrl) {
+                showImagePreview(artist.imageUrl);
+            }
+        }
+
+        // Gestion de l'upload d'image
+        imageUploadArea.addEventListener('click', () => {
+            artistImage.click();
+        });
+
+        artistImage.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('L\'image ne doit pas dépasser 5MB');
+                    return;
+                }
+                
+                selectedImageFile = file;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    showImagePreview(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function showImagePreview(src) {
+            imageUploadArea.classList.add('has-image');
+            imageUploadArea.innerHTML = `<img src="${src}" alt="Aperçu" class="image-preview">`;
+        }
+
+        function resetImageUpload() {
+            imageUploadArea.classList.remove('has-image');
+            imageUploadArea.innerHTML = `
+                <div class="upload-placeholder">
+                    <span class="upload-icon">📸</span>
+                    <div>Cliquer pour sélectionner une image</div>
+                    <small>PNG, JPG jusqu'à 5MB</small>
+                </div>
+            `;
+            selectedImageFile = null;
+        }
+
+        // Soumission du formulaire
+        artistForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<div class="loading-spinner"></div> Traitement...';
+
+            try {
+                const artistData = {
+                    nom: document.getElementById('artistName').value,
+                    styleMusical: document.getElementById('artistStyle').value,
+                    jour: document.getElementById('artistDay').value,
+                    heure: document.getElementById('artistTime').value,
+                    description: document.getElementById('artistDescription').value,
+                    lienSocial: document.getElementById('artistSocial').value || ''
+                };
+
+                // Upload image si nouvelle image sélectionnée
+                if (selectedImageFile) {
+                    const timestamp = Date.now();
+                    const imageRef = ref(storage, `artists/${timestamp}_${selectedImageFile.name}`);
+                    const snapshot = await uploadBytes(imageRef, selectedImageFile);
+                    artistData.imageUrl = await getDownloadURL(snapshot.ref);
+                }
+
+                if (currentArtistId) {
+                    // Modification
+                    await updateDoc(doc(db, 'artistes', currentArtistId), artistData);
+                } else {
+                    // Ajout
+                    await addDoc(collection(db, 'artistes'), artistData);
+                }
+
+                closeModalDialog();
+                await loadArtists();
+                
+                // Notification de succès
+                showSuccessNotification(currentArtistId ? 'Artiste modifié !' : 'Artiste ajouté !');
+                
+            } catch (error) {
+                console.error('Erreur:', error);
+                showError('Une erreur est survenue lors de l\'enregistrement');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        });
+
+        // Fonctions globales pour les boutons
+        window.editArtist = async (id) => {
+            try {
+                const docRef = doc(db, 'artistes', id);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    openModal({ id: docSnap.id, ...docSnap.data() });
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                showError('Erreur lors du chargement de l\'artiste');
+            }
+        };
+
+        window.deleteArtist = async (id) => {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet artiste ? Cette action est irréversible.')) {
+                try {
+                    await deleteDoc(doc(db, 'artistes', id));
+                    await loadArtists();
+                    showSuccessNotification('Artiste supprimé !');
+                } catch (error) {
+                    console.error('Erreur:', error);
+                    showError('Erreur lors de la suppression');
+                }
+            }
+        };
+
+        // Notifications de succès
+        function showSuccessNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: var(--gradient-success);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: var(--border-radius);
+                box-shadow: var(--shadow-lg);
+                z-index: 3000;
+                font-weight: 600;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Responsive sidebar toggle
+        function initMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            let isOpen = false;
+            
+            const menuBtn = document.createElement('button');
+            menuBtn.innerHTML = '☰';
+            menuBtn.style.cssText = `
+                display: none;
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1001;
+                background: var(--warm-white);
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+                font-size: 1.2rem;
+                box-shadow: var(--shadow);
+                cursor: pointer;
+                align-items: center;
+                justify-content: center;
+            `;
+            
+            document.body.appendChild(menuBtn);
+            
+            menuBtn.addEventListener('click', () => {
+                isOpen = !isOpen;
+                sidebar.classList.toggle('open', isOpen);
+                menuBtn.innerHTML = isOpen ? '✕' : '☰';
+            });
+            
+            const mediaQuery = window.matchMedia('(max-width: 1024px)');
+            function handleMediaQuery(e) {
+                menuBtn.style.display = e.matches ? 'flex' : 'none';
+                if (!e.matches) {
+                    sidebar.classList.remove('open');
+                    isOpen = false;
+                    menuBtn.innerHTML = '☰';
+                }
+            }
+            
+            mediaQuery.addListener(handleMediaQuery);
+            handleMediaQuery(mediaQuery);
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            initMobileMenu();
+        });
+    </script>
+</body>
+</html> 

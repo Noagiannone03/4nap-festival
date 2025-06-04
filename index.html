@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Festival ANRF</title>
+<title>4NAP Festival</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
@@ -334,10 +334,10 @@
         filter: brightness(0.4);
     }
 
-    .program-card:nth-child(1) { background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%); }
-    .program-card:nth-child(2) { background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%); }
-    .program-card:nth-child(3) { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    .program-card:nth-child(4) { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    .program-card:nth-child(1) { background: linear-gradient(135deg, #EF740F 0%, #ff6b6b 100%); }
+    .program-card:nth-child(2) { background: linear-gradient(135deg, #56B047 0%, #44a08d 100%); }
+    .program-card:nth-child(3) { background: linear-gradient(135deg, #2A4999 0%, #764ba2 100%); }
+    .program-card:nth-child(4) { background: linear-gradient(135deg, #E71F70 0%, #f5576c 100%); }
 
     .card-content {
         position: absolute;
@@ -1305,7 +1305,9 @@
 <body>
 <!-- Navbar -->
 <nav class="navbar" id="navbar">
-    <img src="assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    <a href="index.html">
+        <img src="assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    </a>
     <div class="menu-toggle" id="menuToggle">
         <span id="menuText">MENU</span>
         <div class="hamburger" id="hamburger">
@@ -1475,7 +1477,7 @@
 
 <!-- Action Buttons -->
 <section class="action-buttons">
-    <button class="action-btn secondary">PROGRAMMATION COMPLÈTE</button>
+    <button class="action-btn secondary" onclick="window.location.href='programmation-complete/index.html'">PROGRAMMATION COMPLÈTE</button>
     <button class="action-btn primary">GET YOUR PASS</button>
 </section>
 

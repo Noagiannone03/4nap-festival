@@ -14,7 +14,7 @@
     }
 
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
-
+    
     body {
         font-family: 'Montserrat', sans-serif;
         overflow-x: hidden;
@@ -58,6 +58,10 @@
         margin-left: -20px;
         height: fit-content;
         transition: all 0.5s ease;
+    }
+
+    .logo img {
+        height: 100%;
     }
 
     .menu-toggle {
@@ -268,12 +272,34 @@
     }
 
     .section-text p {
-        font-size: 1rem;
-        line-height: 1.7;
-        color: #666;
-        margin-bottom: 15px;
-        font-weight: 500;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        margin-bottom: 10px;
         flex-grow: 1;
+        /* Solution moderne et robuste pour l'ellipsis */
+        --lines: 4;
+        --line-height: 1.5;
+        max-height: calc(var(--lines) * var(--line-height) * 1em);
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* Pseudo-element pour les ellipsis propres */
+    .section-text p::after {
+        content: '...';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(to right, transparent, white 50%);
+        padding-left: 1em;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    /* Activation des ellipsis seulement quand nécessaire */
+    .section-text p.text-overflow::after {
+        opacity: 1;
     }
 
     .discover-more {
@@ -519,34 +545,403 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-        .hero-section {
-            flex-direction: column;
-            height: auto;
+        /* Navbar Mobile */
+        .navbar {
+            padding: 0 15px;
+            height: 60px;
         }
 
-        .hero-content {
-            padding: 40px;
+        .navbar::after {
+            left: 15px;
+            right: 15px;
         }
 
-        .hero-title {
-            font-size: 2.5rem;
+        .logo {
+            height: 50px;
+            margin-left: 5px;
         }
 
-        .section-container {
-            grid-template-columns: 1fr;
-            gap: 40px;
+        .logo img {
+            height: 100%;
         }
 
-        .content-section {
-            padding: 60px 40px;
+        #menuText {
+            display: none;
+        }
+
+        .hamburger {
+            margin-left: 0;
+            width: 28px;
+            height: 22px;
+        }
+
+        .hamburger span {
+            height: 3px;
         }
 
         .menu-overlay {
-            padding-left: 40px;
+            padding-left: 30px;
         }
 
         .menu-item {
-            font-size: 2.5rem;
+            font-size: 2rem;
+            margin: 12px 0;
+        }
+
+        /* Hero Section Mobile */
+        .hero-section {
+            margin-top: 60px;
+            flex-direction: row;
+            height: 40vh;
+            min-height: 280px;
+            max-height: 350px;
+        }
+
+        .hero-image {
+            flex: 0 0 55%;
+            min-height: 100%;
+            order: 1;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            flex: 0 0 45%;
+            padding: 15px 12px;
+            order: 2;
+        }
+
+        .hero-text {
+            max-width: none;
+            text-align: left;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .hero-description {
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .hero-date {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-time {
+            font-size: 0.9rem;
+        }
+
+        /* Content Sections Mobile */
+        .content-section {
+            padding: 40px 15px;
+        }
+
+        .section-container {
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 100%;
+        }
+
+        .section-text {
+            min-height: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .section-text h2 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .section-time {
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+        }
+
+        .time-icon {
+            width: 14px;
+            height: 14px;
+        }
+
+        .section-text p {
+            font-size: 0.7rem;
+            margin-bottom: 8px;
+            /* Ajustement des custom properties pour très petit mobile */
+            --lines: 3;
+            --line-height: 1.4;
+            max-height: calc(var(--lines) * var(--line-height) * 1em);
+        }
+
+        /* Pseudo-element pour les ellipsis propres */
+        .section-text p::after {
+            content: '...';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(to right, transparent, white 50%);
+            padding-left: 1em;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Activation des ellipsis seulement quand nécessaire */
+        .section-text p.text-overflow::after {
+            opacity: 1;
+        }
+
+        .discover-more {
+            font-size: 0.8rem;
+            margin-top: 15px;
+        }
+
+        .discover-arrow {
+            font-size: 0.9rem;
+        }
+
+        .section-image {
+            height: 300px;
+            border-radius: 6px;
+        }
+
+        /* Image Separators Mobile */
+        .image-separator {
+            height: 30px;
+        }
+
+        /* Action Buttons Mobile */
+        .action-buttons {
+            padding: 40px 20px 60px 20px;
+        }
+
+        .action-btn {
+            width: 100%;
+            max-width: none;
+            padding: 18px 30px;
+            font-size: 14px;
+        }
+
+        /* Footer Mobile - Style Accordion */
+        .footer {
+            padding: 40px 20px 0 20px;
+        }
+
+        .footer-top {
+            padding: 20px 0;
+            flex-direction: column;
+            gap: 20px;
+            min-height: auto;
+        }
+
+        .footer-socials {
+            gap: 20px;
+        }
+
+        .footer-bottom {
+            padding: 40px 0 20px 0;
+            flex-direction: column;
+            gap: 0;
+            align-items: stretch;
+        }
+
+        .footer-col {
+            border-bottom: 1px solid #ccc;
+            min-width: auto;
+            max-width: none;
+        }
+
+        .footer-col:last-child {
+            border-bottom: none;
+        }
+
+        .footer-col h4 {
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 20px 0;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-col h4::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-col.active h4::after {
+            transform: rotate(45deg);
+        }
+
+        .footer-col-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0;
+        }
+
+        .footer-col.active .footer-col-content {
+            max-height: 500px;
+            padding-bottom: 20px;
+        }
+
+        .footer-col p {
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .footer-member-section {
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .footer-member-section h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            padding: 0;
+            cursor: default;
+            justify-content: flex-start;
+        }
+
+        .footer-member-section h4::after {
+            display: none;
+        }
+
+        .footer-copyright {
+            margin: 0;
+            padding: 20px 0 15px 0;
+            font-size: 12px;
+        }
+
+        /* Sticky Member Button Mobile - EXACT copy from index */
+        .sticky-member {
+            width: 100px;
+            height: 100px;
+            bottom: -15px;
+            right: -15px;
+            font-size: 11px;
+        }
+    }
+
+    /* Très petit mobile */
+    @media (max-width: 480px) {
+        .navbar {
+            padding: 0 10px;
+        }
+
+        .navbar::after {
+            left: 10px;
+            right: 10px;
+        }
+
+        .logo {
+            height: 45px;
+            margin-left: 2px;
+        }
+
+        .hamburger {
+            width: 26px;
+            height: 20px;
+        }
+
+        .menu-overlay {
+            padding-left: 20px;
+        }
+
+        .menu-item {
+            font-size: 1.8rem;
+            margin: 10px 0;
+        }
+
+        .hero-section {
+            height: fit-content;
+        }
+
+        .hero-image {
+            flex: 0 0 55%;
+        }
+
+        .hero-content {
+            flex: 0 0 45%;
+            padding: 12px 8px;
+        }
+
+        .hero-title {
+            font-size: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.8rem;
+        }
+
+        .hero-description {
+            font-size: 0.75rem;
+        }
+
+        .content-section {
+            padding: 30px 10px;
+        }
+
+        .section-container {
+            gap: 10px;
+        }
+
+        .section-text {
+            padding: 5px;
+        }
+
+        .section-text h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .section-time {
+            font-size: 0.7rem;
+            margin-bottom: 12px;
+        }
+
+        .time-icon {
+            width: 12px;
+            height: 12px;
+        }
+
+        .section-text p {
+            font-size: 0.7rem;
+            margin-bottom: 8px;
+            /* Réduire à 3 lignes pour très petit mobile */
+            -webkit-line-clamp: 3;
+        }
+
+        .discover-more {
+            font-size: 0.7rem;
+            margin-top: 12px;
+        }
+
+        .section-image {
+            height: 220px;
+            border-radius: 4px;
+        }
+
+        .action-buttons {
+            padding: 30px 15px 50px 15px;
         }
     }
 
@@ -634,12 +1029,19 @@
         outline: 2px solid #4CAF50;
         outline-offset: 2px;
     }
+
+    /* Desktop: garder le contenu des blocs visible */
+    .footer-col-content {
+        display: block;
+    }
 </style>
 </head>
 <body>
 <!-- Navbar -->
 <nav class="navbar" id="navbar">
-    <img src="../assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    <a href="../index.html">
+        <img src="../assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    </a>
     <div class="menu-toggle" id="menuToggle">
         <span id="menuText">MENU</span>
         <div class="hamburger" id="hamburger">
@@ -652,7 +1054,7 @@
 
 <!-- Sticky Member Button -->
 <div class="sticky-member">
-    DEVENIR<br>MEMBRE
+    DEVENEZ<br>MEMBRE
 </div>
 
 <!-- Menu Overlay -->
@@ -681,105 +1083,25 @@
     </div>
 </section>
 
-<!-- Content Section 1 -->
-<section class="content-section">
-    <div class="section-container">
-        <div class="section-text">
-            <h2>L'EXPÉRIENCE SONO MONDIALE</h2>
-            <div class="section-time">
-                <img src="../assets/pictos/Clock(1).png" alt="Time" class="time-icon">
-                <span>19:00 - 22:00</span>
+<!-- Dynamic Artist Sections - will be populated by Firebase -->
+<div id="artistSections">
+    <!-- Loading placeholder -->
+    <div class="image-separator"></div>
+    <section class="content-section">
+        <div class="section-container">
+            <div class="section-text" style="text-align: center; grid-column: 1 / -1;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                    <div style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #ff9a56; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                </div>
+                <p style="color: #666; font-size: 1.1rem;">Chargement des artistes Sono Mondiale...</p>
             </div>
-            <p>
-                Plongez dans un univers sonore où se mélangent les traditions musicales du monde entier. 
-                Cette soirée unique vous propose un voyage musical à travers les continents, 
-                avec des artistes venus des quatre coins du globe.
-            </p>
-            <p>
-                Des rythmes africains aux mélodies asiatiques, en passant par les sonorités 
-                latino-américaines et les harmonies européennes, chaque performance vous 
-                transportera dans une nouvelle culture musicale.
-            </p>
-            <a href="#" class="discover-more">
-                <span>Découvrir plus</span>
-                <img src="../assets/pictos/ic_baseline-arrow-right.png" alt="Arrow" class="discover-arrow">
-            </a>
         </div>
-        <div class="section-image">
-            <img src="../assets/images/dezze.png" alt="World Music" />
-        </div>
-    </div>
-</section>
-
-<!-- Image Separator -->
-<div class="image-separator"></div>
-
-<!-- Content Section 2 -->
-<section class="content-section">
-    <div class="section-container">
-        <div class="section-image">
-            <img src="../assets/images/dezze.png" alt="Instruments" />
-        </div>
-        <div class="section-text">
-            <h2>INSTRUMENTS TRADITIONNELS</h2>
-            <div class="section-time">
-                <img src="../assets/pictos/Clock(1).png" alt="Time" class="time-icon">
-                <span>19:00 - 22:00</span>
-            </div>
-            <p>
-                Découvrez une collection exceptionnelle d'instruments traditionnels du monde entier. 
-                Chaque artiste apporte avec lui les sonorités authentiques de sa culture, 
-                créant une symphonie unique et envoûtante.
-            </p>
-            <p>
-                Du djembé africain au sitar indien, en passant par le charango andin et 
-                les percussions caribéennes, chaque instrument raconte une histoire 
-                et porte en lui l'âme d'un peuple.
-            </p>
-            <a href="#" class="discover-more">
-                <span>Découvrir plus</span>
-                <img src="../assets/pictos/ic_baseline-arrow-right.png" alt="Arrow" class="discover-arrow">
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Image Separator -->
-<div class="image-separator"></div>
-
-<!-- Content Section 3 -->
-<section class="content-section">
-    <div class="section-container">
-        <div class="section-text">
-            <h2>FUSION CULTURELLE</h2>
-            <div class="section-time">
-                <img src="../assets/pictos/Clock(1).png" alt="Time" class="time-icon">
-                <span>19:00 - 22:00</span>
-            </div>
-            <p>
-                La magie de Sono Mondiale réside dans la rencontre entre les cultures. 
-                Les artistes ne se contentent pas de présenter leur tradition musicale, 
-                ils créent ensemble des fusions inédites et surprenantes.
-            </p>
-            <p>
-                Ces collaborations spontanées donnent naissance à des moments musicaux 
-                uniques, où les frontières s'effacent pour laisser place à l'universalité 
-                de la musique et à la beauté de la diversité culturelle.
-            </p>
-            <a href="#" class="discover-more">
-                <span>Découvrir plus</span>
-                <img src="../assets/pictos/ic_baseline-arrow-right.png" alt="Arrow" class="discover-arrow">
-            </a>
-        </div>
-        <div class="section-image">
-            <img src="../assets/images/dezze.png" alt="Cultural Fusion" />
-        </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <!-- Action Buttons -->
 <section class="action-buttons">
-    <button class="action-btn secondary">PROGRAMMATION COMPLÈTE</button>
+    <button class="action-btn secondary" onclick="window.location.href='../programmation-complete/index.html'">PROGRAMMATION COMPLÈTE</button>
     <button class="action-btn primary">GET YOUR PASS</button>
 </section>
 
@@ -808,19 +1130,25 @@
     <div class="footer-bottom">
         <div class="footer-col footer-col-left">
             <h4>INFOS PRATIQUES</h4>
-            <p>Découvrez toutes nos infos pratiques</p>
+            <div class="footer-col-content">
+                <p>Découvrez toutes nos infos pratiques</p>
+            </div>
         </div>
         <div class="footer-col footer-col-center">
             <h4>PARTENAIRES</h4>
-            <p>Découvrez nos partenaires</p>
-            <div class="footer-member-section">
-                <h4>DEVENEZ MEMBRE</h4>
-                <p>Des questions ? Des réponses</p>
+            <div class="footer-col-content">
+                <p>Découvrez nos partenaires</p>
+                <div class="footer-member-section">
+                    <h4>DEVENEZ MEMBRE</h4>
+                    <p>Des questions ? Des réponses</p>
+                </div>
             </div>
         </div>
         <div class="footer-col footer-col-right">
             <h4>NEWS</h4>
-            <p>News & bon plans</p>
+            <div class="footer-col-content">
+                <p>News & bon plans</p>
+            </div>
         </div>
     </div>
     <div class="footer-copyright">
@@ -981,6 +1309,288 @@
         duration: 0.8,
         stagger: 0.2,
         ease: 'power3.out'
+    });
+
+    // Mobile Accordion Functionality
+    function initMobileAccordions() {
+        if (window.innerWidth <= 768) {
+            // Footer Accordion
+            const footerCols = document.querySelectorAll('.footer-col h4');
+            footerCols.forEach(header => {
+                // Skip the member section header
+                if (!header.parentElement.classList.contains('footer-member-section')) {
+                    header.addEventListener('click', () => {
+                        const footerCol = header.parentElement;
+                        footerCol.classList.toggle('active');
+                    });
+                }
+            });
+        }
+    }
+
+    // Smart Ellipsis Detection - Niveau développeur senior
+    function initSmartEllipsis() {
+        const paragraphs = document.querySelectorAll('.section-text p');
+        
+        const checkTextOverflow = (element) => {
+            // Créer un clone temporaire pour mesurer la hauteur réelle
+            const clone = element.cloneNode(true);
+            clone.style.maxHeight = 'none';
+            clone.style.position = 'absolute';
+            clone.style.visibility = 'hidden';
+            clone.style.width = element.offsetWidth + 'px';
+            element.parentNode.appendChild(clone);
+            
+            const realHeight = clone.offsetHeight;
+            const maxHeight = element.offsetHeight;
+            
+            element.parentNode.removeChild(clone);
+            
+            // Ajouter/retirer la classe selon le débordement
+            if (realHeight > maxHeight) {
+                element.classList.add('text-overflow');
+            } else {
+                element.classList.remove('text-overflow');
+            }
+        };
+        
+        // Vérifier au chargement
+        paragraphs.forEach(checkTextOverflow);
+        
+        // Vérifier au redimensionnement avec debounce
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                paragraphs.forEach(checkTextOverflow);
+            }, 150);
+        });
+    }
+
+    // Initialize smart ellipsis avec attente des polices
+    document.fonts.ready.then(() => {
+        initSmartEllipsis();
+    }).catch(() => {
+        // Fallback si les polices ne chargent pas
+        setTimeout(initSmartEllipsis, 1000);
+    });
+
+    // Initialize accordion on page load
+    initMobileAccordions();
+</script>
+
+<!-- Firebase Integration for Artists -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCK20ovvLNY9lBSr7FotjXPU1mwHsg8pnk",
+        authDomain: "nap-festival.firebaseapp.com",
+        projectId: "nap-festival",
+        storageBucket: "nap-festival.firebasestorage.app",
+        messagingSenderId: "928048730953",
+        appId: "1:928048730953:web:47cad1e4c5d300a11b4098",
+        measurementId: "G-481JX6JFMD"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+
+    // Function to create artist section HTML
+    function createArtistSection(artist, index) {
+        const isEven = index % 2 === 0;
+        const isFirst = index === 0;
+        
+        return `
+            ${!isFirst ? '<!-- Image Separator --><div class="image-separator"></div>' : ''}
+
+            <!-- Artist Section: ${artist.nom} -->
+            <section class="content-section">
+                <div class="section-container">
+                    ${isEven ? `
+                        <div class="section-text">
+                            <h2>${artist.nom.toUpperCase()}</h2>
+                            <div class="section-time">
+                                <img src="../assets/pictos/Clock(1).png" alt="Time" class="time-icon">
+                                <span>${artist.heure} - 11 juillet</span>
+                            </div>
+                            <p>
+                                ${artist.description}
+                            </p>
+                            ${artist.lienSocial ? `
+                                <a href="${artist.lienSocial}" target="_blank" class="discover-more">
+                                    <span>Suivre l'artiste</span>
+                                    <img src="../assets/pictos/ic_baseline-arrow-right.png" alt="Arrow" class="discover-arrow">
+                                </a>
+                            ` : `
+                                <div class="discover-more" style="opacity: 0.6; cursor: default;">
+                                    <span>${artist.styleMusical}</span>
+                                </div>
+                            `}
+                        </div>
+                        <div class="section-image">
+                            <img src="${artist.imageUrl || '../assets/images/dezze.png'}" alt="${artist.nom}" />
+                        </div>
+                    ` : `
+                        <div class="section-image">
+                            <img src="${artist.imageUrl || '../assets/images/dezze.png'}" alt="${artist.nom}" />
+                        </div>
+                        <div class="section-text">
+                            <h2>${artist.nom.toUpperCase()}</h2>
+                            <div class="section-time">
+                                <img src="../assets/pictos/Clock(1).png" alt="Time" class="time-icon">
+                                <span>${artist.heure} - 11 juillet</span>
+                            </div>
+                            <p>
+                                ${artist.description}
+                            </p>
+                            ${artist.lienSocial ? `
+                                <a href="${artist.lienSocial}" target="_blank" class="discover-more">
+                                    <span>Suivre l'artiste</span>
+                                    <img src="../assets/pictos/ic_baseline-arrow-right.png" alt="Arrow" class="discover-arrow">
+                                </a>
+                            ` : `
+                                <div class="discover-more" style="opacity: 0.6; cursor: default;">
+                                    <span>${artist.styleMusical}</span>
+                                </div>
+                            `}
+                        </div>
+                    `}
+                </div>
+            </section>
+        `;
+    }
+
+    // Function to load artists for day 11 (Sono Mondiale)
+    async function loadSonoMondialeArtists() {
+        const artistSections = document.getElementById('artistSections');
+        
+        try {
+            // Query artists for day 11 ordered by time
+            const q = query(
+                collection(db, 'artistes'), 
+                where('jour', '==', '11'),
+                orderBy('heure')
+            );
+            
+            const snapshot = await getDocs(q);
+            const artists = [];
+            
+            snapshot.forEach((doc) => {
+                artists.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Display artists as individual sections
+            if (artists.length === 0) {
+                artistSections.innerHTML = `
+                    <div class="image-separator"></div>
+                    <section class="content-section">
+                        <div class="section-container">
+                            <div class="section-text" style="text-align: center; grid-column: 1 / -1;">
+                                <h2>ARTISTES À VENIR</h2>
+                                <p style="color: #666; font-size: 1.1rem;">
+                                    La programmation Sono Mondiale sera bientôt dévoilée.<br>
+                                    Revenez prochainement pour découvrir nos artistes exceptionnels !
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            } else {
+                artistSections.innerHTML = artists.map((artist, index) => createArtistSection(artist, index)).join('');
+
+                // Trigger GSAP animations for new sections
+                setTimeout(() => {
+                    // Content Sections Animation
+                    gsap.fromTo('.content-section', {
+                        y: 50,
+                        opacity: 0
+                    }, {
+                        scrollTrigger: {
+                            trigger: '.content-section',
+                            start: 'top 80%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        stagger: 0.3,
+                        ease: 'power3.out'
+                    });
+
+                    // Image Separators Animation
+                    gsap.fromTo('.image-separator', {
+                        scaleX: 0
+                    }, {
+                        scrollTrigger: {
+                            trigger: '.image-separator',
+                            start: 'top 90%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        scaleX: 1,
+                        duration: 1.2,
+                        ease: 'power3.out',
+                        transformOrigin: 'left center'
+                    });
+
+                    // Section Text Animation
+                    gsap.fromTo('.section-text h2', {
+                        y: 30,
+                        opacity: 0
+                    }, {
+                        scrollTrigger: {
+                            trigger: '.section-text h2',
+                            start: 'top 90%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    });
+
+                    // Section Images Animation
+                    gsap.fromTo('.section-image', {
+                        scale: 0.8,
+                        opacity: 0
+                    }, {
+                        scrollTrigger: {
+                            trigger: '.section-image',
+                            start: 'top 85%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        scale: 1,
+                        opacity: 1,
+                        duration: 1,
+                        ease: 'power3.out'
+                    });
+                }, 100);
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des artistes:', error);
+            artistSections.innerHTML = `
+                <div class="image-separator"></div>
+                <section class="content-section">
+                    <div class="section-container">
+                        <div class="section-text" style="text-align: center; grid-column: 1 / -1;">
+                            <h2>ERREUR DE CHARGEMENT</h2>
+                            <p style="color: #666; font-size: 1.1rem;">
+                                Impossible de charger les artistes.<br>
+                                Veuillez rafraîchir la page.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+    }
+
+    // Load artists when page is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        loadSonoMondialeArtists();
     });
 </script>
 </body>

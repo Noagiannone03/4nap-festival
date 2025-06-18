@@ -224,6 +224,29 @@
         font-weight: 500;
     }
 
+    .hero-button {
+        margin-top: 40px;
+        padding: 18px 40px;
+        background: transparent;
+        border: 2px solid #000;
+        color: #000;
+        font-size: 14px;
+        font-weight: 700;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        line-height: 1.2;
+    }
+
+    .hero-button:hover {
+        background: #000;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
     /* Content Sections */
     .content-section {
         padding: 80px 80px;
@@ -415,74 +438,19 @@
     .footer-social-icon:hover {
         background: #4CAF50;
     }
-    .footer-newsletter {
+    .footer-partners {
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-weight: 700;
-        font-size: 16px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
+        gap: 30px;
     }
-    .footer-newsletter-icon-img {
-        width: 24px;
-        height: 24px;
-        object-fit: contain;
-        filter: brightness(0);
+    .footer-partner-icon {
+        height: 30px;
+        width: auto;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
     }
-    .footer-bottom {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 60px 60px 30px 60px;
-        gap: 60px;
-        background: #e8e8e8;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    .footer-col {
-        flex: 1 1 0;
-        min-width: 200px;
-        max-width: 350px;
-    }
-    .footer-col-center {
-        text-align: center;
-    }
-    .footer-col-right {
-        text-align: right;
-    }
-    .footer-member-section {
-        margin-top: 40px;
-        padding-top: 30px;
-        border-top: 1px solid #ccc;
-    }
-    .footer-member-section h4 {
-        font-size: 1.3rem;
-        font-weight: 900;
-        margin-bottom: 18px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #222;
-    }
-    .footer-member-section p {
-        color: #333;
-        font-size: 15px;
-        font-weight: 500;
-        margin-bottom: 0;
-    }
-    .footer-col h4 {
-        font-size: 1.3rem;
-        font-weight: 900;
-        margin-bottom: 18px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #222;
-    }
-    .footer-col p {
-        color: #333;
-        font-size: 15px;
-        font-weight: 500;
-        margin-bottom: 0;
+    .footer-partner-icon:hover {
+        opacity: 1;
     }
     .footer-copyright {
         text-align: center;
@@ -495,24 +463,16 @@
     }
 
     /* Suppression de l'ancien social-bar et footer */
-    .social-bar { display: none !important; }
+    .social-bar, .footer-bottom, .footer-newsletter, .footer-col, .footer-member-section { display: none !important; }
 
     /* Responsive Footer */
     @media (max-width: 900px) {
         .footer {
             padding: 40px 30px 0 30px;
         }
-        .footer-top, .footer-bottom {
+        .footer-top {
             padding-left: 30px;
             padding-right: 30px;
-        }
-        .footer-bottom {
-            flex-direction: column;
-            gap: 30px;
-            align-items: stretch;
-        }
-        .footer-col-center, .footer-col-right {
-            text-align: left;
         }
         .footer-copyright {
             margin: 0 30px;
@@ -522,11 +482,9 @@
         .footer {
             padding: 20px 15px 0 15px;
         }
-        .footer-top, .footer-bottom {
+        .footer-top {
             padding-left: 15px;
             padding-right: 15px;
-        }
-        .footer-top {
             flex-direction: column;
             gap: 15px;
             min-height: 0;
@@ -534,9 +492,14 @@
             padding-bottom: 15px;
             margin-top: 20px;
         }
-        .footer-bottom {
-            padding-top: 30px;
-            padding-bottom: 10px;
+        .footer-socials {
+            gap: 20px;
+        }
+        .footer-partners {
+            gap: 20px;
+        }
+        .footer-partner-icon {
+            height: 25px;
         }
         .footer-copyright {
             margin: 0 15px;
@@ -641,6 +604,12 @@
 
         .hero-time {
             font-size: 0.9rem;
+        }
+
+        .hero-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 12px;
         }
 
         /* Content Sections Mobile */
@@ -1030,10 +999,7 @@
         outline-offset: 2px;
     }
 
-    /* Desktop: garder le contenu des blocs visible */
-    .footer-col-content {
-        display: block;
-    }
+
 </style>
 </head>
 <body>
@@ -1054,7 +1020,7 @@
 
 <!-- Sticky Member Button -->
 <div class="sticky-member">
-    DEVENEZ<br>MEMBRE
+    GET MY<br>TICKETS
 </div>
 
 <!-- Menu Overlay -->
@@ -1078,7 +1044,7 @@
                 et leurs performances envoûtantes. Une expérience musicale unique qui célèbre la 
                 diversité culturelle et l'universalité de la musique.
             </p>
-            
+            <button class="hero-button" onclick="window.open('#', '_blank')">GET MY TICKETS</button>
         </div>
     </div>
 </section>
@@ -1122,38 +1088,15 @@
                 <img src="../assets/pictos/prime_twitter.png" alt="Twitter" class="social-icon-img">
             </a>
         </div>
-        <div class="footer-newsletter">
-            <img src="../assets/pictos/Vector(2).png" alt="Email" class="footer-newsletter-icon-img">
-            <span class="footer-newsletter-text">NEWSLETTER</span>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="footer-col footer-col-left">
-            <h4>INFOS PRATIQUES</h4>
-            <div class="footer-col-content">
-                <p>Découvrez toutes nos infos pratiques</p>
-            </div>
-        </div>
-        <div class="footer-col footer-col-center">
-            <h4>PARTENAIRES</h4>
-            <div class="footer-col-content">
-                <p>Découvrez nos partenaires</p>
-                <div class="footer-member-section">
-                    <h4>DEVENEZ MEMBRE</h4>
-                    <p>Des questions ? Des réponses</p>
-                </div>
-            </div>
-        </div>
-        <div class="footer-col footer-col-right">
-            <h4>NEWS</h4>
-            <div class="footer-col-content">
-                <p>News & bon plans</p>
-            </div>
+        <div class="footer-partners">
+            <img src="../assets/logos/4nap-logo-gris.png" alt="Partner 1" class="footer-partner-icon">
+            <img src="../assets/logos/4nap-logo-gris.png" alt="Partner 2" class="footer-partner-icon">
+            <img src="../assets/logos/4nap-logo-gris.png" alt="Partner 3" class="footer-partner-icon">
+            <img src="../assets/logos/4nap-logo-gris.png" alt="Partner 4" class="footer-partner-icon">
         </div>
     </div>
     <div class="footer-copyright">
         <p>&copy; 2025 NO/ID*.  <a href="https://noagiannone.fr" style="text-decoration: none; font-weight: bold; color: inherit;">Made with ✌️ by Noa Giannone</a>. Tous droits réservés.</p>
-
     </div>
 </footer>
 
@@ -1313,19 +1256,7 @@
 
     // Mobile Accordion Functionality
     function initMobileAccordions() {
-        if (window.innerWidth <= 768) {
-            // Footer Accordion
-            const footerCols = document.querySelectorAll('.footer-col h4');
-            footerCols.forEach(header => {
-                // Skip the member section header
-                if (!header.parentElement.classList.contains('footer-member-section')) {
-                    header.addEventListener('click', () => {
-                        const footerCol = header.parentElement;
-                        footerCol.classList.toggle('active');
-                    });
-                }
-            });
-        }
+        // Plus besoin du footer accordion
     }
 
     // Smart Ellipsis Detection - Niveau développeur senior

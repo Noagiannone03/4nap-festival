@@ -1159,11 +1159,11 @@
         .program-cards-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 1px;
             margin: 0;
-            padding: 40px 0;
+            padding: 0;
             position: relative;
-            min-height: 80vh;
+            min-height: auto;
         }
 
         /* Masquer les cartes desktop sur mobile */
@@ -1306,6 +1306,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         .info-block h3::after {
@@ -1313,6 +1315,9 @@
             font-size: 1.5rem;
             font-weight: 300;
             transition: transform 0.3s ease;
+            color: #333;
+            flex-shrink: 0;
+            margin-left: 10px;
         }
 
         .info-block.active h3::after {
@@ -1320,15 +1325,18 @@
         }
 
         .info-block-content {
-            max-height: 0;
+            max-height: 0 !important;
             overflow: hidden;
             transition: max-height 0.3s ease;
             padding: 0;
+            opacity: 0;
         }
 
         .info-block.active .info-block-content {
-            max-height: 1000px;
+            max-height: 1000px !important;
             padding-bottom: 20px;
+            opacity: 1;
+            transition: max-height 0.3s ease, opacity 0.3s ease 0.1s;
         }
 
         .info-block p {
@@ -1452,7 +1460,7 @@
         }
 
         .program-cards-grid {
-        padding: 0%;
+            padding: 0;
             gap: 1px;
         }
 
@@ -1498,8 +1506,10 @@
     }
 
     /* Desktop: garder le contenu des blocs visible */
-    .info-block-content {
-        display: block;
+    @media (min-width: 769px) {
+        .info-block-content {
+            display: block;
+        }
     }
 </style>
 </head>
@@ -1528,6 +1538,11 @@
 
 <!-- Hero Section -->
 <section class="hero">
+    <video class="hero-video" autoplay muted loop playsinline>
+        <source src="assets/videos/4nap.mov" type="video/quicktime">
+        <source src="assets/videos/4nap.mov" type="video/mp4">
+    </video>
+    <!-- Fallback si la vidéo ne se charge pas -->
     <div class="video-placeholder">
         <div class="play-button"></div>
     </div>
@@ -1697,7 +1712,7 @@
         <h2 class="map-title">COMMENT VENIR ?</h2>
         <iframe 
             class="map-iframe"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2907.1915089745956!2d5.883669676470947!3d43.093891979144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c904577e6a8a1d%3A0x9e6e9e6e6e9e9e6e!2sFort%20Napol%C3%A9on%2C%20Chemin%20Marc%20Sagnier%2C%2083500%20La%20Seyne-sur-Mer!5e0!3m2!1sfr!2sfr!4v1703150000000!5m2!1sfr!2sfr"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2913.470653388145!2d5.895491!3d43.094623!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c90353c495fc09%3A0xfd2b86e8eefb03ba!2sParking%20Fort%20Napol%C3%A9on!5e0!3m2!1sfr!2sfr!4v1750324780094!5m2!1sfr!2sfr"
             allowfullscreen="" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade">
@@ -1767,18 +1782,13 @@
 <footer class="footer">
     <div class="footer-top">
         <div class="footer-socials">
-            <a href="#" class="footer-social-icon">
+            <a href="https://www.facebook.com/noidlabtoulon/?locale=fr_FR" class="footer-social-icon">
                 <img src="assets/pictos/fe_facebook.png" alt="Facebook" class="social-icon-img">
             </a>
-            <a href="#" class="footer-social-icon">
+            <a href="https://www.instagram.com/noidlab/" class="footer-social-icon">
                 <img src="assets/pictos/mdi_instagram.png" alt="Instagram" class="social-icon-img">
             </a>
-            <a href="#" class="footer-social-icon">
-                <img src="assets/pictos/ic_baseline-tiktok.png" alt="TikTok" class="social-icon-img">
-            </a>
-            <a href="#" class="footer-social-icon">
-                <img src="assets/pictos/prime_twitter.png" alt="Twitter" class="social-icon-img">
-            </a>
+         
         </div>
         <div class="footer-partners">
             <img src="assets/logos/4nap-logo-gris.png" alt="Partner 1" class="footer-partner-icon">
@@ -2038,18 +2048,35 @@
 
     // Mobile Accordion Functionality
     function initMobileAccordions() {
+        // Remove existing listeners first to avoid duplicates
+        document.querySelectorAll('.info-block h3').forEach(header => {
+            header.replaceWith(header.cloneNode(true));
+        });
+        
         if (window.innerWidth <= 768) {
             // Info Section Accordion
             const infoBlocks = document.querySelectorAll('.info-block h3');
             infoBlocks.forEach(header => {
-                header.addEventListener('click', () => {
-                    const infoBlock = header.parentElement;
+                header.style.cursor = 'pointer';
+                header.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const infoBlock = this.parentElement;
+                    
+                    // Close other blocks
+                    document.querySelectorAll('.info-block').forEach(block => {
+                        if (block !== infoBlock) {
+                            block.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current block
                     infoBlock.classList.toggle('active');
-                });
+                }, { passive: false });
             });
 
             // Program Cards Click to Open Details
-            const programCards = document.querySelectorAll('.program-card');
+            const programCards = document.querySelectorAll('.program-cards-grid .program-card');
             programCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const button = card.querySelector('.card-button');
@@ -2061,8 +2088,12 @@
         }
     }
 
-    // Initialize accordion on page load
-    initMobileAccordions();
+    // Initialize accordion after page is fully loaded
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            initMobileAccordions();
+        }, 100);
+    });
 
     // Reinitialize on window resize
     let resizeTimer;

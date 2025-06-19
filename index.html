@@ -701,6 +701,8 @@
         line-height: 1.2;
         position: relative;
         z-index: 10;
+        opacity: 1;
+        visibility: visible;
     }
 
     .action-btn.primary {
@@ -1519,10 +1521,9 @@
 
 <!-- Menu Overlay -->
 <div class="menu-overlay" id="menuOverlay">
-    <div class="menu-item">PROGRAMMATION</div>
-    <div class="menu-item">INFOS PRATIQUES</div>
+    <div class="menu-item" data-target="#program-section">PROGRAMMATION</div>
+    <div class="menu-item" data-target="#info-section">INFOS PRATIQUES</div>
     <div class="menu-item">DEVENEZ MEMBRE</div>
-    <div class="menu-item">NEWS</div>
 </div>
 
 <!-- Hero Section -->
@@ -1549,7 +1550,7 @@
             <div class="accent-corner top-right"></div>
             <div class="accent-corner bottom-left"></div>
             <div class="accent-corner bottom-right"></div>
-            <p>Une programmation précise et underground, loin des clichés commerciaux. Une célébration pour les puristes et les âmes avides de découvertes. Laissez-vous emporter par ces vagues sonores dans ce site hors du commun. La première édition du 4NAP festival est le point de départ d'une aventure qui ne fait que commencer… montez dans le train, les places sont limitées, alors réservez vite.</p>
+            <p>Une programmation précise et underground, loin des clichés commerciaux. Une célébration pour les puristes et les âmes avides de découvertes. Laissez-vous emporter par ces vagues sonores dans ce site hors du commun. La première édition du 4NAP festival est le point de départ d'une aventure qui ne fait que commencer… </br><span style="font-weight: 900; font-size: 1.1em; color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);">  montez dans le train, les places sont limitées, alors réservez vite.</span></p>
         </div>
         
         <div class="countdown">
@@ -1577,58 +1578,54 @@
 </section>
 
 <!-- Program Section -->
-<section class="program-section">
+<section class="program-section" id="program-section">
     <!-- Cartes Desktop (version biais) -->
     <div class="program-card">
         <div class="card-content">
             <div class="card-date">11<br>JUILLET</div>
             <div class="card-title">SONO MONDIALE</div>
-            <div class="card-genre">WORLD MUSIC</div>
         </div>
         <div class="card-image">
             <img src="assets/images/perso1.png" alt="Program Card 1">
         </div>
         <div class="card-button-container">
-            <button class="card-button" onclick="window.location.href='programmation/sono-mondiale.html'">VOIR LA PROGRAMMATION</button>
+            <button class="card-button">PROGRAMMATION À VENIR</button>
         </div>
     </div>
     <div class="program-card">
         <div class="card-content">
             <div class="card-date">12<br>JUILLET</div>
-            <div class="card-title">GROS MUSIC</div>
-            <div class="card-genre">ELECTRONIC</div>
+            <div class="card-title">BASS MUSIC</div>
         </div>
         <div class="card-image">
             <img src="assets/images/perso2.png" alt="Program Card 2">
         </div>
         <div class="card-button-container">
-            <button class="card-button" onclick="alert('Page Gros Music en construction')">VOIR LA PROGRAMMATION</button>
+            <button class="card-button">PROGRAMMATION À VENIR</button>
         </div>
     </div>
     <div class="program-card">
         <div class="card-content">
             <div class="card-date">13<br>JUILLET</div>
-            <div class="card-title">TECHNO HARD</div>
-            <div class="card-genre">TECHNO</div>
+            <div class="card-title">TECHNO TO HARDCORE</div>
         </div>
         <div class="card-image">
             <img src="assets/images/perso3.png" alt="Program Card 3">
         </div>
         <div class="card-button-container">
-            <button class="card-button" onclick="alert('Page Techno Hard en construction')">VOIR LA PROGRAMMATION</button>
+            <button class="card-button">PROGRAMMATION À VENIR</button>
         </div>
     </div>
     <div class="program-card">
         <div class="card-content">
             <div class="card-date">14<br>JUILLET</div>
-            <div class="card-title">HOUSE MUSIC</div>
-            <div class="card-genre">HOUSE</div>
+            <div class="card-title">GROOVE TO HOUSE MUSIC</div>
         </div>
         <div class="card-image">
             <img src="assets/images/perso4.png" alt="Program Card 4">
         </div>
         <div class="card-button-container">
-            <button class="card-button" onclick="alert('Page House Music en construction')">VOIR LA PROGRAMMATION</button>
+            <button class="card-button">PROGRAMMATION À VENIR</button>
         </div>
     </div>
 
@@ -1690,7 +1687,7 @@
 
 <!-- Action Buttons -->
 <section class="action-buttons">
-    <button class="action-btn secondary" onclick="window.location.href='programmation-complete/index.html'">PROGRAMMATION COMPLÈTE</button>
+    <button class="action-btn secondary">PROGRAMMATION À VENIR</button>
     <button class="action-btn primary">GET YOUR PASS</button>
 </section>
 
@@ -1700,7 +1697,7 @@
         <h2 class="map-title">COMMENT VENIR ?</h2>
         <iframe 
             class="map-iframe"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.8234567890123!2d5.8834567890123456!3d43.10123456789012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c91b5b5b5b5b5b%3A0x5b5b5b5b5b5b5b5b!2sFort%20Napol%C3%A9on%2C%20La%20Seyne-sur-Mer!5e0!3m2!1sfr!2sfr!4v1234567890123"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2907.1915089745956!2d5.883669676470947!3d43.093891979144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12c904577e6a8a1d%3A0x9e6e9e6e6e9e9e6e!2sFort%20Napol%C3%A9on%2C%20Chemin%20Marc%20Sagnier%2C%2083500%20La%20Seyne-sur-Mer!5e0!3m2!1sfr!2sfr!4v1703150000000!5m2!1sfr!2sfr"
             allowfullscreen="" 
             loading="lazy" 
             referrerpolicy="no-referrer-when-downgrade">
@@ -1709,55 +1706,58 @@
 </section>
 
 <!-- Info Section -->
-<section class="info-section">
+<section class="info-section" id="info-section">
     <div class="info-container">
         <div class="info-block">
-            <h3>ACCÈS</h3>
+            <h3>ACCÈS & INFOS PRATIQUES</h3>
             <div class="info-block-content">
-                <p><span class="highlight">LIEU :</span> LE BOIS DE VINCENNES</p>
-                <p>Plaine de la Belle Étoile<br>
-                Accès par la Route Dauphine via Espl. Saint Louis<br>
-                Bois de Vincennes, 75012 Paris</p>
+                <p><span class="highlight">📍 LIEU :</span> FORT NAPOLÉON</p>
+                <p>Chemin Marc Sagnier, La Seyne-sur-Mer<br>
+                <strong>⚠️ Le Fort est situé en hauteur : une montée est à prévoir</strong></p>
                 
-                <p><span class="highlight">HORAIRES :</span> 6, 7 & 8 JUIN 2025</p>
-                <p>Vendredi : 17H – 1H<br>
-                Samedi : 14H – 1h<br>
-                Dimanche : 14H – 1H</p>
+                <p><span class="highlight">📅 DATES :</span> DU 11 AU 14 JUILLET 2025</p>
+                <p>Ouverture des portes à partir de 17h45</p>
                 
-                <p><span class="highlight">DERNIERS MÉTROS :</span></p>
-                <p>Vendredi : métro 1 : Château de Vincennes vers PARIS : 1h39<br>
-                Samedi : métro 1 : Château de Vincennes vers PARIS : 1h39<br>
-                Dimanche : métro 1 : Château de Vincennes vers PARIS : 1h39</p>
+                <p><span class="highlight">🚗 ACCÈS EN VOITURE :</span></p>
+                <p>🅿️ 100 places réservées aux premiers arrivants<br>
+                ⏱️ Environ 5 minutes de montée à pied<br>
+                ✅ Encadrement par un placier<br>
+                <strong>🔴 Après cette limite : stationnement non garanti</strong></p>
+                
+                <p><span class="highlight">♿ ACCESSIBILITÉ :</span></p>
+                <p>Le site n'est pas adapté aux PMR sans assistance<br>
+                ✅ Stationnement proche possible en arrivant tôt</p>
             </div>
         </div>
         <div class="info-block">
-            <h3>TRANSPORTS</h3>
+            <h3>RECOMMANDATIONS</h3>
             <div class="info-block-content">
-                <p><span class="highlight">MÉTRO</span> Ligne 1 — Château de Vincennes</p>
-                <p><span class="highlight">RER</span> A — Château de Vincennes</p>
-                <p><span class="highlight">BUS</span> Ligne 56 — Barbès, Gare de l'Est, République, Oberkampf,<br>
-                Nation, Château de Vincennes</p>
-                <p>Ligne 46 Et d'autres !</p>
+                <p><span class="highlight">🕖 ARRIVEZ TÔT !</span></p>
+                <p>• 100 premières places proches<br>
+                • Moins d'attente, confort optimal<br>
+                • 🍻 Happy Hour (18h-20h) : 2 bières achetées = la 3ᵉ offerte</p>
                 
-                <p><span class="highlight">VÉLO</span></p>
-                <p>> Parking à vélo proposé par <a href="#" class="highlight">BOSCH EBIKE SYSTEMS</a></p>
-                <p>> Parking vélo gratuit, non gardienné à proximité</p>
+                <p><span class="highlight">✅ TRANSPORTS RECOMMANDÉS :</span></p>
+                <p>• Transports en commun<br>
+                • Bateau-bus<br>
+                • Covoiturage</p>
                 
-                <p><span class="highlight">VÉLIB'</span> 5 stations sont à proximité : Bois de Vincennes, Polygone-<br>
-                Pyramide, Parc Floral-Tremblay, Lac des Minimes-Pyramide, École<br>
-                du Breuil.</p>
-                
-                <p><span class="highlight">STATION VÉLIB' GÉANTE ÉPHÉMÈRE</span> 600 places à l'entrée du festival<br>
-                (Esplanade Saint-Louis)</p>
-                
-                <p><span class="highlight">NOCTILIEN</span> Ligne N11 et N33</p>
-                <p>Pas de parking voiture à proximité.</p>
+                <p><span class="highlight">⚠️ IMPORTANT :</span></p>
+                <p>📵 Aucun accès motorisé autorisé sans billet<br>
+                • Prévoyez de bonnes chaussures pour la montée<br>
+                • Arrivée anticipée fortement conseillée</p>
             </div>
         </div>
         <div class="info-block">
-            <h3>PLUS D'INFOS</h3>
+            <h3>BILLETTERIE</h3>
             <div class="info-block-content">
-                <p><a href="#">Plus d'informations ici !</a></p>
+                <p><span class="highlight">🎫 RÉSERVEZ VOS PLACES</span></p>
+                <p>Places limitées pour chaque soirée<br>
+                Tarifs préférentiels en prévente</p>
+                
+                <p><span class="highlight">📱 INFOS & CONTACT :</span></p>
+                <p>Suivez-nous sur les réseaux sociaux<br>
+                pour les dernières actualités</p>
             </div>
         </div>
     </div>
@@ -1811,6 +1811,16 @@
 
     let menuOpen = false;
 
+    function closeMenu() {
+        menuOpen = false;
+        navbar.classList.remove('menu-open');
+        hamburger.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        menuText.textContent = 'MENU';
+        logo.src = "assets/logos/4nap-logo-noir.png";
+        gsap.to('.menu-item', { x: -50, opacity: 0, duration: 0.3, stagger: 0.05 });
+    }
+
     menuToggle.addEventListener('click', () => {
         menuOpen = !menuOpen;
         
@@ -1828,15 +1838,23 @@
                 { x: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.3 }
             );
         } else {
-            // Close menu
-            navbar.classList.remove('menu-open');
-            hamburger.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            menuText.textContent = 'MENU';
-            logo.src = "assets/logos/4nap-logo-noir.png";
-            
-            gsap.to('.menu-item', { x: -50, opacity: 0, duration: 0.3, stagger: 0.05 });
+            closeMenu();
         }
+    });
+
+    // Smooth scroll pour les items du menu
+    document.querySelectorAll('.menu-item[data-target]').forEach(item => {
+        item.addEventListener('click', (e) => {
+            const target = item.getAttribute('data-target');
+            const element = document.querySelector(target);
+            
+            if (element) {
+                closeMenu();
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+        });
     });
 
     // Real Countdown Timer
@@ -1911,20 +1929,26 @@
     // Program Cards - pas d'animation d'apparition
 
     // Action Buttons Animation
-    gsap.fromTo('.action-btn', {
-        y: 50,
-        opacity: 0
-    }, {
-        scrollTrigger: {
-            trigger: '.action-buttons',
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
+    ScrollTrigger.create({
+        trigger: '.action-buttons',
+        start: 'top 85%',
+        onEnter: () => {
+            gsap.fromTo('.action-btn', 
+                {
+                    y: 50,
+                    opacity: 0,
+                    visibility: 'visible'
+                }, 
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    stagger: 0.2,
+                    ease: 'power3.out'
+                }
+            );
         },
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power3.out'
+        once: true
     });
 
     // Map Section Animation

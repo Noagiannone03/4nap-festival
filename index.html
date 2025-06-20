@@ -955,14 +955,172 @@
         align-items: center;
         gap: 30px;
     }
-    .footer-partner-icon {
-        height: 30px;
+    .footer-partners-image {
+        height: 32px;
         width: auto;
-        opacity: 0.7;
-        transition: opacity 0.3s ease;
+        object-fit: contain;
+        opacity: 0.8;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border-radius: 4px;
     }
-    .footer-partner-icon:hover {
+    .footer-partners-image:hover {
         opacity: 1;
+        transform: scale(1.05);
+    }
+
+    /* Partners Popup */
+    .partners-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+    }
+
+    .partners-popup.active {
+        display: flex;
+    }
+
+    .partners-popup-content {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .partners-popup-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 30px;
+        cursor: pointer;
+        color: #333;
+        font-weight: 300;
+    }
+
+    .partners-popup-close:hover {
+        color: #000;
+    }
+
+    .partners-popup h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 800;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .partners-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .partner-item {
+        background: #f8f8f8;
+        padding: 15px 20px;
+        border-radius: 8px;
+        border-left: 4px solid #333;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .partner-item:hover {
+        background: #333;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .partner-item a {
+        text-decoration: none;
+        color: inherit;
+        font-weight: 600;
+        font-family: 'Montserrat', sans-serif;
+        display: block;
+    }
+
+    @media (max-width: 768px) {
+        .partners-popup-content {
+            padding: 20px 15px;
+            width: 95%;
+            max-width: 90vw;
+            max-height: 85vh;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        .partners-popup h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .partners-popup-close {
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+        }
+
+        .partners-list {
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .partner-item {
+            padding: 10px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+        }
+
+        .partner-item a {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .partners-popup-content {
+            padding: 15px 10px;
+            width: 98%;
+            max-width: 95vw;
+            margin: 5px;
+        }
+
+        .partners-popup h2 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .partners-list {
+            gap: 6px;
+        }
+
+        .partner-item {
+            padding: 8px 10px;
+            font-size: 13px;
+        }
+
+        .partner-item a {
+            font-size: 13px;
+        }
     }
     .footer-copyright {
         text-align: center;
@@ -1005,8 +1163,9 @@
         .footer-partners {
             gap: 20px;
         }
-        .footer-partner-icon {
-            height: 25px;
+        .footer-partners-image {
+            height: 18px;
+            max-width: 90%;
         }
         .footer-copyright {
             margin: 0 15px;
@@ -1599,7 +1758,7 @@
 <div class="menu-overlay" id="menuOverlay">
     <div class="menu-item" data-target="#program-section">PROGRAMMATION</div>
     <div class="menu-item" data-target="#info-section">INFOS PRATIQUES</div>
-    <div class="menu-item">DEVENEZ MEMBRE</div>
+    <div class="menu-item" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</div>
 </div>
 
 <!-- Hero Section -->
@@ -1621,7 +1780,7 @@
 </section>
 
 <!-- Sticky Member Button -->
-<div class="sticky-member">
+<div class="sticky-member" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">
     GET MY<br>TICKETS
 </div>
 
@@ -1637,7 +1796,7 @@
             <div class="accent-corner top-right"></div>
             <div class="accent-corner bottom-left"></div>
             <div class="accent-corner bottom-right"></div>
-            <p>Une programmation précise et underground, loin des clichés commerciaux. Une célébration pour les puristes et les âmes avides de découvertes. Laissez-vous emporter par ces vagues sonores dans ce site hors du commun. La première édition du 4NAP festival est le point de départ d'une aventure qui ne fait que commencer… </br><span style="font-weight: 900; font-size: 1.1em; color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);">  montez dans le train, les places sont limitées, alors réservez vite.</span></p>
+            <p>Une programmation précise et underground, loin des clichés commerciaux. Une célébration pour les puristes et les âmes avides de découvertes. Laissez-vous emporter par ces vagues sonores dans ce site hors du commun.</br> La première édition du 4NAP festival est le point de départ d'une aventure qui ne fait que commencer… </br><span style="font-weight: 900; font-size: 1.1em; color: #fff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);">  Montez dans le train, les places sont limitées, alors réservez vite.</span></p>
         </div>
         
         <div class="countdown">
@@ -1676,7 +1835,7 @@
             <img src="assets/images/perso1.png" alt="Program Card 1">
         </div>
         <div class="card-button-container">
-            <button class="card-button">PROGRAMMATION À VENIR</button>
+            <button class="card-button" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
         </div>
     </div>
     <div class="program-card">
@@ -1688,7 +1847,7 @@
             <img src="assets/images/perso2.png" alt="Program Card 2">
         </div>
         <div class="card-button-container">
-            <button class="card-button">PROGRAMMATION À VENIR</button>
+            <button class="card-button" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
         </div>
     </div>
     <div class="program-card">
@@ -1700,7 +1859,7 @@
             <img src="assets/images/perso3.png" alt="Program Card 3">
         </div>
         <div class="card-button-container">
-            <button class="card-button">PROGRAMMATION À VENIR</button>
+            <button class="card-button" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
         </div>
     </div>
     <div class="program-card">
@@ -1712,7 +1871,7 @@
             <img src="assets/images/perso4.png" alt="Program Card 4">
         </div>
         <div class="card-button-container">
-            <button class="card-button">PROGRAMMATION À VENIR</button>
+            <button class="card-button" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
         </div>
     </div>
 
@@ -1727,7 +1886,7 @@
                 <img src="assets/images/perso1.png" alt="Program Card 1">
             </div>
             <div class="card-button-container">
-                <button class="card-button" onclick="window.location.href='programmation/sono-mondiale.html'">VOIR LA PROGRAMMATION</button>
+                <button class="card-button" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
             </div>
         </div>
         <div class="program-card">
@@ -1739,7 +1898,7 @@
                 <img src="assets/images/perso2.png" alt="Program Card 2">
             </div>
             <div class="card-button-container">
-                <button class="card-button" onclick="alert('Page Gros Music en construction')">VOIR LA PROGRAMMATION</button>
+                <button class="card-button" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
             </div>
         </div>
         <div class="program-card">
@@ -1751,7 +1910,7 @@
                 <img src="assets/images/perso3.png" alt="Program Card 3">
             </div>
             <div class="card-button-container">
-                <button class="card-button" onclick="alert('Page Techno Hard en construction')">VOIR LA PROGRAMMATION</button>
+                <button class="card-button" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
             </div>
         </div>
         <div class="program-card">
@@ -1763,7 +1922,7 @@
                 <img src="assets/images/perso4.png" alt="Program Card 4">
             </div>
             <div class="card-button-container">
-                <button class="card-button" onclick="alert('Page House Music en construction')">VOIR LA PROGRAMMATION</button>
+                <button class="card-button" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
             </div>
         </div>
         <div class="center-logo">
@@ -1774,8 +1933,8 @@
 
 <!-- Action Buttons -->
 <section class="action-buttons">
-    <button class="action-btn secondary">PROGRAMMATION À VENIR</button>
-    <button class="action-btn primary">GET YOUR PASS</button>
+    <button class="action-btn secondary" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>
+    <!--<button class="action-btn primary" onclick="window.open('https://www.helloasso.com/associations/no-id-lab/evenements/festival-for-nap-2-2', '_blank')">GET MY TICKETS</button>-->
 </section>
 
 <!-- Map Section -->
@@ -1863,10 +2022,7 @@
          
         </div>
         <div class="footer-partners">
-            <img src="assets/logos/4nap-logo-gris.png" alt="Partner 1" class="footer-partner-icon">
-            <img src="assets/logos/4nap-logo-gris.png" alt="Partner 2" class="footer-partner-icon">
-            <img src="assets/logos/4nap-logo-gris.png" alt="Partner 3" class="footer-partner-icon">
-            <img src="assets/logos/4nap-logo-gris.png" alt="Partner 4" class="footer-partner-icon">
+            <img src="assets/images/partners.png" alt="Partenaires 4NAP Festival" class="footer-partners-image" onclick="console.log('Image clicked!'); openPartnersPopup();">
         </div>
     </div>
     <div class="footer-copyright">
@@ -1874,7 +2030,71 @@
     </div>
 </footer>
 
+<!-- Partners Popup -->
+<div class="partners-popup" id="partnersPopup">
+    <div class="partners-popup-content">
+        <button class="partners-popup-close" onclick="closePartnersPopup()">&times;</button>
+        <h2>Nos Partenaires</h2>
+        <ul class="partners-list">
+            <li class="partner-item">
+                <a href="https://www.la-seyne.fr/" target="_blank">Ville de La Seyne-sur-Mer</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.noidlab.com/" target="_blank">NO/ID LAB</a>
+            </li>
+            <li class="partner-item">
+                <a href="http://lenez.net/" target="_blank">Le Nez</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.chezvibe.com/fr/" target="_blank">Chez Vibe</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.instagram.com/messio.asso/" target="_blank">Messio</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.radio-active.net/" target="_blank">Radio Active</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.labieredesilesdor.fr/" target="_blank">La Bière des Îles d'Or</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.instagram.com/reciprocagency/" target="_blank">Reciproc Agency</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.olympiclocation.com/olympic-location-toulon/" target="_blank">Olympic Location</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://4nap.fr" target="_blank">4NAP</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <script>
+    // Partners Popup Functions (défini en premier)
+    function openPartnersPopup() {
+        console.log('openPartnersPopup called!');
+        const popup = document.getElementById('partnersPopup');
+        if (popup) {
+            popup.classList.add('active');
+            // Empêcher le scroll de la page
+            document.body.style.overflow = 'hidden';
+            console.log('Popup should be visible now');
+        } else {
+            console.log('Popup element not found!');
+        }
+    }
+
+    function closePartnersPopup() {
+        console.log('closePartnersPopup called!');
+        const popup = document.getElementById('partnersPopup');
+        if (popup) {
+            popup.classList.remove('active');
+            // Rétablir le scroll de la page
+            document.body.style.overflow = 'auto';
+        }
+    }
+
     // Préchargement des vidéos
     const heroVideoDesktop = document.querySelector('.hero-video-desktop');
     const heroVideoMobile = document.querySelector('.hero-video-mobile');
@@ -2237,6 +2457,26 @@
             resetAccordionForDesktop();
             initMobileAccordions();
         }, 250);
+    });
+
+    // Event listeners pour la popup (après chargement du DOM)
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fermer la popup en cliquant sur le fond
+        const popup = document.getElementById('partnersPopup');
+        if (popup) {
+            popup.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePartnersPopup();
+                }
+            });
+        }
+
+        // Fermer la popup avec la touche Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePartnersPopup();
+            }
+        });
     });
 </script>
 </body>

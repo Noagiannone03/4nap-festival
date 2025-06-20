@@ -174,6 +174,25 @@
         background: #000; /* Fond noir pendant le chargement */
     }
 
+    /* Affichage vidéo selon la taille d'écran */
+    .hero-video-desktop {
+        display: block;
+    }
+
+    .hero-video-mobile {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .hero-video-desktop {
+            display: none;
+        }
+
+        .hero-video-mobile {
+            display: block;
+        }
+    }
+
     .video-placeholder {
         position: absolute;
         top: 0;
@@ -1044,8 +1063,15 @@
         /* Hero Section Mobile */
         .hero {
             height: auto;
-            min-height: calc(100vh - 60px);
+            min-height: auto; /* Plus de hauteur minimale forcée */
             margin-top: 60px; /* Décale sous la navbar mobile */
+        }
+
+        /* Vidéo mobile prend toute la largeur sans contrainte de hauteur */
+        .hero-video-mobile {
+            width: 100%;
+            height: auto;
+            object-fit: cover; /* Remplit complètement l'espace */
         }
 
         .play-button {
@@ -1553,9 +1579,15 @@
 
 <!-- Hero Section -->
 <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+    <!-- Vidéo Desktop -->
+    <video class="hero-video hero-video-desktop" autoplay muted loop playsinline preload="auto">
         <source src="assets/videos/4nap.mov" type="video/quicktime">
         <source src="assets/videos/4nap.mov" type="video/mp4">
+    </video>
+    <!-- Vidéo Mobile -->
+    <video class="hero-video hero-video-mobile" autoplay muted loop playsinline preload="auto">
+        <source src="assets/videos/4nap-phone.mov" type="video/quicktime">
+        <source src="assets/videos/4nap-phone.mov" type="video/mp4">
     </video>
     <!-- Fallback si la vidéo ne se charge pas -->
     <div class="video-placeholder">
@@ -1818,20 +1850,29 @@
 </footer>
 
 <script>
-    // Préchargement de la vidéo
-    const heroVideo = document.querySelector('.hero-video');
-    if (heroVideo) {
-        // Masquer le placeholder une fois la vidéo prête
-        heroVideo.addEventListener('canplaythrough', function() {
-            heroVideo.play().catch(e => console.log('Autoplay prevented:', e));
-        });
-        
-        // En cas d'erreur, afficher le placeholder
-        heroVideo.addEventListener('error', function() {
-            heroVideo.setAttribute('error', 'true');
-            console.log('Video loading error');
-        });
+    // Préchargement des vidéos
+    const heroVideoDesktop = document.querySelector('.hero-video-desktop');
+    const heroVideoMobile = document.querySelector('.hero-video-mobile');
+    
+    // Fonction pour gérer les événements d'une vidéo
+    function setupVideoEvents(video, name) {
+        if (video) {
+            // Masquer le placeholder une fois la vidéo prête
+            video.addEventListener('canplaythrough', function() {
+                video.play().catch(e => console.log(`Autoplay prevented for ${name}:`, e));
+            });
+            
+            // En cas d'erreur, afficher le placeholder
+            video.addEventListener('error', function() {
+                video.setAttribute('error', 'true');
+                console.log(`Video loading error for ${name}`);
+            });
+        }
     }
+    
+    // Configurer les deux vidéos
+    setupVideoEvents(heroVideoDesktop, 'desktop');
+    setupVideoEvents(heroVideoMobile, 'mobile');
 
     // GSAP Animations
     gsap.registerPlugin(ScrollTrigger);

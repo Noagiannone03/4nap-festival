@@ -1349,6 +1349,10 @@
             align-items: center;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            color: #333 !important;
+            font-weight: 800 !important;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .info-block h3::after {
@@ -1368,16 +1372,26 @@
         .info-block-content {
             max-height: 0 !important;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
             padding: 0;
             opacity: 0;
         }
 
         .info-block.active .info-block-content {
-            max-height: 1000px !important;
+            max-height: 2000px !important;
             padding-bottom: 20px;
             opacity: 1;
-            transition: max-height 0.3s ease, opacity 0.3s ease 0.1s;
+            transition: max-height 0.4s ease, opacity 0.3s ease 0.1s;
+        }
+
+        /* S'assurer que le contenu est bien structuré */
+        .info-block {
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 0;
+        }
+
+        .info-block:last-child {
+            border-bottom: none;
         }
 
         .info-block p {
@@ -1549,7 +1563,18 @@
     /* Desktop: garder le contenu des blocs visible */
     @media (min-width: 769px) {
         .info-block-content {
-            display: block;
+            display: block !important;
+            max-height: none !important;
+            opacity: 1 !important;
+            padding: 0 !important;
+        }
+        
+        .info-block h3 {
+            cursor: default !important;
+        }
+        
+        .info-block h3::after {
+            display: none !important;
         }
     }
 </style>
@@ -2119,48 +2144,85 @@
 
     // Mobile Accordion Functionality
     function initMobileAccordions() {
-        // Remove existing listeners first to avoid duplicates
-        document.querySelectorAll('.info-block h3').forEach(header => {
-            header.replaceWith(header.cloneNode(true));
-        });
+        console.log('Initializing mobile accordions...');
         
         if (window.innerWidth <= 768) {
             // Info Section Accordion
-            const infoBlocks = document.querySelectorAll('.info-block h3');
-            infoBlocks.forEach(header => {
-                header.style.cursor = 'pointer';
-                header.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const infoBlock = this.parentElement;
+            const infoBlocks = document.querySelectorAll('.info-block');
+            console.log('Found info blocks:', infoBlocks.length);
+            
+            infoBlocks.forEach((block, index) => {
+                const header = block.querySelector('h3');
+                if (header && !header.hasAttribute('data-accordion-ready')) {
+                    console.log('Setting up accordion for block', index);
                     
-                    // Close other blocks
-                    document.querySelectorAll('.info-block').forEach(block => {
-                        if (block !== infoBlock) {
-                            block.classList.remove('active');
+                    // Marquer comme prêt pour éviter les doublons
+                    header.setAttribute('data-accordion-ready', 'true');
+                    header.style.cursor = 'pointer';
+                    
+                    header.addEventListener('click', function(e) {
+                        console.log('Accordion clicked!');
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const currentBlock = this.parentElement;
+                        const isActive = currentBlock.classList.contains('active');
+                        
+                        // Close all other blocks
+                        document.querySelectorAll('.info-block').forEach(otherBlock => {
+                            if (otherBlock !== currentBlock) {
+                                otherBlock.classList.remove('active');
+                            }
+                        });
+                        
+                        // Toggle current block
+                        if (isActive) {
+                            currentBlock.classList.remove('active');
+                        } else {
+                            currentBlock.classList.add('active');
                         }
                     });
-                    
-                    // Toggle current block
-                    infoBlock.classList.toggle('active');
-                }, { passive: false });
+                }
             });
 
             // Program Cards Click to Open Details
             const programCards = document.querySelectorAll('.program-cards-grid .program-card');
             programCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const button = card.querySelector('.card-button');
-                    if (button) {
-                        button.click();
-                    }
-                });
+                if (!card.hasAttribute('data-click-ready')) {
+                    card.setAttribute('data-click-ready', 'true');
+                    card.addEventListener('click', () => {
+                        const button = card.querySelector('.card-button');
+                        if (button) {
+                            button.click();
+                        }
+                    });
+                }
             });
         }
     }
 
-    // Initialize accordion after page is fully loaded
+    // Reset accordion state when switching to desktop
+    function resetAccordionForDesktop() {
+        if (window.innerWidth > 768) {
+            document.querySelectorAll('.info-block').forEach(block => {
+                block.classList.remove('active');
+                const header = block.querySelector('h3');
+                if (header) {
+                    header.removeAttribute('data-accordion-ready');
+                    header.style.cursor = 'default';
+                }
+            });
+        }
+    }
+
+    // Initialize accordion immediately and on load
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM loaded, initializing accordions...');
+        initMobileAccordions();
+    });
+
     window.addEventListener('load', () => {
+        console.log('Window loaded, initializing accordions...');
         setTimeout(() => {
             initMobileAccordions();
         }, 100);
@@ -2171,6 +2233,8 @@
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(() => {
+            console.log('Window resized, reinitializing accordions...');
+            resetAccordionForDesktop();
             initMobileAccordions();
         }, 250);
     });

@@ -154,9 +154,11 @@
 
     /* Hero Section */
     .hero {
-        height: 100vh;
+        height: auto;
+        min-height: 100vh;
+        margin-top: 80px; /* Décale la section sous la navbar */
         position: relative;
-        background: #333;
+        background: #000; /* Fond noir au lieu de bleu pendant le chargement */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -164,22 +166,33 @@
     }
 
     .hero-video {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain; /* Garde les proportions naturelles */
+        z-index: 1;
+        background: #000; /* Fond noir pendant le chargement */
+    }
+
+    .video-placeholder {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        z-index: 1;
-    }
-
-    .video-placeholder {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #000; /* Fond noir au lieu du gradient bleu */
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 0;
+        opacity: 0; /* Masqué par défaut */
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Affiche le placeholder uniquement si la vidéo ne se charge pas */
+    .hero:has(video[error]) .video-placeholder,
+    .hero:not(:has(video)) .video-placeholder {
+        opacity: 1;
     }
 
     .play-button {
@@ -1030,7 +1043,9 @@
 
         /* Hero Section Mobile */
         .hero {
-            height: 70vh;
+            height: auto;
+            min-height: calc(100vh - 60px);
+            margin-top: 60px; /* Décale sous la navbar mobile */
         }
 
         .play-button {
@@ -1538,7 +1553,7 @@
 
 <!-- Hero Section -->
 <section class="hero">
-    <video class="hero-video" autoplay muted loop playsinline>
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
         <source src="assets/videos/4nap.mov" type="video/quicktime">
         <source src="assets/videos/4nap.mov" type="video/mp4">
     </video>
@@ -1803,6 +1818,21 @@
 </footer>
 
 <script>
+    // Préchargement de la vidéo
+    const heroVideo = document.querySelector('.hero-video');
+    if (heroVideo) {
+        // Masquer le placeholder une fois la vidéo prête
+        heroVideo.addEventListener('canplaythrough', function() {
+            heroVideo.play().catch(e => console.log('Autoplay prevented:', e));
+        });
+        
+        // En cas d'erreur, afficher le placeholder
+        heroVideo.addEventListener('error', function() {
+            heroVideo.setAttribute('error', 'true');
+            console.log('Video loading error');
+        });
+    }
+
     // GSAP Animations
     gsap.registerPlugin(ScrollTrigger);
 

@@ -566,6 +566,73 @@
             .header-title {
                 font-size: 1.5rem;
             }
+            .header-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .artists-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .tabs-container {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .tab {
+                flex: 1 1 auto;
+                min-width: 120px;
+                font-size: 0.8rem;
+                padding: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 1.5rem;
+                margin: 0.5rem;
+            }
+            .header {
+                padding: 0.75rem 1rem;
+            }
+            .header-title {
+                font-size: 1.25rem;
+            }
+            .content-area {
+                padding: 1rem;
+            }
+            .stat-card {
+                padding: 1.5rem;
+            }
+            .stat-number {
+                font-size: 2rem;
+            }
+            .tabs-container {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+            .tab {
+                min-width: auto;
+                font-size: 0.75rem;
+                padding: 0.5rem;
+            }
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+                margin: 0.5rem;
+            }
+            .user-menu {
+                order: -1;
+                align-self: flex-start;
+            }
+            .btn {
+                font-size: 0.875rem;
+                padding: 0.75rem 1.5rem;
+            }
         }
 
         /* Onglets */
@@ -706,6 +773,11 @@
 
         .artist-day-badge.day-13 {
             background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            color: white;
+        }
+
+        .artist-day-badge.day-14 {
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
             color: white;
         }
 
@@ -1066,7 +1138,7 @@
                             <div>
                                 <div class="stat-number" id="weekendArtists">0</div>
                                 <div class="stat-label">Weekend</div>
-                                <div class="stat-change positive">12-13 juillet</div>
+                                <div class="stat-change positive">12-13-14 juillet</div>
                             </div>
                             <div class="stat-icon warning">🎪</div>
                         </div>
@@ -1081,6 +1153,7 @@
                         <button class="tab" data-day="11">🌍 11 Juillet</button>
                         <button class="tab" data-day="12">🎪 12 Juillet</button>
                         <button class="tab" data-day="13">🎤 13 Juillet</button>
+                        <button class="tab" data-day="14">🎆 14 Juillet</button>
                     </div>
 
                     <!-- Zone d'artistes -->
@@ -1111,25 +1184,23 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="form-label" for="artistStyle">Style musical *</label>
-                        <input type="text" id="artistStyle" class="form-input" placeholder="Ex: Afrobeat" required>
-                    </div>
-                    
-                    <div class="form-group">
                         <label class="form-label" for="artistDay">Jour *</label>
                         <select id="artistDay" class="form-input" required>
                             <option value="">Sélectionner un jour</option>
                             <option value="11">11 Juillet - Sono Mondiale</option>
                             <option value="12">12 Juillet - Weekend</option>
                             <option value="13">13 Juillet - Weekend</option>
+                            <option value="14">14 Juillet - Weekend</option>
                         </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="artistTime">Heure de début *</label>
+                        <input type="time" id="artistTime" class="form-input" required>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="artistTime">Heure de passage *</label>
-                    <input type="time" id="artistTime" class="form-input" required>
-                </div>
+
 
                 <div class="form-group">
                     <label class="form-label" for="artistDescription">Description *</label>
@@ -1311,7 +1382,7 @@
         function updateStats() {
             const total = artists.length;
             const sono = artists.filter(a => a.jour === '11').length;
-            const weekend = artists.filter(a => a.jour === '12' || a.jour === '13').length;
+            const weekend = artists.filter(a => a.jour === '12' || a.jour === '13' || a.jour === '14').length;
             
             animateNumber('totalArtists', total);
             animateNumber('sonoArtists', sono);
@@ -1371,7 +1442,6 @@
                         <div class="artist-header">
                             <div>
                                 <h3 class="artist-name">${artist.nom}</h3>
-                                <p class="artist-style">${artist.styleMusical}</p>
                             </div>
                             <span class="artist-day-badge day-${artist.jour}">
                                 ${artist.jour} JUILLET
@@ -1450,7 +1520,6 @@
 
         function fillForm(artist) {
             document.getElementById('artistName').value = artist.nom;
-            document.getElementById('artistStyle').value = artist.styleMusical;
             document.getElementById('artistDay').value = artist.jour;
             document.getElementById('artistTime').value = artist.heure;
             document.getElementById('artistDescription').value = artist.description;
@@ -1512,7 +1581,6 @@
             try {
                 const artistData = {
                     nom: document.getElementById('artistName').value,
-                    styleMusical: document.getElementById('artistStyle').value,
                     jour: document.getElementById('artistDay').value,
                     heure: document.getElementById('artistTime').value,
                     description: document.getElementById('artistDescription').value,

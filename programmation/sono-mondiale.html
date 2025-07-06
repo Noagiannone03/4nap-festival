@@ -75,18 +75,18 @@
 <section class="artist-bio-section">
     <div class="artist-bio-container">
         <div class="artist-bio-image">
-            <img src="../assets/images/dezze.png" alt="Allegra Leroy - Ally" />
+            <img src="../assets/images/perso1.png" alt="Allegra Leroy - Ally" />
             <div class="artist-bio-overlay">
                 <h3>ALLEGRA LEROY</h3>
                 <p>Ally pour les intimes</p>
             </div>
         </div>
+        <div class="artist-bio-header">
+            <h2>RENCONTREZ NOTRE CURATRICE</h2>
+            <div class="artist-bio-subtitle">La nomade des sons</div>
+        </div>
+        
         <div class="artist-bio-content">
-            <div class="artist-bio-header">
-                <h2>RENCONTREZ NOTRE CURATRICE</h2>
-                <div class="artist-bio-subtitle">La nomade des sons</div>
-            </div>
-            
             <div class="artist-identity-card">
                 <div class="identity-item">
                     <span class="identity-label">Nom</span>
@@ -116,9 +116,12 @@
 
             <div class="artist-story">
                 <h3>D'où ça vient ?</h3>
-                <p>Je suis née à Haïti, j'ai grandi entre les tambours Ka et la sono mobile. Les rythmes des Caraïbes ont bercé mon enfance, et j'ai très vite compris que la musique était ma véritable langue. A la fin de mon adolescence, j'ai voyagé, beaucoup : j'ai d'abord rejoint mon frère à Marseille, avec son énergie brute et ses accents du monde.</p>
-                <p>Après j'ai pris mon sac à dos et je suis partie solo pour Lisbonne et Rio, vécu plus un an au Cap en afrique du Sud ou j'ai rencontré mes professeurs de percussions qui m'ont transmis leur savoir, puis je me suis installé à Barcelone, ou je travaille en tant que chorégraphe, j'aime tellement cette ville, vibrante de culture et d'expérimentation musicale.</p>
-                <p>Durant les beaux jours, je viens souvent voir mon frère à La Seyne, c'est le seul membre de ma famille en Europe mais j'y reste rarement plus d'une saison. J'ai un joli van que j'ai fait retaper, et je roule là où on m'appelle pour travailler. Le monde, c'est ma maison et je suis une globe-trotteuse invétérée toujours partante pour découvrir une nouvelle destination.</p>
+                <div class="artist-story-content collapsed" id="storyContent">
+                    <p>Je suis née à Haïti, j'ai grandi entre les tambours Ka et la sono mobile. Les rythmes des Caraïbes ont bercé mon enfance, et j'ai très vite compris que la musique était ma véritable langue. A la fin de mon adolescence, j'ai voyagé, beaucoup : j'ai d'abord rejoint mon frère à Marseille, avec son énergie brute et ses accents du monde.</p>
+                    <p>Après j'ai pris mon sac à dos et je suis partie solo pour Lisbonne et Rio, vécu plus un an au Cap en afrique du Sud ou j'ai rencontré mes professeurs de percussions qui m'ont transmis leur savoir, puis je me suis installé à Barcelone, ou je travaille en tant que chorégraphe, j'aime tellement cette ville, vibrante de culture et d'expérimentation musicale.</p>
+                    <p>Durant les beaux jours, je viens souvent voir mon frère à La Seyne, c'est le seul membre de ma famille en Europe mais j'y reste rarement plus d'une saison. J'ai un joli van que j'ai fait retaper, et je roule là où on m'appelle pour travailler. Le monde, c'est ma maison et je suis une globe-trotteuse invétérée toujours partante pour découvrir une nouvelle destination.</p>
+                </div>
+                <button class="story-toggle-btn" onclick="toggleStory()">Voir plus</button>
             </div>
 
             <div class="artist-faq">
@@ -502,6 +505,40 @@
 
     // Make toggleFAQ globally accessible
     window.toggleFAQ = toggleFAQ;
+
+    // Story Toggle Function
+    function toggleStory() {
+        const storyContent = document.getElementById('storyContent');
+        const toggleBtn = document.querySelector('.story-toggle-btn');
+        
+        if (storyContent.classList.contains('collapsed')) {
+            // Expand
+            storyContent.classList.remove('collapsed');
+            toggleBtn.textContent = 'Voir moins';
+            
+            // Animate with GSAP
+            gsap.to(storyContent, {
+                maxHeight: 'none',
+                duration: 0.4,
+                ease: 'power3.out'
+            });
+        } else {
+            // Collapse
+            storyContent.classList.add('collapsed');
+            toggleBtn.textContent = 'Voir plus';
+            
+            // Get the collapsed height and animate to it
+            const collapsedHeight = window.innerWidth <= 480 ? '100px' : '120px';
+            gsap.to(storyContent, {
+                maxHeight: collapsedHeight,
+                duration: 0.3,
+                ease: 'power3.out'
+            });
+        }
+    }
+
+    // Make toggleStory globally accessible
+    window.toggleStory = toggleStory;
 
     // Artist Bio Section Animation
     gsap.fromTo('.artist-bio-section', {

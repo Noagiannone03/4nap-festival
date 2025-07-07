@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programmation Complète - 4NAP festival</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+    body {
+        font-family: 'Montserrat', sans-serif;
+        overflow-x: hidden;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        z-index: 1000;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 40px;
+        right: 40px;
+        height: 1px;
+        background: #000;
+    }
+
+    .navbar.menu-open {
+        background: #000;
+    }
+
+    .logo {
+        margin-left: -20px;
+        height: fit-content;
+        transition: all 0.5s ease;
+    }
+
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: #000;
+        font-weight: 500;
+        font-size: 16px;
+        transition: all 0.5s ease;
+    }
+
+    .navbar.menu-open .menu-toggle {
+        color: white;
+    }
+
+    .hamburger {
+        margin-left: 15px;
+        width: 24px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background: #000;
+        position: absolute;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar.menu-open .hamburger span {
+        background: white;
+    }
+
+    .hamburger span:nth-child(1) { top: 0; }
+    .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+    .hamburger span:nth-child(3) { bottom: 0; }
+
+    .hamburger.active span:nth-child(1) {
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
+    }
+
+    /* Menu Overlay */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 1);
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-left: 80px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .menu-item {
+        color: white;
+        font-size: 4rem;
+        font-weight: 400;
+        margin: 20px 0;
+        cursor: pointer;
+        transform: translateX(-50px);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .menu-item:hover {
+        color: #ff6b6b;
+    }
+
+    /* Main Content */
+    .main-content {
+        margin-top: 80px;
+        padding: 60px 80px;
+        min-height: calc(100vh - 80px);
+        background: white;
+    }
+
+    .page-title {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #333;
+        margin-bottom: 40px;
+        text-align: left;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    /* Tabs Section */
+    .tabs-container {
+        margin-bottom: 60px;
+    }
+
+    .tabs {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .tab-button {
+        padding: 15px 30px;
+        border: 2px solid;
+        border-radius: 25px;
+        background: transparent;
+        cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tab-button.voir-tout {
+        border-color: #333;
+        color: #333;
+    }
+
+    .tab-button.voir-tout.active {
+        background: #333;
+        color: white;
+    }
+
+    .tab-button.vendredi {
+        border-color: #EF740F;
+        color: #EF740F;
+    }
+
+    .tab-button.vendredi.active {
+        background: #EF740F;
+        color: white;
+    }
+
+    .tab-button.samedi {
+        border-color: #56B047;
+        color: #56B047;
+    }
+
+    .tab-button.samedi.active {
+        background: #56B047;
+        color: white;
+    }
+
+    .tab-button.dimanche {
+        border-color: #2A4999;
+        color: #2A4999;
+    }
+
+    .tab-button.dimanche.active {
+        background: #2A4999;
+        color: white;
+    }
+
+    .tab-button.scènes {
+        border-color: #9C27B0;
+        color: #9C27B0;
+    }
+
+    .tab-button.scènes.active {
+        background: #9C27B0;
+        color: white;
+    }
+
+    .tab-button.genres {
+        border-color: #FF9800;
+        color: #FF9800;
+    }
+
+    .tab-button.genres.active {
+        background: #FF9800;
+        color: white;
+    }
+
+    .tab-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Events Grid */
+    .events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+    }
+
+    .event-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        height: 400px;
+        border: 3px solid;
+    }
+
+    .event-card[data-day="vendredi"] {
+        border-color: #EF740F;
+    }
+
+    .event-card[data-day="samedi"] {
+        border-color: #56B047;
+    }
+
+    .event-card[data-day="dimanche"] {
+        border-color: #2A4999;
+    }
+
+    .event-card[data-genre="sono"] {
+        border-color: #9C27B0;
+    }
+
+    .event-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .event-image {
+        width: 100%;
+        height: 80%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .event-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .event-date-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        z-index: 10;
+        max-width: fit-content;
+        text-align: center;
+        line-height: 1.1;
+        white-space: nowrap;
+    }
+
+    .event-date-badge.vendredi {
+        background: #EF740F;
+    }
+
+    .event-date-badge.samedi {
+        background: #56B047;
+    }
+
+    .event-date-badge.dimanche {
+        background: #2A4999;
+    }
+
+    .event-genre-badge {
+        display: none;
+    }
+
+    .event-content {
+        height: 20%;
+        padding: 15px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .event-text-section {
+        flex: 1;
+    }
+
+    .event-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-align: left;
+    }
+
+    .event-card[data-day="vendredi"] .event-title {
+        color: #EF740F;
+    }
+
+    .event-card[data-day="samedi"] .event-title {
+        color: #56B047;
+    }
+
+    .event-card[data-day="dimanche"] .event-title {
+        color: #2A4999;
+    }
+
+    .event-card[data-genre="sono"] .event-title {
+        color: #9C27B0;
+    }
+
+    .event-artist {
+        font-size: 0.9rem;
+        color: #666;
+        font-weight: 500;
+        text-align: left;
+        margin: 0;
+    }
+
+    .event-details {
+        display: none;
+    }
+
+    .event-time {
+        display: none;
+    }
+
+    .event-button {
+        display: none;
+    }
+
+    .event-icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 24px;
+        height: 24px;
+
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: white;
+        font-weight: 600;
+    }
+
+    /* Sticky Member Button */
+    .sticky-member {
+        position: fixed;
+        bottom: -20px;
+        right: -20px;
+        width: 150px;
+        height: 150px;
+        background: #000;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        z-index: 900;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+    }
+
+    .sticky-member:hover {
+        animation: epileptic-effect 0.50s infinite;
+    }
+
+    @keyframes epileptic-effect {
+        0% { background: #000; color: white; }
+        25% { background: #ff0000; color: black; }
+        50% { background: #00ff00; color: white; }
+        75% { background: #0000ff; color: yellow; }
+        100% { background: #ffff00; color: black; }
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 80px 0;
+        background: #ffffff;
+    }
+
+    .action-btn {
+        padding: 20px 40px;
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-family: 'Montserrat', sans-serif;
+        width: 300px;
+        text-align: center;
+        display: inline-block;
+        text-decoration: none;
+        line-height: 1.2;
+        position: relative;
+        z-index: 10;
+    }
+
+    .action-btn.primary {
+        background: #000;
+        color: white;
+    }
+
+    .action-btn.secondary {
+        background: white;
+        color: #000;
+        border: 2px solid #000;
+    }
+
+    .action-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-btn:focus {
+        outline: 2px solid #4CAF50;
+        outline-offset: 2px;
+    }
+
+    /* Footer */
+    .footer {
+        background: #e8e8e8;
+        color: #333;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        padding: 60px 80px 0 80px;
+        box-sizing: border-box;
+    }
+    .footer-top {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 60px;
+        border-top: 2px solid #222;
+        border-bottom: 2px solid #222;
+        min-height: 70px;
+        background: #e8e8e8;
+        margin-bottom: 0;
+        box-sizing: border-box;
+    }
+    .footer-socials {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+    .footer-social-icon {
+        width: 32px;
+        height: 32px;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 18px;
+        text-decoration: none;
+        transition: background 0.2s;
+        overflow: hidden;
+    }
+    .social-icon-img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+    .footer-social-icon:hover {
+        background: #4CAF50;
+    }
+    .footer-partners {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+    .footer-partner-icon {
+        height: 30px;
+        width: auto;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+    }
+    .footer-partner-icon:hover {
+        opacity: 1;
+    }
+    .footer-copyright {
+        text-align: center;
+        padding: 30px 0 20px 0;
+        color: #666;
+        font-size: 14px;
+        border-top: 1px solid #ccc;
+        background: #e8e8e8;
+        margin: 0 60px;
+    }
+    /* Suppression des éléments inutiles */
+    .footer-bottom, .footer-newsletter, .footer-col, .footer-member-section { display: none !important; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .footer {
+            padding: 40px 30px 0 30px;
+        }
+        .footer-top {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .footer-copyright {
+            margin: 0 30px;
+        }
+    }
+    @media (max-width: 600px) {
+        .footer {
+            padding: 20px 15px 0 15px;
+        }
+        .footer-top {
+            padding-left: 15px;
+            padding-right: 15px;
+            flex-direction: column;
+            gap: 15px;
+            min-height: 0;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-top: 20px;
+        }
+        .footer-socials {
+            gap: 20px;
+        }
+        .footer-partners {
+            gap: 20px;
+        }
+        .footer-partner-icon {
+            height: 25px;
+        }
+        .footer-copyright {
+            margin: 0 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 40px 20px;
+        }
+
+
+        .event-icon {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 24px;
+        height: 24px;
+     
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: white;
+        font-weight: 600;
+    }
+
+        .page-title {
+            font-size: 2.2rem;
+        }
+
+        /* Tabs responsive avec scroll horizontal */
+        .tabs-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 15px;
+            min-width: max-content;
+            padding-bottom: 10px;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            font-size: 12px;
+            min-width: auto;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* Events Cards responsive - 2 colonnes */
+        .events-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .event-card {
+            height: 270px;
+        }
+
+        .event-content {
+            padding: 12px 15px;
+        }
+
+        .event-title {
+            font-size: 0.9rem;
+        }
+
+        .event-artist {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .menu-overlay {
+            padding-left: 40px;
+        }
+
+        .menu-item {
+            font-size: 2.5rem;
+        }
+
+        /* Navbar Mobile */
+        .navbar {
+            padding: 0 15px;
+            height: 60px;
+        }
+
+        .navbar::after {
+            left: 15px;
+            right: 15px;
+        }
+
+        .logo {
+            height: 50px;
+            margin-left: 5px;
+        }
+
+        .logo img {
+            height: 100%;
+        }
+
+        #menuText {
+            display: none;
+        }
+
+        .hamburger {
+            margin-left: 0;
+            width: 28px;
+            height: 22px;
+        }
+
+        .hamburger span {
+            height: 3px;
+        }
+
+        /* Action Buttons Mobile */
+        .action-buttons {
+            padding: 40px 20px 60px 20px;
+        }
+
+        .action-btn {
+            width: 100%;
+            max-width: none;
+            padding: 18px 30px;
+            font-size: 14px;
+        }
+
+
+
+        /* Sticky Member Button Mobile */
+        .sticky-member {
+            width: 100px;
+            height: 100px;
+            bottom: -15px;
+            right: -15px;
+            font-size: 11px;
+        }
+    }
+
+    /* Très petit mobile */
+    @media (max-width: 480px) {
+        .main-content {
+            padding: 30px 15px;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .navbar {
+            padding: 0 10px;
+        }
+
+        .navbar::after {
+            left: 10px;
+            right: 10px;
+        }
+
+        .logo {
+            height: 45px;
+            margin-left: 2px;
+        }
+
+        .hamburger {
+            width: 26px;
+            height: 20px;
+        }
+
+        .menu-overlay {
+            padding-left: 20px;
+        }
+
+        .menu-item {
+            font-size: 1.8rem;
+            margin: 10px 0;
+        }
+
+        .tabs {
+            gap: 10px;
+        }
+
+        .tab-button {
+            padding: 10px 15px;
+            font-size: 11px;
+        }
+
+        /* Events Cards - toujours 2 colonnes */
+        .events-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .event-card {
+            height: 250px;
+        }
+
+        .event-content {
+            padding: 10px 12px;
+        }
+
+        .event-title {
+            font-size: 0.8rem;
+        }
+
+        .event-artist {
+            font-size: 0.7rem;
+        }
+
+        .action-buttons {
+            padding: 30px 15px 50px 15px;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+    <a href="../index.html">
+        <img src="../assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    </a>
+    <div class="menu-toggle" id="menuToggle">
+        <span id="menuText">MENU</span>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- Menu Overlay -->
+<div class="menu-overlay" id="menuOverlay">
+    <div class="menu-item">PROGRAMMATION</div>
+    <div class="menu-item">INFOS PRATIQUES</div>
+    <div class="menu-item">DEVENEZ MEMBRE</div>
+    <div class="menu-item">NEWS</div>
+</div>
+
+<!-- Sticky Member Button -->
+<div class="sticky-member">
+    GET MY<br>TICKETS
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+    <h1 class="page-title">PROGRAMMATION COMPLÈTE</h1>
+    
+    <!-- Tabs -->
+    <div class="tabs-container">
+        <div class="tabs">
+            <button class="tab-button voir-tout active" data-filter="all">VOIR TOUT</button>
+            <button class="tab-button vendredi" data-filter="vendredi">VENDREDI</button>
+            <button class="tab-button samedi" data-filter="samedi">SAMEDI</button>
+            <button class="tab-button dimanche" data-filter="dimanche">DIMANCHE</button>
+            <button class="tab-button scènes" data-filter="scenes">SCÈNES</button>
+            <button class="tab-button genres" data-filter="genres">GENRES</button>
+        </div>
+    </div>
+
+    <!-- Events Grid -->
+    <div class="events-grid" id="eventsGrid">
+        <!-- Loading placeholder - will be replaced by Firebase data -->
+        <div class="loading-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #666;">
+            <div class="loading-spinner" style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #333; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+            <p>Chargement des artistes...</p>
+        </div>
+    </div>
+</main>
+
+<!-- Action Buttons -->
+<section class="action-buttons">
+    <button class="action-btn secondary" onclick="window.location.href='../index.html'">ACCUEIL</button>
+    <button class="action-btn primary">GET YOUR PASS</button>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-socials">
+            <a href="#" class="footer-social-icon">
+                <img src="../assets/pictos/fe_facebook.png" alt="Facebook" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="../assets/pictos/mdi_instagram.png" alt="Instagram" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="../assets/pictos/ic_baseline-tiktok.png" alt="TikTok" class="social-icon-img">
+            </a>
+            <a href="#" class="footer-social-icon">
+                <img src="../assets/pictos/prime_twitter.png" alt="Twitter" class="social-icon-img">
+            </a>
+        </div>
+        <div class="footer-partners">
+            <img src="../assets/logos/4nap-logo-gris.png" alt="Partner 1" class="footer-partner-icon">
+            <img src="../assets/logos/4nap-logo-gris.png" alt="Partner 2" class="footer-partner-icon">
+            <img src="../assets/logos/4nap-logo-gris.png" alt="Partner 3" class="footer-partner-icon">
+            <img src="../assets/logos/4nap-logo-gris.png" alt="Partner 4" class="footer-partner-icon">
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>&copy; 2025 NO/ID*.  <a href="https://noagiannone.fr" style="text-decoration: none; font-weight: bold; color: inherit;">Made with ✌️ by Noa Giannone</a>. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script>
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Page Load Animation
+    gsap.timeline()
+        .from('.navbar', { y: -100, opacity: 0, duration: 1, ease: 'power3.out' })
+        .from('.page-title', { x: -50, opacity: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+        .from('.tabs', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3');
+
+    // Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const hamburger = document.getElementById('hamburger');
+    const navbar = document.getElementById('navbar');
+    const menuText = document.getElementById('menuText');
+    const logo = document.getElementById('logo');
+
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        
+        if (menuOpen) {
+            navbar.classList.add('menu-open');
+            hamburger.classList.add('active');
+            menuOverlay.classList.add('active');
+            menuText.textContent = 'FERMER';
+            logo.src = "../assets/logos/4nap-logo-gris.png";
+            
+            gsap.fromTo('.menu-item', 
+                { x: -50, opacity: 0 },
+                { x: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.3 }
+            );
+        } else {
+            navbar.classList.remove('menu-open');
+            hamburger.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            menuText.textContent = 'MENU';
+            logo.src = "../assets/logos/4nap-logo-noir.png";
+            
+            gsap.to('.menu-item', { x: -50, opacity: 0, duration: 0.3, stagger: 0.05 });
+        }
+    });
+
+    // Events Grid Animation
+    function animateEventCards() {
+        gsap.fromTo('.event-card', {
+            y: 50,
+            opacity: 0
+        }, {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out'
+        });
+    }
+
+    // Action Buttons Animation
+    gsap.fromTo('.action-btn', {
+        y: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.action-buttons',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out'
+    });
+
+    // Plus besoin du Mobile Accordion pour le footer
+</script>
+
+<!-- Firebase Integration for All Artists -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCK20ovvLNY9lBSr7FotjXPU1mwHsg8pnk",
+        authDomain: "nap-festival.firebaseapp.com",
+        projectId: "nap-festival",
+        storageBucket: "nap-festival.firebasestorage.app",
+        messagingSenderId: "928048730953",
+        appId: "1:928048730953:web:47cad1e4c5d300a11b4098",
+        measurementId: "G-481JX6JFMD"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+
+    // Global variables for artists and filtering
+    let allArtists = [];
+    let currentFilter = 'all';
+
+    // Mapping pour les jours
+    const dayMapping = {
+        '11': 'vendredi',
+        '12': 'samedi', 
+        '13': 'dimanche'
+    };
+
+    const dayColors = {
+        'vendredi': '#EF740F',
+        'samedi': '#56B047',
+        'dimanche': '#2A4999'
+    };
+
+    const dayLabels = {
+        'vendredi': 'VEN. 11 JUILLET',
+        'samedi': 'SAM. 12 JUILLET',
+        'dimanche': 'DIM. 13 JUILLET'
+    };
+
+    // Function to get day icon based on day
+    function getDayIcon(dayKey) {
+        const icons = {
+            'vendredi': '../assets/pictos/ArrowUpRightOrange.png',
+            'samedi': '../assets/pictos/ArrowUpRightVert.png',
+            'dimanche': '../assets/pictos/ArrowUpRightBleu.png'
+        };
+        return icons[dayKey] || '../assets/pictos/ArrowUpRightOrange.png';
+    }
+
+    // Function to get genre icon
+    function getGenreIcon(styleMusical) {
+        const style = styleMusical.toLowerCase();
+        if (style.includes('bass') || style.includes('dubstep')) return '🎵';
+        if (style.includes('world') || style.includes('mondial')) return '🌍';
+        if (style.includes('house')) return '🏠';
+        if (style.includes('techno')) return '⚡';
+        if (style.includes('electro')) return '🔊';
+        return '🎶';
+    }
+
+    // Function to create event card HTML
+    function createEventCard(artist) {
+        const dayKey = dayMapping[artist.jour] || 'vendredi';
+        const dayColor = dayColors[dayKey];
+        const dayLabel = dayLabels[dayKey];
+        const dayIcon = getDayIcon(dayKey);
+
+        return `
+            <div class="event-card" data-day="${dayKey}" data-genre="${artist.styleMusical.toLowerCase()}">
+                <div class="event-image">
+                    <img src="${artist.imageUrl || '../assets/images/dezze.png'}" alt="${artist.nom}">
+                    <div class="event-date-badge ${dayKey}">${dayLabel}</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-text-section">
+                        <h3 class="event-title">${artist.nom}</h3>
+                        <p class="event-artist">${artist.styleMusical}</p>
+                    </div>
+                    <div class="event-icon">
+                        <img src="${dayIcon}" alt="Day Icon" style="width: 24px; height: 24px; object-fit: contain;">
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Function to display artists
+    function displayArtists(artists) {
+        const eventsGrid = document.getElementById('eventsGrid');
+        
+        if (artists.length === 0) {
+            eventsGrid.innerHTML = `
+                <div class="loading-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #666;">
+                    <p>Aucun artiste trouvé pour ce filtre.<br>Essayez de changer de catégorie.</p>
+                </div>
+            `;
+            return;
+        }
+
+        eventsGrid.innerHTML = artists.map(createEventCard).join('');
+
+        // Trigger GSAP animation
+        setTimeout(() => {
+            gsap.fromTo('.event-card', {
+                y: 50,
+                opacity: 0
+            }, {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power3.out'
+            });
+        }, 100);
+    }
+
+    // Function to filter artists
+    function filterArtists(filter) {
+        currentFilter = filter;
+        let filteredArtists = allArtists;
+
+        if (filter !== 'all') {
+            if (filter === 'vendredi') {
+                filteredArtists = allArtists.filter(artist => artist.jour === '11');
+            } else if (filter === 'samedi') {
+                filteredArtists = allArtists.filter(artist => artist.jour === '12');
+            } else if (filter === 'dimanche') {
+                filteredArtists = allArtists.filter(artist => artist.jour === '13');
+            } else if (filter === 'scenes' || filter === 'genres') {
+                // Pour ces filtres, afficher tous les artistes pour l'instant
+                filteredArtists = allArtists;
+            }
+        }
+
+        displayArtists(filteredArtists);
+    }
+
+    // Function to load all artists
+    async function loadAllArtists() {
+        const eventsGrid = document.getElementById('eventsGrid');
+        
+        try {
+            // Query all artists ordered by day then time
+            const q = query(collection(db, 'artistes'), orderBy('jour'), orderBy('heure'));
+            const snapshot = await getDocs(q);
+            
+            allArtists = [];
+            snapshot.forEach((doc) => {
+                allArtists.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Display all artists initially
+            displayArtists(allArtists);
+
+            // Setup tab functionality
+            setupTabFunctionality();
+
+        } catch (error) {
+            console.error('Erreur lors du chargement des artistes:', error);
+            eventsGrid.innerHTML = `
+                <div class="loading-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: #666;">
+                    <p>Erreur lors du chargement des artistes.<br>Veuillez rafraîchir la page.</p>
+                </div>
+            `;
+        }
+    }
+
+    // Function to setup tab functionality
+    function setupTabFunctionality() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-filter');
+                filterArtists(filter);
+            });
+        });
+    }
+
+    // Load artists when page is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        loadAllArtists();
+    });
+</script>
+</body>
+</html> 

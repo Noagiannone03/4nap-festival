@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sono Mondiale - Festival ANRF</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+    <a href="../index.html">
+        <img src="../assets/logos/4nap-logo-noir.png" alt="ANRF" class="logo" id="logo">
+    </a>
+    <div class="menu-toggle" id="menuToggle">
+        <span id="menuText">MENU</span>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+<!-- Sticky Member Button -->
+<div class="sticky-member">
+    GET MY<br>TICKETS
+</div>
+
+<!-- Menu Overlay -->
+<div class="menu-overlay" id="menuOverlay">
+    <div class="menu-item">PROGRAMMATION</div>
+    <div class="menu-item">INFOS PRATIQUES</div>
+    <div class="menu-item">DEVENEZ MEMBRE</div>
+    <div class="menu-item">NEWS</div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-image"></div>
+    <div class="hero-content">
+        <div class="hero-text">
+           
+            <h1 class="hero-title">SONO MONDIALE</h1>
+            <p class="hero-description">
+                C'est l'ouverture du festival, et elle ne se fera pas sans chaleur. Une carte blanche au métissage sonore, entre groove organique et beats électronique. Inspirée par les fêtes hybrides du festival Nyege Nyege, les mixes fous des favelas ou les ovnis sonores d'Afrique du Sud. Cette soirée est une invitation au lâcher-prise, à la danse, au corps qui écoute autant qu'il répond.
+            </p>
+            <p class="hero-description">
+                Une vibe solaire, libre et chaude. Viens pour le voyage, reste pour la transe collective.
+            </p>
+            <button class="hero-button" onclick="window.open('#', '_blank')">GET MY TICKETS</button>
+        </div>
+    </div>
+</section>
+
+<!-- Dynamic Artist Sections - will be populated by Firebase -->
+<div id="artistSections">
+    <!-- Loading placeholder -->
+    <div class="image-separator"></div>
+    <section class="content-section">
+        <div class="section-container">
+            <div class="section-text" style="text-align: center; grid-column: 1 / -1;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                    <div style="width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #ff9a56; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                </div>
+                <p style="color: #666; font-size: 1.1rem;">Chargement des artistes Sono Mondiale...</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Artist Bio Section -->
+<section class="artist-bio-section">
+    <div class="artist-bio-container">
+        <div class="artist-bio-image">
+            <img src="../assets/images/perso1.png" alt="Allegra Leroy - Ally" />
+            <div class="artist-bio-overlay">
+                <h3>ALLEGRA LEROY</h3>
+                <p>Ally pour les intimes</p>
+            </div>
+        </div>
+        <div class="artist-bio-header">
+            <h2>RENCONTREZ NOTRE CURATRICE</h2>
+            <div class="artist-bio-subtitle">La nomade des sons</div>
+        </div>
+        
+        <div class="artist-bio-content">
+            <div class="artist-identity-card">
+                <div class="identity-item">
+                    <span class="identity-label">Nom</span>
+                    <span class="identity-value">Allegra Leroy, Ally pour les intimes</span>
+                </div>
+                <div class="identity-item">
+                    <span class="identity-label">Âge</span>
+                    <span class="identity-value">27 ans</span>
+                </div>
+                <div class="identity-item">
+                    <span class="identity-label">Origine</span>
+                    <span class="identity-value">Née à Port-au-Prince (Haïti), en escale chez son frère durant les beaux jours à La Seyne-sur-Mer</span>
+                </div>
+                <div class="identity-item">
+                    <span class="identity-label">Métier</span>
+                    <span class="identity-value">Chorégraphe, professeur de percussions</span>
+                </div>
+                <div class="identity-item">
+                    <span class="identity-label">Passion</span>
+                    <span class="identity-value">Tisser des ponts entre les musiques du monde et les scènes électroniques</span>
+                </div>
+                <div class="identity-item">
+                    <span class="identity-label">Style de vie</span>
+                    <span class="identity-value">Nomade, elle suit le vent et les invitations, toujours prête à semer le groove et le geste là où on l'accueille</span>
+                </div>
+            </div>
+
+            <div class="artist-story">
+                <h3>D'où ça vient ?</h3>
+                <div class="artist-story-content collapsed" id="storyContent">
+                    <p>Je suis née à Haïti, j'ai grandi entre les tambours Ka et la sono mobile. Les rythmes des Caraïbes ont bercé mon enfance, et j'ai très vite compris que la musique était ma véritable langue. A la fin de mon adolescence, j'ai voyagé, beaucoup : j'ai d'abord rejoint mon frère à Marseille, avec son énergie brute et ses accents du monde.</p>
+                    <p>Après j'ai pris mon sac à dos et je suis partie solo pour Lisbonne et Rio, vécu plus un an au Cap en afrique du Sud ou j'ai rencontré mes professeurs de percussions qui m'ont transmis leur savoir, puis je me suis installé à Barcelone, ou je travaille en tant que chorégraphe, j'aime tellement cette ville, vibrante de culture et d'expérimentation musicale.</p>
+                    <p>Durant les beaux jours, je viens souvent voir mon frère à La Seyne, c'est le seul membre de ma famille en Europe mais j'y reste rarement plus d'une saison. J'ai un joli van que j'ai fait retaper, et je roule là où on m'appelle pour travailler. Le monde, c'est ma maison et je suis une globe-trotteuse invétérée toujours partante pour découvrir une nouvelle destination.</p>
+                </div>
+                <button class="story-toggle-btn" onclick="toggleStory()">Voir plus</button>
+            </div>
+
+            <div class="artist-faq">
+                <h3>En savoir plus</h3>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Le track que tu ponces en ce moment en boucle ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>En ce moment, je suis obsédée par "Wele Wele" de Burna Boy remixé par Rimon. C'est cette fusion parfaite entre l'afrobeat traditionnel et les beats électroniques modernes qui me fait vibrer. Chaque écoute me transporte dans mes voyages entre Lagos et Barcelone.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Un club ou un festival incontournable dans ton créneau musical ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Le Nyege Nyege Festival en Ouganda ! C'est là que j'ai compris que la musique électronique pouvait vraiment embrasser les sonorités traditionnelles africaines. L'énergie là-bas est incomparable, c'est un laboratoire vivant de la musique mondiale.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>L'artiste que tout le monde devrait écouter et son meilleur titre selon toi ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>DJ Lag avec "Ice Drop" ! Il représente parfaitement cette nouvelle génération d'artistes sud-africains qui révolutionnent la scène électronique mondiale. Son approche du gqom est juste révolutionnaire.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Un track préféré pour un peak time sans concession ?</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>"Bambaataa" de Shygirl. Quand ça passe, la piste explose littéralement. C'est mon arme secrète pour transformer n'importe quelle foule en transe collective. Pure énergie, pure magie.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Action Buttons -->
+<section class="action-buttons">
+    <button class="action-btn secondary" onclick="window.location.href='../programmation-complete/index.html'">PROGRAMMATION COMPLÈTE</button>
+    <button class="action-btn primary">GET YOUR PASS</button>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-socials">
+            <a href="https://www.facebook.com/noidlabtoulon/?locale=fr_FR" class="footer-social-icon">
+                <img src="../assets/pictos/fe_facebook.png" alt="Facebook" class="social-icon-img">
+            </a>
+            <a href="https://www.instagram.com/noidlab/" class="footer-social-icon">
+                <img src="../assets/pictos/mdi_instagram.png" alt="Instagram" class="social-icon-img">
+            </a>
+         
+        </div>
+        <div class="footer-partners">
+            <img src="../assets/images/partners.png" alt="Partenaires 4NAP Festival" class="footer-partners-image" onclick="console.log('Image clicked!'); openPartnersPopup();">
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>&copy; 2025 NO/ID*.  <a href="https://noagiannone.fr" style="text-decoration: none; font-weight: bold; color: inherit;">Made with ✌️ by Noa Giannone</a>. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<!-- Partners Popup -->
+<div class="partners-popup" id="partnersPopup">
+    <div class="partners-popup-content">
+        <button class="partners-popup-close" onclick="closePartnersPopup()">&times;</button>
+        <h2>Nos Partenaires</h2>
+        <ul class="partners-list">
+            <li class="partner-item">
+                <a href="https://www.la-seyne.fr/" target="_blank">Ville de La Seyne-sur-Mer</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.noidlab.com/" target="_blank">NO/ID LAB</a>
+            </li>
+            <li class="partner-item">
+                <a href="http://lenez.net/" target="_blank">Le Nez</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.chezvibe.com/fr/" target="_blank">Chez Vibe</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.instagram.com/messio.asso/" target="_blank">Messio</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.radio-active.net/" target="_blank">Radio Active</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.labieredesilesdor.fr/" target="_blank">La Bière des Îles d'Or</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.instagram.com/reciprocagency/" target="_blank">Reciproc Agency</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://www.olympiclocation.com/olympic-location-toulon/" target="_blank">Olympic Location</a>
+            </li>
+            <li class="partner-item">
+                <a href="https://4nap.fr" target="_blank">4NAP</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    // Partners Popup Functions
+    function openPartnersPopup() {
+        console.log('openPartnersPopup called!');
+        const popup = document.getElementById('partnersPopup');
+        if (popup) {
+            popup.classList.add('active');
+            // Empêcher le scroll de la page
+            document.body.style.overflow = 'hidden';
+            console.log('Popup should be visible now');
+        } else {
+            console.log('Popup element not found!');
+        }
+    }
+
+    function closePartnersPopup() {
+        console.log('closePartnersPopup called!');
+        const popup = document.getElementById('partnersPopup');
+        if (popup) {
+            popup.classList.remove('active');
+            // Rétablir le scroll de la page
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Page Load Animation
+    gsap.timeline()
+        .from('.navbar', { y: -100, opacity: 0, duration: 1, ease: 'power3.out' })
+        .from('.hero-text', { x: -50, opacity: 0, duration: 1, ease: 'power3.out' }, '-=0.5')
+        .from('.hero-image', { x: 50, opacity: 0, duration: 1, ease: 'power3.out' }, '-=1');
+
+    // Menu Toggle (same as original)
+    const menuToggle = document.getElementById('menuToggle');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const hamburger = document.getElementById('hamburger');
+    const navbar = document.getElementById('navbar');
+    const menuText = document.getElementById('menuText');
+    const logo = document.getElementById('logo');
+
+    let menuOpen = false;
+
+    menuToggle.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        
+        if (menuOpen) {
+            navbar.classList.add('menu-open');
+            hamburger.classList.add('active');
+            menuOverlay.classList.add('active');
+            menuText.textContent = 'FERMER';
+            logo.src = "../assets/logos/4nap-logo-gris.png";
+            
+            gsap.fromTo('.menu-item', 
+                { x: -50, opacity: 0 },
+                { x: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out', delay: 0.3 }
+            );
+        } else {
+            navbar.classList.remove('menu-open');
+            hamburger.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            menuText.textContent = 'MENU';
+            logo.src = "../assets/logos/4nap-logo-noir.png";
+            
+            gsap.to('.menu-item', { x: -50, opacity: 0, duration: 0.3, stagger: 0.05 });
+        }
+    });
+
+    // Content Sections Animation
+    gsap.fromTo('.content-section', {
+        y: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.content-section',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.3,
+        ease: 'power3.out'
+    });
+
+    // Image Separators Animation
+    gsap.fromTo('.image-separator', {
+        scaleX: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.image-separator',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+        },
+        scaleX: 1,
+        duration: 1.2,
+        ease: 'power3.out',
+        transformOrigin: 'left center'
+    });
+
+    // Section Text Animation
+    gsap.fromTo('.section-text h2', {
+        y: 30,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.section-text h2',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power3.out'
+    });
+
+    gsap.fromTo('.section-text p', {
+        y: 20,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.section-text p',
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power3.out'
+    });
+
+    // Section Images Animation
+    gsap.fromTo('.section-image', {
+        scale: 0.8,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.section-image',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+        },
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out'
+    });
+
+    // Parallax effect for image separators
+    gsap.to('.image-separator', {
+        scrollTrigger: {
+            trigger: '.image-separator',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1
+        },
+        y: '-20%',
+        ease: 'none'
+    });
+
+    // Action Buttons Animation
+    gsap.fromTo('.action-btn', {
+        y: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.action-buttons',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out'
+    });
+
+    // Mobile Accordion Functionality
+    function initMobileAccordions() {
+        // Plus besoin du footer accordion
+    }
+
+    // Smart Ellipsis Detection - Niveau développeur senior
+    function initSmartEllipsis() {
+        const paragraphs = document.querySelectorAll('.section-text p');
+        
+        const checkTextOverflow = (element) => {
+            // Créer un clone temporaire pour mesurer la hauteur réelle
+            const clone = element.cloneNode(true);
+            clone.style.maxHeight = 'none';
+            clone.style.position = 'absolute';
+            clone.style.visibility = 'hidden';
+            clone.style.width = element.offsetWidth + 'px';
+            element.parentNode.appendChild(clone);
+            
+            const realHeight = clone.offsetHeight;
+            const maxHeight = element.offsetHeight;
+            
+            element.parentNode.removeChild(clone);
+            
+            // Ajouter/retirer la classe selon le débordement
+            if (realHeight > maxHeight) {
+                element.classList.add('text-overflow');
+            } else {
+                element.classList.remove('text-overflow');
+            }
+        };
+        
+        // Vérifier au chargement
+        paragraphs.forEach(checkTextOverflow);
+        
+        // Vérifier au redimensionnement avec debounce
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                paragraphs.forEach(checkTextOverflow);
+            }, 150);
+        });
+    }
+
+    // Initialize smart ellipsis avec attente des polices
+    document.fonts.ready.then(() => {
+        initSmartEllipsis();
+    }).catch(() => {
+        // Fallback si les polices ne chargent pas
+        setTimeout(initSmartEllipsis, 1000);
+    });
+
+    // Initialize accordion on page load
+    initMobileAccordions();
+
+    // FAQ Toggle Function
+    function toggleFAQ(element) {
+        const faqItem = element.parentElement;
+        const faqAnswer = faqItem.querySelector('.faq-answer');
+        const faqIcon = element.querySelector('.faq-icon');
+        
+        // Toggle active class
+        faqItem.classList.toggle('active');
+        
+        // Update icon
+        if (faqItem.classList.contains('active')) {
+            faqIcon.textContent = '−';
+            faqIcon.style.transform = 'rotate(0deg)';
+        } else {
+            faqIcon.textContent = '+';
+            faqIcon.style.transform = 'rotate(0deg)';
+        }
+        
+        // Animate with GSAP
+        if (faqItem.classList.contains('active')) {
+            gsap.to(faqAnswer, {
+                maxHeight: faqAnswer.scrollHeight + 'px',
+                opacity: 1,
+                duration: 0.4,
+                ease: 'power3.out'
+            });
+        } else {
+            gsap.to(faqAnswer, {
+                maxHeight: 0,
+                opacity: 0,
+                duration: 0.3,
+                ease: 'power3.out'
+            });
+        }
+    }
+
+    // Make toggleFAQ globally accessible
+    window.toggleFAQ = toggleFAQ;
+
+    // Story Toggle Function
+    function toggleStory() {
+        const storyContent = document.getElementById('storyContent');
+        const toggleBtn = document.querySelector('.story-toggle-btn');
+        
+        if (storyContent.classList.contains('collapsed')) {
+            // Expand
+            storyContent.classList.remove('collapsed');
+            toggleBtn.textContent = 'Voir moins';
+            
+            // Animate with GSAP
+            gsap.to(storyContent, {
+                maxHeight: 'none',
+                duration: 0.4,
+                ease: 'power3.out'
+            });
+        } else {
+            // Collapse
+            storyContent.classList.add('collapsed');
+            toggleBtn.textContent = 'Voir plus';
+            
+            // Get the collapsed height and animate to it
+            const collapsedHeight = window.innerWidth <= 480 ? '100px' : '120px';
+            gsap.to(storyContent, {
+                maxHeight: collapsedHeight,
+                duration: 0.3,
+                ease: 'power3.out'
+            });
+        }
+    }
+
+    // Make toggleStory globally accessible
+    window.toggleStory = toggleStory;
+
+    // Artist Bio Section Animation
+    gsap.fromTo('.artist-bio-section', {
+        y: 100,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.artist-bio-section',
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+        },
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: 'power3.out'
+    });
+
+    // Artist Bio Image Animation
+    gsap.fromTo('.artist-bio-image', {
+        x: -50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.artist-bio-image',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+        },
+        x: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out'
+    });
+
+    // Artist Bio Content Animation
+    gsap.fromTo('.artist-bio-content > *', {
+        x: 50,
+        opacity: 0
+    }, {
+        scrollTrigger: {
+            trigger: '.artist-bio-content',
+            start: 'top 85%',
+            toggleActions: 'play none none reverse'
+        },
+        x: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out'
+    });
+
+    // Event listeners pour la popup partenaires
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fermer la popup en cliquant sur le fond
+        const popup = document.getElementById('partnersPopup');
+        if (popup) {
+            popup.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePartnersPopup();
+                }
+            });
+        }
+
+        // Fermer la popup avec la touche Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePartnersPopup();
+            }
+        });
+    });
+</script>
+
+<!-- Firebase Integration for Artists -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where, orderBy } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCK20ovvLNY9lBSr7FotjXPU1mwHsg8pnk",
+        authDomain: "nap-festival.firebaseapp.com",
+        projectId: "nap-festival",
+        storageBucket: "nap-festival.firebasestorage.app",
+        messagingSenderId: "928048730953",
+        appId: "1:928048730953:web:47cad1e4c5d300a11b4098",
+        measurementId: "G-481JX6JFMD"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+
+    // Function to create artist section HTML
+    function createArtistSection(artist, index) {
+        const isEven = index % 2 === 0;
+        const isFirst = index === 0;
+        
+        return `
+            ${!isFirst ? '<!-- Image Separator --><div class="image-separator"></div>' : ''}
+
+            <!-- Artist Section: ${artist.nom} -->
+            <section class="content-section">
+                <div class="section-container">
+                    ${isEven ? `
+                        <div class="section-text">
+                            <h2>${artist.nom.toUpperCase()}</h2>
+                            <div class="section-time">
+                                <img src="../assets/pictos/Clock(1).png" alt="Time" class="time-icon">
+                                <span>${artist.heure} - 11 juillet</span>
+                            </div>
+                            <p>
+                                ${artist.description}
+                            </p>
+                            ${artist.lienSocial ? `
+                                <a href="${artist.lienSocial}" target="_blank" class="discover-more">
+                                    <span>Suivre l'artiste</span>
+                                    <svg class="discover-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14"></path>
+                                        <path d="m12 5 7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            ` : `
+                                <div class="discover-more" style="opacity: 0.6; cursor: default;">
+                                    <span>${artist.styleMusical}</span>
+                                </div>
+                            `}
+                        </div>
+                        <div class="section-image">
+                            <img src="${artist.imageUrl || '../assets/images/dezze.png'}" alt="${artist.nom}" />
+                        </div>
+                    ` : `
+                        <div class="section-image">
+                            <img src="${artist.imageUrl || '../assets/images/dezze.png'}" alt="${artist.nom}" />
+                        </div>
+                        <div class="section-text">
+                            <h2>${artist.nom.toUpperCase()}</h2>
+                            <div class="section-time">
+                                <img src="../assets/pictos/Clock(1).png" alt="Time" class="time-icon">
+                                <span>${artist.heure} - 11 juillet</span>
+                            </div>
+                            <p>
+                                ${artist.description}
+                            </p>
+                            ${artist.lienSocial ? `
+                                <a href="${artist.lienSocial}" target="_blank" class="discover-more">
+                                    <span>Suivre l'artiste</span>
+                                    <svg class="discover-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14"></path>
+                                        <path d="m12 5 7 7-7 7"></path>
+                                    </svg>
+                                </a>
+                            ` : `
+                                <div class="discover-more" style="opacity: 0.6; cursor: default;">
+                                    <span>${artist.styleMusical}</span>
+                                </div>
+                            `}
+                        </div>
+                    `}
+                </div>
+            </section>
+        `;
+    }
+
+    // Function to load artists for day 11 (Sono Mondiale)
+    async function loadSonoMondialeArtists() {
+        const artistSections = document.getElementById('artistSections');
+        
+        try {
+            // Query artists for day 11 ordered by time (from latest to earliest)
+            const q = query(
+                collection(db, 'artistes'), 
+                where('jour', '==', '11'),
+                orderBy('heure', 'desc')
+            );
+            
+            const snapshot = await getDocs(q);
+            const artists = [];
+            
+            snapshot.forEach((doc) => {
+                artists.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Display artists as individual sections
+            if (artists.length === 0) {
+                artistSections.innerHTML = `
+                    <div class="image-separator"></div>
+                    <section class="content-section">
+                        <div class="section-container">
+                            <div class="section-text" style="text-align: center; grid-column: 1 / -1;">
+                                <h2>ARTISTES À VENIR</h2>
+                                <p style="color: #666; font-size: 1.1rem;">
+                                    La programmation Sono Mondiale sera bientôt dévoilée.<br>
+                                    Revenez prochainement pour découvrir nos artistes exceptionnels !
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            } else {
+                artistSections.innerHTML = artists.map((artist, index) => createArtistSection(artist, index)).join('');
+
+                // Trigger GSAP animations for new sections
+                setTimeout(() => {
+                    // Content Sections Animation
+                    gsap.fromTo('.content-section', {
+                        y: 50,
+                        opacity: 0
+                    }, {
+                        scrollTrigger: {
+                            trigger: '.content-section',
+                            start: 'top 80%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        stagger: 0.3,
+                        ease: 'power3.out'
+                    });
+
+                    // Image Separators Animation
+                    gsap.fromTo('.image-separator', {
+                        scaleX: 0
+                    }, {
+                        scrollTrigger: {
+                            trigger: '.image-separator',
+                            start: 'top 90%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        scaleX: 1,
+                        duration: 1.2,
+                        ease: 'power3.out',
+                        transformOrigin: 'left center'
+                    });
+
+                    // Section Text Animation
+                    gsap.fromTo('.section-text h2', {
+                        y: 30,
+                        opacity: 0
+                    }, {
+                        scrollTrigger: {
+                            trigger: '.section-text h2',
+                            start: 'top 90%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    });
+
+                    // Section Images Animation
+                    gsap.fromTo('.section-image', {
+                        scale: 0.8,
+                        opacity: 0
+                    }, {
+                        scrollTrigger: {
+                            trigger: '.section-image',
+                            start: 'top 85%',
+                            toggleActions: 'play none none reverse'
+                        },
+                        scale: 1,
+                        opacity: 1,
+                        duration: 1,
+                        ease: 'power3.out'
+                    });
+                }, 100);
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des artistes:', error);
+            artistSections.innerHTML = `
+                <div class="image-separator"></div>
+                <section class="content-section">
+                    <div class="section-container">
+                        <div class="section-text" style="text-align: center; grid-column: 1 / -1;">
+                            <h2>ERREUR DE CHARGEMENT</h2>
+                            <p style="color: #666; font-size: 1.1rem;">
+                                Impossible de charger les artistes.<br>
+                                Veuillez rafraîchir la page.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+    }
+
+    // Load artists when page is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        loadSonoMondialeArtists();
+    });
+</script>
+</body>
+</html> 
